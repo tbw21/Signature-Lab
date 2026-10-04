@@ -1,0 +1,192 @@
+{
+  "developmentOnly": true,
+  "softwareChecks": 391,
+  "failed": 0,
+  "unavailable": 4,
+  "candidateFrozen": false,
+  "suites": [
+    {
+      "file": "bbqr-1-15.json",
+      "suite": "BBQr unit/contract/fault injection",
+      "passed": 15,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "bbqr-16-40.json",
+      "suite": "BBQr unit/contract/fault injection",
+      "passed": 25,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "bbqr-41-62.json",
+      "suite": "BBQr unit/contract/fault injection",
+      "passed": 22,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "browser-1-20.json",
+      "suite": "Chromium browser/workflow/lifecycle simulations",
+      "passed": 20,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "browser-21-40.json",
+      "suite": "Chromium browser/workflow/lifecycle simulations",
+      "passed": 20,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "browser-41-62.json",
+      "suite": "Chromium browser/workflow/lifecycle simulations",
+      "passed": 22,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "camera.json",
+      "suite": "Camera lifecycle fault-injection contracts (mock clock/media, not hardware)",
+      "passed": 21,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "evidence-replay.json",
+      "suite": "Independent public evidence replay and tampering checks",
+      "passed": 36,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "independent-crypto.json",
+      "suite": null,
+      "passed": 6,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "independent-structure.json",
+      "suite": "Independent Python transaction and PSBT structure checks",
+      "passed": 12,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "origins.json",
+      "suite": "Normal-origin/browser acceptance attempts",
+      "passed": 0,
+      "failed": 0,
+      "unavailable": 4
+    },
+    {
+      "file": "package.json",
+      "suite": "Archive/reconstruction/filesystem qualification",
+      "passed": 15,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "regression-1-20.json",
+      "suite": "Audit regression, state, metadata and evidence contracts",
+      "passed": 20,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "regression-21-40.json",
+      "suite": "Audit regression, state, metadata and evidence contracts",
+      "passed": 20,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "regression-41-54.json",
+      "suite": "Audit regression, state, metadata and evidence contracts",
+      "passed": 14,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "release-tools.json",
+      "suite": "Release-authentication/vendor tool simulations",
+      "passed": 11,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "reliability-browser-1-15.json",
+      "suite": "Reliability exact-HTML browser integration",
+      "passed": 15,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "reliability-browser-16-23.json",
+      "suite": "Reliability exact-HTML browser integration",
+      "passed": 8,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-1-29.json",
+      "suite": "Consolidation / guided physical-session contracts and faults",
+      "passed": 29,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-30-38.json",
+      "suite": "Consolidation / guided physical-session contracts and faults",
+      "passed": 9,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-browser-1-7.json",
+      "suite": "Consolidation exact-HTML browser / fingerprint simulations",
+      "passed": 7,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-browser-15-21.json",
+      "suite": "Consolidation exact-HTML browser / fingerprint simulations",
+      "passed": 7,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-browser-22-28.json",
+      "suite": "Consolidation exact-HTML browser / fingerprint simulations",
+      "passed": 7,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "sessions-browser-8-14.json",
+      "suite": "Consolidation exact-HTML browser / fingerprint simulations",
+      "passed": 7,
+      "failed": 0,
+      "unavailable": 0
+    },
+    {
+      "file": "static.json",
+      "suite": "Static/syntax/architecture/source-preservation",
+      "passed": 23,
+      "failed": 0,
+      "unavailable": 0
+    }
+  ],
+  "wordingRecheck": {
+    "static": 23,
+    "browser": 3,
+    "failed": 0,
+    "notAdditionalUniquePasses": true
+  },
+  "hardwareTests": 0,
+  "note": "Final acceptance must rerun all applicable suites on the newly frozen release candidate."
+}

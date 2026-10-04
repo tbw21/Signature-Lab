@@ -1,0 +1,8 @@
+{
+  "package": "pako",
+  "version": "1.0.11",
+  "source": "installed pptxgenjs dependency, not fetched in this task",
+  "upstream": "https://github.com/nodeca/pako/tree/1.0.11",
+  "sha256": "29cfa0542b9864b6640cfdcc8f15b184db6431b532db2702a3ce97e5f2a7fc1c",
+  "upstream_byte_verification": "unavailable: container DNS/network blocked; local byte provenance only"
+}

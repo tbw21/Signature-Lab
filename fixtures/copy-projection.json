@@ -1,0 +1,117 @@
+{
+  "pageSha256": "2e0ebfc6f7e6e835e4dc7964338565f9cde4a707e6f1710fab0c18993b404fd9",
+  "cssSha256": "dee247418b67506013d988b74f6bdb5339a77475f4316938c7d1f2bd96f151aa",
+  "architectureSha256": "e8620938c8a16bf6252ca1b949032ee687a9114d1772e6299f2f0dad1d29878a",
+  "questions": [
+    [
+      "guided-session-help",
+      "Repeat &amp; customize",
+      "What does a guided physical-device session do?"
+    ],
+    [
+      "license-help",
+      "Method &amp; trust",
+      "Licensing &amp; original project"
+    ],
+    [
+      "release-status-help",
+      "Method &amp; trust",
+      "Release identity &amp; trust status"
+    ],
+    [
+      "signature-check",
+      "Start here",
+      "How does this check for seed leakage?"
+    ],
+    [
+      "review-amounts-help",
+      "Start here",
+      "Which numbers should match my signing device?"
+    ],
+    [
+      "orange-result-help",
+      "Understand a result",
+      "What does an orange result mean?"
+    ],
+    [
+      "result-checks",
+      "Understand a result",
+      "What do the three result checks mean?"
+    ],
+    [
+      "camera-permission-help",
+      "Scan &amp; transfer",
+      "Why does the browser ask for camera access again?"
+    ],
+    [
+      "scan-file-help",
+      "Scan &amp; transfer",
+      "Why did a QR scan stop?"
+    ],
+    [
+      "bbqr-help",
+      "Scan &amp; transfer",
+      "How do I use BBQr?"
+    ],
+    [
+      "trust-results",
+      "Method &amp; trust",
+      "Can I rely on the results?"
+    ],
+    [
+      "known-example",
+      "Start here",
+      "Try a known malicious-signature example"
+    ],
+    [
+      "original-comparison",
+      "Method &amp; trust",
+      "How does this compare with the original tool?"
+    ],
+    [
+      "repeat-tests",
+      "Repeat &amp; customize",
+      "Why run several tests with the same seed?"
+    ],
+    [
+      "randomness",
+      "Repeat &amp; customize",
+      "Which scenarios are tested, and how random are they?"
+    ],
+    [
+      "limitations",
+      "Understand a result",
+      "What can a match tell me, and what can it miss?"
+    ],
+    [
+      "reduced-response-help",
+      "Understand a result",
+      "Why did my signer return a smaller file?"
+    ],
+    [
+      "evidence-help",
+      "Understand a result",
+      "What is checked in returned-file metadata and evidence?"
+    ],
+    [
+      "offline-help",
+      "Scan &amp; transfer",
+      "How do I use this offline?"
+    ],
+    [
+      "technical-help",
+      "Repeat &amp; customize",
+      "Technical details and expected signatures"
+    ],
+    [
+      "workspace-help",
+      "Start here",
+      "Where are the advanced settings and complete records?"
+    ],
+    [
+      "camera-permissions",
+      "Scan &amp; transfer",
+      "Why does capture stop when I leave the test?"
+    ]
+  ]
+}

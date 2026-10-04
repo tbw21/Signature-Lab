@@ -1,0 +1,184 @@
+{
+  "grade": "development validation completed; not frozen acceptance",
+  "passed": 532,
+  "failed": 0,
+  "unavailable": 4,
+  "historicalHarnessFailures": 3,
+  "incompleteCombinedExecutions": 3,
+  "testResults": [
+    {
+      "name": "dev2-static-final.json",
+      "sha256": "e21ca99866b85c5207473a6cd0deaaa7bbf1b0bae42f72ff2e4d1b9004e51ad1",
+      "passed": 33,
+      "failed": 0
+    },
+    {
+      "name": "bbqr-1-15.json",
+      "sha256": "12b77bd5f8869cf90c6edc51a6fa43223656e25664f102f3a87c74783fc0e3da",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "name": "bbqr-16-40.json",
+      "sha256": "53ac5812b8f6a137bc4f8edebf01d8c2c5589902186f53220e658ffb1d2645f2",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "name": "bbqr-41-62.json",
+      "sha256": "b1867201b0a45e500cb41a8f022918c971a12ee0a7af02e04cb956e0a3a027e1",
+      "passed": 22,
+      "failed": 0
+    },
+    {
+      "name": "regression-1-20.json",
+      "sha256": "1b12220b76e1c14345bf27ea158997f9293eb6da9918f84670e1c916bf198b4a",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "regression-21-40.json",
+      "sha256": "c3a978956893ae06b9ddb876563997e6765aa8402eeaed54c41ad5452962ac82",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "reg41-complete.json",
+      "sha256": "ea2449f3565d464d0a149a48ba8aed9814b443fb4d375e8f8234b282bf4812e1",
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "name": "camera-complete.json",
+      "sha256": "4d998cd3c9978c0b9c87302d4bb1e56f7c0f4e1cddf52f0d7e0d343f7751f317",
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "name": "dev2-sessions.json",
+      "sha256": "4815f3aa8a775c3ed42f518614cc57f2c12c2ef246c0b20099228137dd5a8dc4",
+      "passed": 38,
+      "failed": 0
+    },
+    {
+      "name": "dev2-browser1.json",
+      "sha256": "058153ef72a72d0c5bdbfdc8a7159546497c97fa018b571ced4b671ecfb01dfc",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "dev2-browser2.json",
+      "sha256": "5d0aafd71782fabc38fdbb18d2d7db40ec9b53c75ea49c4c2ec78e3f9eb7a0cd",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "dev2-browser3-rerun.json",
+      "sha256": "1a66f0f83cfcc3bd35855458ef9387e39f882b1811f306af474766cf0c6a4ef9",
+      "passed": 22,
+      "failed": 0
+    },
+    {
+      "name": "dev2-reliability-browser.json",
+      "sha256": "6b89cf0062981eb7221cf07a37d39496c24ae1c968f2052c2e92763a0d167664",
+      "passed": 23,
+      "failed": 0
+    },
+    {
+      "name": "dev2-sessions-browser-a.json",
+      "sha256": "98128970c57260e8c27ca38be11e2381e8b747bf1be81ddc85bd3112794e179e",
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "name": "dev2-sessions-browser-b.json",
+      "sha256": "4ea05ca197db9d755cc96a92b5f3e8bd5e94180d5a80af1dd432d1c951069011",
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "name": "dev2-ux-a.json",
+      "sha256": "cd2c58cb50d2b9eb10cd62cc53e344eddcd427e6b8253751cddf36b31edeae60",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "dev2-ux-b.json",
+      "sha256": "d7e748eaec24258065f771a186618e7adec90880c74ad62597120fee56aed1a0",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "dev2-ux-c.json",
+      "sha256": "53925a391b0a86a51a7e0bccf2078bc1f7870ba1ad812b9ecfda745703cc1ea7",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "dev2-ux-d.json",
+      "sha256": "612a887fecb59bdca759dc735ee39d313bf9e066da0df31bb6ae6fd1e6eb7372",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "dev2-remediation.json",
+      "sha256": "2cfd9889324ebe95e84b00e238c8997b7f1cbfff7f6c23c02871a24fdf7b4256",
+      "passed": 55,
+      "failed": 0
+    },
+    {
+      "name": "dev2-new-browser-a.json",
+      "sha256": "09c742f04d69f61a603aab3571c68230f4ca7a4eedeaae2c160ea66003a75882",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "dev2-new-browser-b.json",
+      "sha256": "8f2f4cb29c4007b299435c840031ab51ac2b0998dd46bed8e49d248792aced84",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "name": "dev2-new-browser-c.json",
+      "sha256": "d030e098a30360870f952728feca828f69415776715fa6c443e4366b570e9ee0",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "dev2-release-tools.json",
+      "sha256": "6a82803cec45ade06bf6e7a13014277f3d5e74cd005c0fba221f706bfc7c1618",
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "name": "dev2-package.json",
+      "sha256": "295a35e6d6d0fcf8470c9a535e56d0090c32a8b659d92cd5bb5375602c0def99",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "name": "independent-crypto.json",
+      "sha256": "a7f652c11ea0b35277030466779f9969f169963c59885718e04a06319780f200",
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "name": "independent-structure.json",
+      "sha256": "71bf55e040c1b3d0c0bee13f21f0775f40c4fa886ac69a868fc3c3bf955f829e",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "evidence-replay.json",
+      "sha256": "807471781e31744a34549b53ad5a10ed89d4055f5ceb13a3961aa7dca08b6252",
+      "passed": 36,
+      "failed": 0
+    },
+    {
+      "name": "dev2-new-browser-focus.json",
+      "sha256": "57d5ef34f680cbe53c21d344798c2c189cffc2d60e7f313d009621d3fc96cf97",
+      "passed": 2,
+      "failed": 0
+    }
+  ]
+}

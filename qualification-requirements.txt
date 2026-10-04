@@ -1,0 +1,14 @@
+# Linux/CPython qualification environment used for this candidate.
+# Exact direct and active transitive versions; not a publisher signature or wheel hash lock.
+beautifulsoup4==4.14.3
+cffi==2.0.0
+cryptography==46.0.4
+greenlet==3.5.1
+Pillow==12.3.0
+playwright==1.57.0
+pycparser==3.0
+pyee==13.0.1
+pyzbar==0.1.9
+qrcode==8.2
+soupsieve==2.8.4
+typing_extensions==4.16.0

@@ -1,0 +1,5 @@
+{
+  "version": "0.20.0-rc1",
+  "baseline": "0.19.0-rc1; optional journal evidence, diagnostic export, independent metadata replay and qualification hardening",
+  "status": "release-candidate"
+}

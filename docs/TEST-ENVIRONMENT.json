@@ -1,0 +1,14 @@
+{
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "node": "v22.16.0",
+  "chromium": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)",
+  "packages": {
+    "playwright": "1.57.0",
+    "Pillow": "12.3.0",
+    "qrcode": "8.2",
+    "pyzbar": "0.1.9",
+    "cryptography": "46.0.4"
+  },
+  "dependencyAuthentication": "not established by this environment inventory"
+}

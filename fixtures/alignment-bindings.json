@@ -1,0 +1,1390 @@
+{
+  "bindings": [
+    [
+      ":aria-expanded",
+      "seedQrExpanded"
+    ],
+    [
+      ":aria-pressed",
+      "amountUnit === 'btc'"
+    ],
+    [
+      ":aria-pressed",
+      "amountUnit === 'sats'"
+    ],
+    [
+      ":aria-pressed",
+      "psbtQrMode === 'bbqr'"
+    ],
+    [
+      ":aria-pressed",
+      "psbtQrMode === 'ur'"
+    ],
+    [
+      ":aria-pressed",
+      "sessionCount === '100'"
+    ],
+    [
+      ":aria-pressed",
+      "sessionCount === '20'"
+    ],
+    [
+      ":aria-pressed",
+      "sessionCount === '50'"
+    ],
+    [
+      ":aria-pressed",
+      "wordCount === '12'"
+    ],
+    [
+      ":aria-pressed",
+      "wordCount === '24'"
+    ],
+    [
+      ":aria-pressed",
+      "workspaceView === 'advanced'"
+    ],
+    [
+      ":aria-pressed",
+      "workspaceView === 'session'"
+    ],
+    [
+      ":aria-pressed",
+      "workspaceView === 'test'"
+    ],
+    [
+      ":disabled",
+      "!!demonstration.analysis?.ok"
+    ],
+    [
+      ":disabled",
+      "!acknowledged"
+    ],
+    [
+      ":disabled",
+      "!acknowledged"
+    ],
+    [
+      ":disabled",
+      "!artifactText.trim()"
+    ],
+    [
+      ":disabled",
+      "!canGenerateRandomOutputs"
+    ],
+    [
+      ":disabled",
+      "!canStartGuided"
+    ],
+    [
+      ":disabled",
+      "!canStartGuided"
+    ],
+    [
+      ":disabled",
+      "!canStartGuided"
+    ],
+    [
+      ":disabled",
+      "!canStartGuided"
+    ],
+    [
+      ":disabled",
+      "!canStartGuided || !transactionReady"
+    ],
+    [
+      ":disabled",
+      "!hasEvidence"
+    ],
+    [
+      ":disabled",
+      "!transactionReady"
+    ],
+    [
+      ":disabled",
+      "guidedLocked"
+    ],
+    [
+      ":disabled",
+      "guidedLocked"
+    ],
+    [
+      ":disabled",
+      "guidedLocked"
+    ],
+    [
+      ":disabled",
+      "guidedLocked && !guidedStatus.canAdvance"
+    ],
+    [
+      ":disabled",
+      "guidedLocked && !guidedStatus.canAdvance"
+    ],
+    [
+      ":disabled",
+      "inputs.length === 1"
+    ],
+    [
+      ":disabled",
+      "inputs.length >= 20"
+    ],
+    [
+      ":disabled",
+      "isTestComplete"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !!buildProblem"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !!buildProblem"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !!buildProblem"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !transactionReady"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !transactionReady"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !transactionReady"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || !transactionReady"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || (guidedLocked && !guidedStatus.canReceive)"
+    ],
+    [
+      ":disabled",
+      "isTestComplete || guidedLocked"
+    ],
+    [
+      ":disabled",
+      "outputs.length === 1"
+    ],
+    [
+      ":disabled",
+      "outputs.length >= 20"
+    ],
+    [
+      ":disabled",
+      "policyLocked || isTestComplete"
+    ],
+    [
+      ":disabled",
+      "scan.active"
+    ],
+    [
+      ":disabled",
+      "scan.active"
+    ],
+    [
+      ":disabled",
+      "scan.active"
+    ],
+    [
+      ":disabled",
+      "scan.active"
+    ],
+    [
+      "@change",
+      "handleFileInput($event)"
+    ],
+    [
+      "@change",
+      "handleFileInput($event)"
+    ],
+    [
+      "@change",
+      "invalidate()"
+    ],
+    [
+      "@change",
+      "randomizeTransaction($event.target.value)"
+    ],
+    [
+      "@change",
+      "setSigningPolicy($event.target.value)"
+    ],
+    [
+      "@click",
+      "addInputRow()"
+    ],
+    [
+      "@click",
+      "addOutputRow()"
+    ],
+    [
+      "@click",
+      "amountUnit = 'btc'"
+    ],
+    [
+      "@click",
+      "amountUnit = 'sats'"
+    ],
+    [
+      "@click",
+      "confirmWalletLoaded()"
+    ],
+    [
+      "@click",
+      "copyPsbt()"
+    ],
+    [
+      "@click",
+      "copyTxid()"
+    ],
+    [
+      "@click",
+      "downloadEvidence()"
+    ],
+    [
+      "@click",
+      "downloadHistory()"
+    ],
+    [
+      "@click",
+      "downloadPsbt()"
+    ],
+    [
+      "@click",
+      "downloadReport()"
+    ],
+    [
+      "@click",
+      "downloadResult()"
+    ],
+    [
+      "@click",
+      "downloadScanDiagnostics()"
+    ],
+    [
+      "@click",
+      "downloadSessionReport()"
+    ],
+    [
+      "@click",
+      "endGuidedSession()"
+    ],
+    [
+      "@click",
+      "generateRandomInputs()"
+    ],
+    [
+      "@click",
+      "generateRandomOutputs()"
+    ],
+    [
+      "@click",
+      "goToStep(1)"
+    ],
+    [
+      "@click",
+      "goToStep(2)"
+    ],
+    [
+      "@click",
+      "goToStep(3)"
+    ],
+    [
+      "@click",
+      "intakeOpen = true"
+    ],
+    [
+      "@click",
+      "openPaste()"
+    ],
+    [
+      "@click",
+      "openPaste()"
+    ],
+    [
+      "@click",
+      "openWorkspace('advanced')"
+    ],
+    [
+      "@click",
+      "openWorkspace('session')"
+    ],
+    [
+      "@click",
+      "openWorkspace('session')"
+    ],
+    [
+      "@click",
+      "openWorkspace('test')"
+    ],
+    [
+      "@click",
+      "openWorkspace('test')"
+    ],
+    [
+      "@click",
+      "openWorkspace('test')"
+    ],
+    [
+      "@click",
+      "randomizeAll()"
+    ],
+    [
+      "@click",
+      "randomizeTransaction()"
+    ],
+    [
+      "@click",
+      "randomizeTransaction()"
+    ],
+    [
+      "@click",
+      "runDemonstration()"
+    ],
+    [
+      "@click",
+      "scanSignedTransaction()"
+    ],
+    [
+      "@click",
+      "seedQrExpanded = !seedQrExpanded"
+    ],
+    [
+      "@click",
+      "selectSeedLength(12)"
+    ],
+    [
+      "@click",
+      "selectSeedLength(24)"
+    ],
+    [
+      "@click",
+      "sessionCount = '100'"
+    ],
+    [
+      "@click",
+      "sessionCount = '20'"
+    ],
+    [
+      "@click",
+      "sessionCount = '50'"
+    ],
+    [
+      "@click",
+      "setPsbtQrMode('bbqr')"
+    ],
+    [
+      "@click",
+      "setPsbtQrMode('ur')"
+    ],
+    [
+      "@click",
+      "setRandomLockTime()"
+    ],
+    [
+      "@click",
+      "showAdvancedSettings()"
+    ],
+    [
+      "@click",
+      "showFileDetails()"
+    ],
+    [
+      "@click",
+      "startGuidedSession()"
+    ],
+    [
+      "@click",
+      "startScan()"
+    ],
+    [
+      "@click",
+      "stopScan()"
+    ],
+    [
+      "@click",
+      "verify(); intakeOpen = false"
+    ],
+    [
+      "@click.prevent.stop",
+      "removeInputRow(index)"
+    ],
+    [
+      "@click.prevent.stop",
+      "removeOutputRow(index)"
+    ],
+    [
+      "@dragleave.prevent",
+      "dragOver = false"
+    ],
+    [
+      "@dragover.prevent",
+      "dragOver = true"
+    ],
+    [
+      "@drop.prevent",
+      "handleDrop($event)"
+    ],
+    [
+      "@input",
+      "editArtifact()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@input",
+      "invalidate()"
+    ],
+    [
+      "@paste.prevent",
+      "pasteArtifact($event)"
+    ],
+    [
+      "@toggle",
+      "outputsOpen = $el.open"
+    ],
+    [
+      "@toggle",
+      "settingsOpen = $el.open"
+    ],
+    [
+      "x-for",
+      "(field,index) in metadataDetails"
+    ],
+    [
+      "x-for",
+      "(row,index) in inputs"
+    ],
+    [
+      "x-for",
+      "(row,index) in outputs"
+    ],
+    [
+      "x-for",
+      "(variant,index) in variants"
+    ],
+    [
+      "x-for",
+      "(word, index) in seed.value.split(' ')"
+    ],
+    [
+      "x-for",
+      "output in outputReview.outputs"
+    ],
+    [
+      "x-for",
+      "row in sessionHistory"
+    ],
+    [
+      "x-model",
+      "artifactText"
+    ],
+    [
+      "x-model",
+      "device"
+    ],
+    [
+      "x-model",
+      "firmware"
+    ],
+    [
+      "x-model",
+      "lockTime.value"
+    ],
+    [
+      "x-model",
+      "psbtVersion"
+    ],
+    [
+      "x-model",
+      "row.amount.value"
+    ],
+    [
+      "x-model",
+      "row.amount.value"
+    ],
+    [
+      "x-model",
+      "row.dest.value"
+    ],
+    [
+      "x-model",
+      "row.pathSuffix.value"
+    ],
+    [
+      "x-model",
+      "row.sequence.value"
+    ],
+    [
+      "x-model",
+      "row.utxoId.value"
+    ],
+    [
+      "x-model",
+      "sessionCount"
+    ],
+    [
+      "x-model",
+      "sessionEndReason"
+    ],
+    [
+      "x-ref",
+      "advancedTitle"
+    ],
+    [
+      "x-ref",
+      "advancedTools"
+    ],
+    [
+      "x-ref",
+      "artifactInput"
+    ],
+    [
+      "x-ref",
+      "intakeSection"
+    ],
+    [
+      "x-ref",
+      "prepareTitle"
+    ],
+    [
+      "x-ref",
+      "psbtQrCanvas"
+    ],
+    [
+      "x-ref",
+      "resultTitle"
+    ],
+    [
+      "x-ref",
+      "resultTools"
+    ],
+    [
+      "x-ref",
+      "scanSection"
+    ],
+    [
+      "x-ref",
+      "scanVideo"
+    ],
+    [
+      "x-ref",
+      "seedQrCanvas"
+    ],
+    [
+      "x-ref",
+      "sessionTitle"
+    ],
+    [
+      "x-ref",
+      "signTitle"
+    ],
+    [
+      "x-show",
+      "!canStartGuided"
+    ],
+    [
+      "x-show",
+      "!hasGuidedSession"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete"
+    ],
+    [
+      "x-show",
+      "!isTestComplete && (resultState === 'unverified' || intakeOpen)"
+    ],
+    [
+      "x-show",
+      "!scan.active"
+    ],
+    [
+      "x-show",
+      "!sessionHistory.length"
+    ],
+    [
+      "x-show",
+      "!transactionReady && !buildProblem"
+    ],
+    [
+      "x-show",
+      "amountUnit === 'btc'"
+    ],
+    [
+      "x-show",
+      "buildProblem"
+    ],
+    [
+      "x-show",
+      "copiedKey === 'psbt'"
+    ],
+    [
+      "x-show",
+      "copiedKey === 'txid'"
+    ],
+    [
+      "x-show",
+      "demonstration.analysis || demonstration.error"
+    ],
+    [
+      "x-show",
+      "demonstration.error"
+    ],
+    [
+      "x-show",
+      "guidedLocked"
+    ],
+    [
+      "x-show",
+      "guidedStatus.phase === 'complete'"
+    ],
+    [
+      "x-show",
+      "guidedStatus.phase === 'halted'"
+    ],
+    [
+      "x-show",
+      "guidedStatus.phase === 'ready'"
+    ],
+    [
+      "x-show",
+      "guidedStatus.phase === 'receiving'"
+    ],
+    [
+      "x-show",
+      "guidedStatus.reason"
+    ],
+    [
+      "x-show",
+      "hasGuidedSession && (workspaceView !== 'advanced' || guidedStatus.phase === 'halted')"
+    ],
+    [
+      "x-show",
+      "isTestComplete"
+    ],
+    [
+      "x-show",
+      "isTestComplete"
+    ],
+    [
+      "x-show",
+      "isTestComplete"
+    ],
+    [
+      "x-show",
+      "isTestComplete"
+    ],
+    [
+      "x-show",
+      "isTestComplete && analysis?.evidence"
+    ],
+    [
+      "x-show",
+      "isTestComplete && completedScanNote"
+    ],
+    [
+      "x-show",
+      "isTestComplete && metadataSummary"
+    ],
+    [
+      "x-show",
+      "isTestComplete && metadataSummary"
+    ],
+    [
+      "x-show",
+      "isTestComplete && metadataSummary?.status === 'unexpected'"
+    ],
+    [
+      "x-show",
+      "metadataDetails.length"
+    ],
+    [
+      "x-show",
+      "notice"
+    ],
+    [
+      "x-show",
+      "output.path"
+    ],
+    [
+      "x-show",
+      "outputReview.problem"
+    ],
+    [
+      "x-show",
+      "parseProblem && resultState === 'unverified'"
+    ],
+    [
+      "x-show",
+      "pasteOpen"
+    ],
+    [
+      "x-show",
+      "psbtQrAvailable"
+    ],
+    [
+      "x-show",
+      "psbtQrAvailable"
+    ],
+    [
+      "x-show",
+      "psbtVersion !== '0'"
+    ],
+    [
+      "x-show",
+      "qrProblem"
+    ],
+    [
+      "x-show",
+      "qrProblem"
+    ],
+    [
+      "x-show",
+      "recordedIncompleteCount"
+    ],
+    [
+      "x-show",
+      "recordedReviewCount"
+    ],
+    [
+      "x-show",
+      "recordedReviewCount || recordedIncompleteCount || sessionSummary.differed"
+    ],
+    [
+      "x-show",
+      "resultState !== 'unverified'"
+    ],
+    [
+      "x-show",
+      "resultState !== 'unverified'"
+    ],
+    [
+      "x-show",
+      "resultState === 'incomplete'"
+    ],
+    [
+      "x-show",
+      "resultState === 'match'"
+    ],
+    [
+      "x-show",
+      "resultState === 'mismatch'"
+    ],
+    [
+      "x-show",
+      "row.error || row.message || row.reason"
+    ],
+    [
+      "x-show",
+      "row.scenario"
+    ],
+    [
+      "x-show",
+      "row.transactionId"
+    ],
+    [
+      "x-show",
+      "scan.active"
+    ],
+    [
+      "x-show",
+      "scan.active"
+    ],
+    [
+      "x-show",
+      "scan.diagnostics?.rejectedFrames"
+    ],
+    [
+      "x-show",
+      "scan.error"
+    ],
+    [
+      "x-show",
+      "scan.error || scan.diagnostics?.rejectedFrames"
+    ],
+    [
+      "x-show",
+      "scan.format"
+    ],
+    [
+      "x-show",
+      "scenarioId === 'boundary'"
+    ],
+    [
+      "x-show",
+      "scenarioId === 'custom'"
+    ],
+    [
+      "x-show",
+      "seedQrVisible"
+    ],
+    [
+      "x-show",
+      "settingsOpen"
+    ],
+    [
+      "x-show",
+      "signingPolicy !== 'compatible'"
+    ],
+    [
+      "x-show",
+      "signingPolicy !== 'compatible' || psbtVersion !== '0' || scenarioId === 'custom'"
+    ],
+    [
+      "x-show",
+      "transactionReady && outputReview.ok"
+    ],
+    [
+      "x-show",
+      "transactionReady && outputReview.ok"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'advanced'"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'session'"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'test'"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'test' && (step === 1)"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'test' && (step === 2)"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'test' && (step === 3)"
+    ],
+    [
+      "x-show",
+      "workspaceView === 'test' && acknowledged"
+    ],
+    [
+      "x-text",
+      "' \u00b7 ' + field.change"
+    ],
+    [
+      "x-text",
+      "'CASE ' + guidedStatus.current + ' / ' + guidedStatus.requested"
+    ],
+    [
+      "x-text",
+      "'Input ' + (index + 1)"
+    ],
+    [
+      "x-text",
+      "'Output ' + (index + 1)"
+    ],
+    [
+      "x-text",
+      "'Output ' + (output.index + 1)"
+    ],
+    [
+      "x-text",
+      "'PSBT v' + psbtVersion"
+    ],
+    [
+      "x-text",
+      "'Signature Lab v' + releaseVersion"
+    ],
+    [
+      "x-text",
+      "'Technical key: ' + field.key"
+    ],
+    [
+      "x-text",
+      "'v' + (reviewSummary?.psbtVersion ?? '?')"
+    ],
+    [
+      "x-text",
+      "(analysis?.evidence?.signaturesVerified ?? 0) + ' of ' + inputs.length + ' valid'"
+    ],
+    [
+      "x-text",
+      "(guidedLocked ? guidedStatus.differed : sessionSummary.differed) + ' differed'"
+    ],
+    [
+      "x-text",
+      "(guidedLocked ? guidedStatus.matched : sessionSummary.matched) + ' matched'"
+    ],
+    [
+      "x-text",
+      "String(guidedLocked ? guidedStatus.completed : sessionSummary.checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[0].checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[1].checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[2].checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[3].checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[4].checked)"
+    ],
+    [
+      "x-text",
+      "String(scenarioCoverage[5].checked)"
+    ],
+    [
+      "x-text",
+      "buildProblem"
+    ],
+    [
+      "x-text",
+      "changeDisplay"
+    ],
+    [
+      "x-text",
+      "completedScanNote"
+    ],
+    [
+      "x-text",
+      "coveredScenarios + ' of 6 scenarios'"
+    ],
+    [
+      "x-text",
+      "demonstration.error"
+    ],
+    [
+      "x-text",
+      "feeAmountDisplay"
+    ],
+    [
+      "x-text",
+      "feeRateDisplay"
+    ],
+    [
+      "x-text",
+      "feeSatsDisplay"
+    ],
+    [
+      "x-text",
+      "field.reason"
+    ],
+    [
+      "x-text",
+      "formatReviewAmount(output.amountSats)"
+    ],
+    [
+      "x-text",
+      "guidedLocked && !guidedStatus.canAdvance ? 'Save this result and end the session above.' : 'Your next transaction uses the same test seed.'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'Guided physical session' : 'Same-seed checks'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'Next planned transaction' : 'New transaction'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'Next planned transaction' : 'Test another transaction'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'No conclusion has been reached. Preserve the evidence and end this session before another attempt.' : 'No conclusion has been reached. Check the imported data and try again.'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'Physical signing required. Counts are not a safety certificate.' : sessionSummary.differed ? 'Investigate differences. More matches do not cancel them.' : sessionSummary.checked >= sessionSummary.suggested ? 'Routine reached. This does not certify your firmware.' : '20 is a routine, not a safety threshold.'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? 'requested' : 'suggested'"
+    ],
+    [
+      "x-text",
+      "guidedLocked ? guidedStatus.requested : sessionSummary.suggested"
+    ],
+    [
+      "x-text",
+      "guidedPhaseLabel"
+    ],
+    [
+      "x-text",
+      "guidedStatus.completed"
+    ],
+    [
+      "x-text",
+      "guidedStatus.incomplete + guidedStatus.captureFailures"
+    ],
+    [
+      "x-text",
+      "guidedStatus.metadataWarnings"
+    ],
+    [
+      "x-text",
+      "guidedStatus.notCompleted"
+    ],
+    [
+      "x-text",
+      "guidedStatus.reason"
+    ],
+    [
+      "x-text",
+      "historyLabel(row)"
+    ],
+    [
+      "x-text",
+      "index + 1"
+    ],
+    [
+      "x-text",
+      "inputs.length"
+    ],
+    [
+      "x-text",
+      "isTestComplete ? 'Completed transaction details. Amounts are in sats.' : 'Edit or shuffle independently. Editor amounts are in sats. Every change needs a new signature.'"
+    ],
+    [
+      "x-text",
+      "isTestComplete ? 'Completed transaction.' : 'Review & sign.'"
+    ],
+    [
+      "x-text",
+      "metadataExplanation"
+    ],
+    [
+      "x-text",
+      "metadataFieldLabel(field)"
+    ],
+    [
+      "x-text",
+      "metadataSummary?.label"
+    ],
+    [
+      "x-text",
+      "metadataSummary?.status === 'unexpected' ? 'File changes need review' : 'Returned-file details'"
+    ],
+    [
+      "x-text",
+      "notice"
+    ],
+    [
+      "x-text",
+      "output.address"
+    ],
+    [
+      "x-text",
+      "output.path"
+    ],
+    [
+      "x-text",
+      "output.role"
+    ],
+    [
+      "x-text",
+      "outputReview.outputs.length === 1 ? 'Review output' : 'Review all ' + outputReview.outputs.length + ' outputs'"
+    ],
+    [
+      "x-text",
+      "outputReview.problem"
+    ],
+    [
+      "x-text",
+      "outputs.length"
+    ],
+    [
+      "x-text",
+      "parseProblem"
+    ],
+    [
+      "x-text",
+      "parseProblem || analysis?.error"
+    ],
+    [
+      "x-text",
+      "paymentsDisplay"
+    ],
+    [
+      "x-text",
+      "psbtQrCaption"
+    ],
+    [
+      "x-text",
+      "qrProblem"
+    ],
+    [
+      "x-text",
+      "qrProblem"
+    ],
+    [
+      "x-text",
+      "recordedIncompleteCount + ' incomplete'"
+    ],
+    [
+      "x-text",
+      "recordedReviewCount + ' file reviews'"
+    ],
+    [
+      "x-text",
+      "releaseSourceHash"
+    ],
+    [
+      "x-text",
+      "resultDisplayState === 'review' ? 'Signatures matched. File changes need review.' : 'Signatures matched'"
+    ],
+    [
+      "x-text",
+      "resultDisplayState === 'review' ? 'The signature check matched, but this result needs review before you continue.' : 'This transaction\u2019s signatures match a supported deterministic result.'"
+    ],
+    [
+      "x-text",
+      "resultState === 'match' ? 'Matched' : 'Different'"
+    ],
+    [
+      "x-text",
+      "resultState === 'unverified' ? 'Bring back the signature.' : 'Your signature check.'"
+    ],
+    [
+      "x-text",
+      "reviewSummary?.inputCount === 1 ? 'Input' : 'Inputs'"
+    ],
+    [
+      "x-text",
+      "reviewSummary?.inputCount ?? 0"
+    ],
+    [
+      "x-text",
+      "reviewSummary?.lockTime ?? '?' "
+    ],
+    [
+      "x-text",
+      "reviewSummary?.outputCount === 1 ? 'Output' : 'Outputs'"
+    ],
+    [
+      "x-text",
+      "reviewSummary?.outputCount ?? 0"
+    ],
+    [
+      "x-text",
+      "row.amount.value || '\u2014'"
+    ],
+    [
+      "x-text",
+      "row.amount.value || '\u2014'"
+    ],
+    [
+      "x-text",
+      "row.createdAt"
+    ],
+    [
+      "x-text",
+      "row.error || row.message || row.reason"
+    ],
+    [
+      "x-text",
+      "row.transactionId"
+    ],
+    [
+      "x-text",
+      "row.type === 'check' ? 'Test ' + String(row.test).padStart(3,'0') : 'Session event'"
+    ],
+    [
+      "x-text",
+      "scan.diagnostics?.frameNotice"
+    ],
+    [
+      "x-text",
+      "scan.error"
+    ],
+    [
+      "x-text",
+      "scan.format"
+    ],
+    [
+      "x-text",
+      "scan.phase === 'awaiting-permission' ? 'Waiting for camera permission. Startup expires after 30 seconds.' : scan.phase === 'awaiting-video' ? 'Starting camera video\u2026' : scan.phase === 'stalled' ? 'Video paused. Waiting up to 10 seconds before stopping.' : 'Keep scanning until all parts arrive.'"
+    ],
+    [
+      "x-text",
+      "scanPercent + '%'"
+    ],
+    [
+      "x-text",
+      "scenarioLabel"
+    ],
+    [
+      "x-text",
+      "scenarioName(row.scenario)"
+    ],
+    [
+      "x-text",
+      "seedQrExpanded ? 'Reduce QR' : 'Enlarge QR'"
+    ],
+    [
+      "x-text",
+      "sessionSummary.checked"
+    ],
+    [
+      "x-text",
+      "sessionSummary.differed + ' differed'"
+    ],
+    [
+      "x-text",
+      "signingPolicyLabel"
+    ],
+    [
+      "x-text",
+      "signingPolicyLabel"
+    ],
+    [
+      "x-text",
+      "testNumberDisplay"
+    ],
+    [
+      "x-text",
+      "testNumberDisplay"
+    ],
+    [
+      "x-text",
+      "testNumberDisplay"
+    ],
+    [
+      "x-text",
+      "totalInDisplay"
+    ],
+    [
+      "x-text",
+      "txidDisplay"
+    ],
+    [
+      "x-text",
+      "variant.label"
+    ],
+    [
+      "x-text",
+      "walletBalanceChangeDisplay"
+    ],
+    [
+      "x-text",
+      "walletFingerprint || 'Unavailable'"
+    ],
+    [
+      "x-text",
+      "walletFingerprint || 'Unavailable'"
+    ],
+    [
+      "x-text",
+      "walletFingerprint || 'Unavailable'"
+    ],
+    [
+      "x-text",
+      "word"
+    ],
+    [
+      "x-text",
+      "wordCount"
+    ]
+  ],
+  "canvases": [
+    [
+      [
+        "aria-label",
+        "SeedQR containing the disposable test seed"
+      ],
+      [
+        "height",
+        "840"
+      ],
+      [
+        "width",
+        "840"
+      ],
+      [
+        "x-ref",
+        "seedQrCanvas"
+      ]
+    ],
+    [
+      [
+        "aria-label",
+        "Animated QR containing the unsigned test PSBT"
+      ],
+      [
+        "height",
+        "280"
+      ],
+      [
+        "width",
+        "280"
+      ],
+      [
+        "x-ref",
+        "psbtQrCanvas"
+      ]
+    ]
+  ]
+}

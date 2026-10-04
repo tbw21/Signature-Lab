@@ -1,0 +1,27 @@
+[
+  {
+    "name": "12 words",
+    "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+    "fingerprint": "73C5DA0A"
+  },
+  {
+    "name": "24 words",
+    "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art",
+    "fingerprint": "5436D724"
+  },
+  {
+    "name": "12 words all ones",
+    "mnemonic": "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong",
+    "fingerprint": "3F635A63"
+  },
+  {
+    "name": "24 words all ones",
+    "mnemonic": "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo vote",
+    "fingerprint": "244C267A"
+  },
+  {
+    "name": "leading zero bytes",
+    "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon bean",
+    "fingerprint": "004AAF56"
+  }
+]

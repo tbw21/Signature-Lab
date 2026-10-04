@@ -1,0 +1,13 @@
+{
+  "recoveredFrom": "delivered zen-work/dev-2.html",
+  "sha256": "ca960324b9e38af5b6598a0201c3dea2cf6bcdb41a5bd42f06d2e9670ea61e0b",
+  "previousCalmSourceAndTests": "Not present in mounted attachments. Screenshots only; earlier development passes are not counted.",
+  "baseline": "v0.15.2-rc1 standalone source archive",
+  "changedUnits": [
+    "src/20-application.js",
+    "src/session-journal.js",
+    "src/page.html",
+    "src/style.css"
+  ],
+  "unchangedUnitsVerified": 25
+}

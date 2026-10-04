@@ -1,0 +1,5609 @@
+{
+  "baseline": "v0.13.0-rc2",
+  "sha256": "d3c1793100e2bdb8e1450104c32b1aff54be3bb6fe3917686b6b8a54278bddb7",
+  "method": "TypeScript AST top-level declaration separation and formatting, performed once. Future build uses only checked-in source files.",
+  "typescript": "5.8.3",
+  "parts": [
+    {
+      "file": "vendor/01-foundation.js",
+      "first": "e",
+      "last": "sa",
+      "originalRanges": [
+        {
+          "name": "e",
+          "start": 4,
+          "end": 19
+        },
+        {
+          "name": "t",
+          "start": 20,
+          "end": 43
+        },
+        {
+          "name": "n",
+          "start": 44,
+          "end": 77
+        },
+        {
+          "name": "r",
+          "start": 78,
+          "end": 106
+        },
+        {
+          "name": "i",
+          "start": 107,
+          "end": 130
+        },
+        {
+          "name": "a",
+          "start": 131,
+          "end": 164
+        },
+        {
+          "name": "o",
+          "start": 165,
+          "end": 248
+        },
+        {
+          "name": "s",
+          "start": 249,
+          "end": 315
+        },
+        {
+          "name": "c",
+          "start": 316,
+          "end": 435
+        },
+        {
+          "name": "l",
+          "start": 436,
+          "end": 647
+        },
+        {
+          "name": "u",
+          "start": 648,
+          "end": 770
+        },
+        {
+          "name": "d",
+          "start": 771,
+          "end": 857
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 858,
+          "end": 1528
+        },
+        {
+          "name": "f",
+          "start": 1532,
+          "end": 1536
+        },
+        {
+          "name": "p",
+          "start": 1537,
+          "end": 1541
+        },
+        {
+          "name": "m",
+          "start": 1542,
+          "end": 1546
+        },
+        {
+          "name": "h",
+          "start": 1547,
+          "end": 1551
+        },
+        {
+          "name": "g",
+          "start": 1552,
+          "end": 1556
+        },
+        {
+          "name": "_",
+          "start": 1557,
+          "end": 1576
+        },
+        {
+          "name": "v",
+          "start": 1576,
+          "end": 1594
+        },
+        {
+          "name": "y",
+          "start": 1594,
+          "end": 1616
+        },
+        {
+          "name": "b",
+          "start": 1616,
+          "end": 1659
+        },
+        {
+          "name": "x",
+          "start": 1659,
+          "end": 1719
+        },
+        {
+          "name": "S",
+          "start": 1719,
+          "end": 1779
+        },
+        {
+          "name": "C",
+          "start": 1779,
+          "end": 1861
+        },
+        {
+          "name": "w",
+          "start": 1865,
+          "end": 1866
+        },
+        {
+          "name": "T",
+          "start": 1867,
+          "end": 1868
+        },
+        {
+          "name": "E",
+          "start": 1869,
+          "end": 1870
+        },
+        {
+          "name": "D",
+          "start": 1871,
+          "end": 1872
+        },
+        {
+          "name": "O",
+          "start": 1873,
+          "end": 1877
+        },
+        {
+          "name": "k",
+          "start": 1878,
+          "end": 1906
+        },
+        {
+          "name": "A",
+          "start": 1906,
+          "end": 1998
+        },
+        {
+          "name": "j",
+          "start": 1998,
+          "end": 2016
+        },
+        {
+          "name": "M",
+          "start": 2016,
+          "end": 2244
+        },
+        {
+          "name": "N",
+          "start": 2244,
+          "end": 2448
+        },
+        {
+          "name": "ee",
+          "start": 2448,
+          "end": 2524
+        },
+        {
+          "name": "P",
+          "start": 2528,
+          "end": 2532
+        },
+        {
+          "name": "F",
+          "start": 2533,
+          "end": 2537
+        },
+        {
+          "name": "I",
+          "start": 2538,
+          "end": 2542
+        },
+        {
+          "name": "L",
+          "start": 2543,
+          "end": 2567
+        },
+        {
+          "name": "R",
+          "start": 2567,
+          "end": 2663
+        },
+        {
+          "name": "z",
+          "start": 2663,
+          "end": 2687
+        },
+        {
+          "name": "B",
+          "start": 2687,
+          "end": 2825
+        },
+        {
+          "name": "V",
+          "start": 2825,
+          "end": 3006
+        },
+        {
+          "name": "te",
+          "start": 3006,
+          "end": 3095
+        },
+        {
+          "name": "ne",
+          "start": 3099,
+          "end": 3126
+        },
+        {
+          "name": "re",
+          "start": 3127,
+          "end": 3132
+        },
+        {
+          "name": "ie",
+          "start": 3133,
+          "end": 3235
+        },
+        {
+          "name": "ae",
+          "start": 3235,
+          "end": 3275
+        },
+        {
+          "name": "oe",
+          "start": 3279,
+          "end": 3284
+        },
+        {
+          "name": "H",
+          "start": 3285,
+          "end": 3438
+        },
+        {
+          "name": "U",
+          "start": 3438,
+          "end": 3499
+        },
+        {
+          "name": "se",
+          "start": 3503,
+          "end": 3508
+        },
+        {
+          "name": "W",
+          "start": 3509,
+          "end": 3513
+        },
+        {
+          "name": "ce",
+          "start": 3514,
+          "end": 3534
+        },
+        {
+          "name": "le",
+          "start": 3534,
+          "end": 3565
+        },
+        {
+          "name": "ue",
+          "start": 3565,
+          "end": 4396
+        },
+        {
+          "name": "de",
+          "start": 4396,
+          "end": 4428
+        },
+        {
+          "name": "fe",
+          "start": 4428,
+          "end": 4538
+        },
+        {
+          "name": "pe",
+          "start": 4538,
+          "end": 4689
+        },
+        {
+          "name": "me",
+          "start": 4689,
+          "end": 4737
+        },
+        {
+          "name": "he",
+          "start": 4737,
+          "end": 4872
+        },
+        {
+          "name": "ge",
+          "start": 4876,
+          "end": 5361
+        },
+        {
+          "name": "_e",
+          "start": 5362,
+          "end": 5452
+        },
+        {
+          "name": "ve",
+          "start": 5452,
+          "end": 5844
+        },
+        {
+          "name": "ye",
+          "start": 5844,
+          "end": 6192
+        },
+        {
+          "name": "be",
+          "start": 6192,
+          "end": 6251
+        },
+        {
+          "name": "xe",
+          "start": 6251,
+          "end": 6462
+        },
+        {
+          "name": "Se",
+          "start": 6466,
+          "end": 6471
+        },
+        {
+          "name": "Ce",
+          "start": 6472,
+          "end": 6497
+        },
+        {
+          "name": "we",
+          "start": 6497,
+          "end": 6644
+        },
+        {
+          "name": "Te",
+          "start": 6644,
+          "end": 6714
+        },
+        {
+          "name": "Ee",
+          "start": 6714,
+          "end": 6777
+        },
+        {
+          "name": "De",
+          "start": 6777,
+          "end": 6811
+        },
+        {
+          "name": "Oe",
+          "start": 6815,
+          "end": 6820
+        },
+        {
+          "name": "ke",
+          "start": 6821,
+          "end": 6841
+        },
+        {
+          "name": "Ae",
+          "start": 6841,
+          "end": 7060
+        },
+        {
+          "name": "je",
+          "start": 7064,
+          "end": 7069
+        },
+        {
+          "name": "Me",
+          "start": 7070,
+          "end": 7124
+        },
+        {
+          "name": "Ne",
+          "start": 7124,
+          "end": 7179
+        },
+        {
+          "name": "Pe",
+          "start": 7179,
+          "end": 7213
+        },
+        {
+          "name": "Fe",
+          "start": 7217,
+          "end": 7226
+        },
+        {
+          "name": "Ie",
+          "start": 7227,
+          "end": 7247
+        },
+        {
+          "name": "Le",
+          "start": 7251,
+          "end": 7253
+        },
+        {
+          "name": "Re",
+          "start": 7254,
+          "end": 7274
+        },
+        {
+          "name": "ze",
+          "start": 7274,
+          "end": 7395
+        },
+        {
+          "name": "Be",
+          "start": 7395,
+          "end": 7538
+        },
+        {
+          "name": "Ve",
+          "start": 7542,
+          "end": 7547
+        },
+        {
+          "name": "He",
+          "start": 7548,
+          "end": 8006
+        },
+        {
+          "name": "Ue",
+          "start": 8006,
+          "end": 8338
+        },
+        {
+          "name": "We",
+          "start": 8338,
+          "end": 8545
+        },
+        {
+          "name": "Ge",
+          "start": 8545,
+          "end": 8579
+        },
+        {
+          "name": "Ke",
+          "start": 8579,
+          "end": 9193
+        },
+        {
+          "name": "qe",
+          "start": 9197,
+          "end": 9204
+        },
+        {
+          "name": "Je",
+          "start": 9205,
+          "end": 9235
+        },
+        {
+          "name": "Ye",
+          "start": 9235,
+          "end": 9255
+        },
+        {
+          "name": "Xe",
+          "start": 9259,
+          "end": 9264
+        },
+        {
+          "name": "Ze",
+          "start": 9265,
+          "end": 9499
+        },
+        {
+          "name": "Qe",
+          "start": 9499,
+          "end": 9549
+        },
+        {
+          "name": "$e",
+          "start": 9549,
+          "end": 9889
+        },
+        {
+          "name": "et",
+          "start": 9889,
+          "end": 9953
+        },
+        {
+          "name": "tt",
+          "start": 9957,
+          "end": 9962
+        },
+        {
+          "name": "nt",
+          "start": 9963,
+          "end": 9973
+        },
+        {
+          "name": "rt",
+          "start": 9974,
+          "end": 9985
+        },
+        {
+          "name": "it",
+          "start": 9986,
+          "end": 10123
+        },
+        {
+          "name": "at",
+          "start": 10123,
+          "end": 10296
+        },
+        {
+          "name": "ot",
+          "start": 10296,
+          "end": 10509
+        },
+        {
+          "name": "st",
+          "start": 10513,
+          "end": 10597
+        },
+        {
+          "name": "ct",
+          "start": 10598,
+          "end": 10605
+        },
+        {
+          "name": "lt",
+          "start": 10606,
+          "end": 10754
+        },
+        {
+          "name": "ut",
+          "start": 10758,
+          "end": 10763
+        },
+        {
+          "name": "dt",
+          "start": 10764,
+          "end": 10790
+        },
+        {
+          "name": "ft",
+          "start": 10790,
+          "end": 10832
+        },
+        {
+          "name": "pt",
+          "start": 10836,
+          "end": 10871
+        },
+        {
+          "name": "mt",
+          "start": 10872,
+          "end": 11141
+        },
+        {
+          "name": "ht",
+          "start": 11145,
+          "end": 11157
+        },
+        {
+          "name": "gt",
+          "start": 11158,
+          "end": 11277
+        },
+        {
+          "name": "_t",
+          "start": 11278,
+          "end": 11406
+        },
+        {
+          "name": "vt",
+          "start": 11406,
+          "end": 11529
+        },
+        {
+          "name": "yt",
+          "start": 11529,
+          "end": 11758
+        },
+        {
+          "name": "bt",
+          "start": 11758,
+          "end": 11820
+        },
+        {
+          "name": "xt",
+          "start": 11824,
+          "end": 11829
+        },
+        {
+          "name": "St",
+          "start": 11830,
+          "end": 12417
+        },
+        {
+          "name": "Ct",
+          "start": 12421,
+          "end": 12426
+        },
+        {
+          "name": "wt",
+          "start": 12427,
+          "end": 12432
+        },
+        {
+          "name": "Tt",
+          "start": 12433,
+          "end": 12469
+        },
+        {
+          "name": "Et",
+          "start": 12469,
+          "end": 12516
+        },
+        {
+          "name": "Dt",
+          "start": 12516,
+          "end": 12542
+        },
+        {
+          "name": "Ot",
+          "start": 12542,
+          "end": 12568
+        },
+        {
+          "name": "kt",
+          "start": 12568,
+          "end": 12654
+        },
+        {
+          "name": "At",
+          "start": 12654,
+          "end": 12864
+        },
+        {
+          "name": "jt",
+          "start": 12864,
+          "end": 12913
+        },
+        {
+          "name": "Mt",
+          "start": 12917,
+          "end": 12922
+        },
+        {
+          "name": "Nt",
+          "start": 12923,
+          "end": 12949
+        },
+        {
+          "name": "Pt",
+          "start": 12953,
+          "end": 12957
+        },
+        {
+          "name": "Ft",
+          "start": 12958,
+          "end": 13161
+        },
+        {
+          "name": "It",
+          "start": 13161,
+          "end": 13221
+        },
+        {
+          "name": "Lt",
+          "start": 13221,
+          "end": 13470
+        },
+        {
+          "name": "Rt",
+          "start": 13474,
+          "end": 13479
+        },
+        {
+          "name": "zt",
+          "start": 13480,
+          "end": 13485
+        },
+        {
+          "name": "Bt",
+          "start": 13486,
+          "end": 13605
+        },
+        {
+          "name": "Vt",
+          "start": 13605,
+          "end": 13653
+        },
+        {
+          "name": "Ht",
+          "start": 13653,
+          "end": 13673
+        },
+        {
+          "name": "Ut",
+          "start": 13673,
+          "end": 13801
+        },
+        {
+          "name": "Wt",
+          "start": 13801,
+          "end": 13853
+        },
+        {
+          "name": "Gt",
+          "start": 13853,
+          "end": 14024
+        },
+        {
+          "name": "Kt",
+          "start": 14024,
+          "end": 14413
+        },
+        {
+          "name": "qt",
+          "start": 14413,
+          "end": 14475
+        },
+        {
+          "name": "Jt",
+          "start": 14475,
+          "end": 14696
+        },
+        {
+          "name": "Yt",
+          "start": 14696,
+          "end": 14814
+        },
+        {
+          "name": "Xt",
+          "start": 14814,
+          "end": 14887
+        },
+        {
+          "name": "Zt",
+          "start": 14887,
+          "end": 14996
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 14996,
+          "end": 15153
+        },
+        {
+          "name": "Qt",
+          "start": 15153,
+          "end": 15464
+        },
+        {
+          "name": "$t",
+          "start": 15464,
+          "end": 16603
+        },
+        {
+          "name": "en",
+          "start": 16603,
+          "end": 16916
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 16916,
+          "end": 17921
+        },
+        {
+          "name": "tn",
+          "start": 17921,
+          "end": 17992
+        },
+        {
+          "name": "nn",
+          "start": 17992,
+          "end": 18313
+        },
+        {
+          "name": "rn",
+          "start": 18313,
+          "end": 19096
+        },
+        {
+          "name": "an",
+          "start": 19096,
+          "end": 19408
+        },
+        {
+          "name": "on",
+          "start": 19412,
+          "end": 19417
+        },
+        {
+          "name": "sn",
+          "start": 19418,
+          "end": 19475
+        },
+        {
+          "name": "cn",
+          "start": 19475,
+          "end": 19516
+        },
+        {
+          "name": "ln",
+          "start": 19520,
+          "end": 19525
+        },
+        {
+          "name": "un",
+          "start": 19526,
+          "end": 19552
+        },
+        {
+          "name": "dn",
+          "start": 19552,
+          "end": 19640
+        },
+        {
+          "name": "fn",
+          "start": 19644,
+          "end": 19649
+        },
+        {
+          "name": "pn",
+          "start": 19650,
+          "end": 19739
+        },
+        {
+          "name": "mn",
+          "start": 19739,
+          "end": 19828
+        },
+        {
+          "name": "hn",
+          "start": 19828,
+          "end": 19902
+        },
+        {
+          "name": "gn",
+          "start": 19902,
+          "end": 20149
+        },
+        {
+          "name": "_n",
+          "start": 20149,
+          "end": 20490
+        },
+        {
+          "name": "vn",
+          "start": 20490,
+          "end": 20584
+        },
+        {
+          "name": "yn",
+          "start": 20584,
+          "end": 20675
+        },
+        {
+          "name": "bn",
+          "start": 20675,
+          "end": 20714
+        },
+        {
+          "name": "xn",
+          "start": 20714,
+          "end": 20815
+        },
+        {
+          "name": "Sn",
+          "start": 20815,
+          "end": 20876
+        },
+        {
+          "name": "Cn",
+          "start": 20876,
+          "end": 20914
+        },
+        {
+          "name": "wn",
+          "start": 20914,
+          "end": 21030
+        },
+        {
+          "name": "Tn",
+          "start": 21030,
+          "end": 21109
+        },
+        {
+          "name": "En",
+          "start": 21109,
+          "end": 21138
+        },
+        {
+          "name": "Dn",
+          "start": 21138,
+          "end": 21259
+        },
+        {
+          "name": "On",
+          "start": 21263,
+          "end": 21565
+        },
+        {
+          "name": "kn",
+          "start": 21566,
+          "end": 21598
+        },
+        {
+          "name": "An",
+          "start": 21598,
+          "end": 21696
+        },
+        {
+          "name": "jn",
+          "start": 21696,
+          "end": 21790
+        },
+        {
+          "name": "Mn",
+          "start": 21790,
+          "end": 22031
+        },
+        {
+          "name": "Nn",
+          "start": 22031,
+          "end": 22160
+        },
+        {
+          "name": "Pn",
+          "start": 22160,
+          "end": 22258
+        },
+        {
+          "name": "Fn",
+          "start": 22258,
+          "end": 22323
+        },
+        {
+          "name": "In",
+          "start": 22323,
+          "end": 22452
+        },
+        {
+          "name": "Ln",
+          "start": 22452,
+          "end": 22563
+        },
+        {
+          "name": "Rn",
+          "start": 22563,
+          "end": 22800
+        },
+        {
+          "name": "zn",
+          "start": 22800,
+          "end": 22873
+        },
+        {
+          "name": "Bn",
+          "start": 22873,
+          "end": 22931
+        },
+        {
+          "name": "Vn",
+          "start": 22935,
+          "end": 22940
+        },
+        {
+          "name": "Hn",
+          "start": 22941,
+          "end": 22946
+        },
+        {
+          "name": "Un",
+          "start": 22947,
+          "end": 23117
+        },
+        {
+          "name": "Wn",
+          "start": 23117,
+          "end": 23141
+        },
+        {
+          "name": "Gn",
+          "start": 23145,
+          "end": 23150
+        },
+        {
+          "name": "Kn",
+          "start": 23151,
+          "end": 23258
+        },
+        {
+          "name": "qn",
+          "start": 23258,
+          "end": 23379
+        },
+        {
+          "name": "Jn",
+          "start": 23379,
+          "end": 23669
+        },
+        {
+          "name": "Yn",
+          "start": 23673,
+          "end": 23678
+        },
+        {
+          "name": "Xn",
+          "start": 23679,
+          "end": 23704
+        },
+        {
+          "name": "Zn",
+          "start": 23704,
+          "end": 23849
+        },
+        {
+          "name": "Qn",
+          "start": 23853,
+          "end": 24867
+        },
+        {
+          "name": "$n",
+          "start": 24868,
+          "end": 25007
+        },
+        {
+          "name": "er",
+          "start": 25011,
+          "end": 25031
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 25032,
+          "end": 25050
+        },
+        {
+          "name": "tr",
+          "start": 25054,
+          "end": 25088
+        },
+        {
+          "name": "nr",
+          "start": 25089,
+          "end": 25111
+        },
+        {
+          "name": "rr",
+          "start": 25112,
+          "end": 25128
+        },
+        {
+          "name": "ir",
+          "start": 25129,
+          "end": 25157
+        },
+        {
+          "name": "ar",
+          "start": 25158,
+          "end": 25182
+        },
+        {
+          "name": "or",
+          "start": 25183,
+          "end": 25207
+        },
+        {
+          "name": "sr",
+          "start": 25208,
+          "end": 25237
+        },
+        {
+          "name": "cr",
+          "start": 25238,
+          "end": 25266
+        },
+        {
+          "name": "lr",
+          "start": 25267,
+          "end": 25283
+        },
+        {
+          "name": "ur",
+          "start": 25284,
+          "end": 25307
+        },
+        {
+          "name": "dr",
+          "start": 25308,
+          "end": 25365
+        },
+        {
+          "name": "fr",
+          "start": 25366,
+          "end": 25470
+        },
+        {
+          "name": "pr",
+          "start": 25471,
+          "end": 25502
+        },
+        {
+          "name": "mr",
+          "start": 25503,
+          "end": 25517
+        },
+        {
+          "name": "hr",
+          "start": 25518,
+          "end": 25523
+        },
+        {
+          "name": "gr",
+          "start": 25524,
+          "end": 25526
+        },
+        {
+          "name": "_r",
+          "start": 25527,
+          "end": 25547
+        },
+        {
+          "name": "vr",
+          "start": 25548,
+          "end": 25576
+        },
+        {
+          "name": "yr",
+          "start": 25577,
+          "end": 25619
+        },
+        {
+          "name": "br",
+          "start": 25619,
+          "end": 25691
+        },
+        {
+          "name": "xr",
+          "start": 25691,
+          "end": 25765
+        },
+        {
+          "name": "Sr",
+          "start": 25769,
+          "end": 25773
+        },
+        {
+          "name": "Cr",
+          "start": 25774,
+          "end": 26046
+        },
+        {
+          "name": "wr",
+          "start": 26046,
+          "end": 26142
+        },
+        {
+          "name": "Tr",
+          "start": 26146,
+          "end": 26151
+        },
+        {
+          "name": "Er",
+          "start": 26152,
+          "end": 26157
+        },
+        {
+          "name": "Dr",
+          "start": 26158,
+          "end": 26190
+        },
+        {
+          "name": "Or",
+          "start": 26190,
+          "end": 26222
+        },
+        {
+          "name": "kr",
+          "start": 26222,
+          "end": 26268
+        },
+        {
+          "name": "Ar",
+          "start": 26268,
+          "end": 26503
+        },
+        {
+          "name": "jr",
+          "start": 26503,
+          "end": 27120
+        },
+        {
+          "name": "Mr",
+          "start": 27124,
+          "end": 27160
+        },
+        {
+          "name": "Nr",
+          "start": 27161,
+          "end": 27236
+        },
+        {
+          "name": "Pr",
+          "start": 27237,
+          "end": 27244
+        },
+        {
+          "name": "Fr",
+          "start": 27245,
+          "end": 27254
+        },
+        {
+          "name": "Ir",
+          "start": 27255,
+          "end": 27262
+        },
+        {
+          "name": "Lr",
+          "start": 27263,
+          "end": 27617
+        },
+        {
+          "name": "Rr",
+          "start": 27617,
+          "end": 27974
+        },
+        {
+          "name": "zr",
+          "start": 27978,
+          "end": 27985
+        },
+        {
+          "name": "Br",
+          "start": 27986,
+          "end": 28241
+        },
+        {
+          "name": "Vr",
+          "start": 28241,
+          "end": 28350
+        },
+        {
+          "name": "Hr",
+          "start": 28350,
+          "end": 28434
+        },
+        {
+          "name": "Ur",
+          "start": 28434,
+          "end": 28509
+        },
+        {
+          "name": "Wr",
+          "start": 28513,
+          "end": 28567
+        },
+        {
+          "name": "Gr",
+          "start": 28568,
+          "end": 28797
+        },
+        {
+          "name": "Kr",
+          "start": 28798,
+          "end": 28817
+        },
+        {
+          "name": "qr",
+          "start": 28818,
+          "end": 28837
+        },
+        {
+          "name": "Jr",
+          "start": 28838,
+          "end": 28845
+        },
+        {
+          "name": "Yr",
+          "start": 28846,
+          "end": 28877
+        },
+        {
+          "name": "Xr",
+          "start": 28878,
+          "end": 29094
+        },
+        {
+          "name": "Zr",
+          "start": 29094,
+          "end": 29231
+        },
+        {
+          "name": "Qr",
+          "start": 29231,
+          "end": 29320
+        },
+        {
+          "name": "$r",
+          "start": 29320,
+          "end": 29416
+        },
+        {
+          "name": "ei",
+          "start": 29416,
+          "end": 29609
+        },
+        {
+          "name": "ti",
+          "start": 29609,
+          "end": 29786
+        },
+        {
+          "name": "ni",
+          "start": 29786,
+          "end": 29911
+        },
+        {
+          "name": "ri",
+          "start": 29911,
+          "end": 30064
+        },
+        {
+          "name": "ii",
+          "start": 30064,
+          "end": 30396
+        },
+        {
+          "name": "ai",
+          "start": 30396,
+          "end": 30570
+        },
+        {
+          "name": "oi",
+          "start": 30570,
+          "end": 31335
+        },
+        {
+          "name": "[si,ci,li,ui]",
+          "start": 31338,
+          "end": 31356
+        },
+        {
+          "name": "di",
+          "start": 31357,
+          "end": 31513
+        },
+        {
+          "name": "fi",
+          "start": 31517,
+          "end": 31535
+        },
+        {
+          "name": "pi",
+          "start": 31536,
+          "end": 31554
+        },
+        {
+          "name": "mi",
+          "start": 31555,
+          "end": 31896
+        },
+        {
+          "name": "hi",
+          "start": 31900,
+          "end": 31914
+        },
+        {
+          "name": "gi",
+          "start": 31915,
+          "end": 31929
+        },
+        {
+          "name": "_i",
+          "start": 31930,
+          "end": 31944
+        },
+        {
+          "name": "vi",
+          "start": 31945,
+          "end": 31959
+        },
+        {
+          "name": "yi",
+          "start": 31960,
+          "end": 32094
+        },
+        {
+          "name": "bi",
+          "start": 32094,
+          "end": 32164
+        },
+        {
+          "name": "xi",
+          "start": 32164,
+          "end": 32226
+        },
+        {
+          "name": "Si",
+          "start": 32226,
+          "end": 32266
+        },
+        {
+          "name": "Ci",
+          "start": 32266,
+          "end": 32522
+        },
+        {
+          "name": "G",
+          "start": 32522,
+          "end": 32562
+        },
+        {
+          "name": "wi",
+          "start": 32562,
+          "end": 32607
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 32607,
+          "end": 32880
+        },
+        {
+          "name": "Ti",
+          "start": 32880,
+          "end": 32953
+        },
+        {
+          "name": "Ei",
+          "start": 32957,
+          "end": 32962
+        },
+        {
+          "name": "Di",
+          "start": 32963,
+          "end": 33010
+        },
+        {
+          "name": "Oi",
+          "start": 33010,
+          "end": 33079
+        },
+        {
+          "name": "ki",
+          "start": 33079,
+          "end": 33143
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 33143,
+          "end": 33331
+        },
+        {
+          "name": "Ai",
+          "start": 33331,
+          "end": 33456
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 33456,
+          "end": 33532
+        },
+        {
+          "name": "ji",
+          "start": 33532,
+          "end": 33673
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 33673,
+          "end": 34850
+        },
+        {
+          "name": "Mi",
+          "start": 34854,
+          "end": 34886
+        },
+        {
+          "name": "Ni",
+          "start": 34887,
+          "end": 35021
+        },
+        {
+          "name": "Pi",
+          "start": 35025,
+          "end": 35034
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 35035,
+          "end": 35278
+        },
+        {
+          "name": "Fi",
+          "start": 35278,
+          "end": 36265
+        },
+        {
+          "name": "Ii",
+          "start": 36265,
+          "end": 36567
+        },
+        {
+          "name": "Li",
+          "start": 36567,
+          "end": 36609
+        },
+        {
+          "name": "Ri",
+          "start": 36609,
+          "end": 36688
+        },
+        {
+          "name": "zi",
+          "start": 36688,
+          "end": 36738
+        },
+        {
+          "name": "Bi",
+          "start": 36738,
+          "end": 36855
+        },
+        {
+          "name": "Vi",
+          "start": 36855,
+          "end": 36908
+        },
+        {
+          "name": "Hi",
+          "start": 36908,
+          "end": 36984
+        },
+        {
+          "name": "Ui",
+          "start": 36984,
+          "end": 37709
+        },
+        {
+          "name": "Wi",
+          "start": 37709,
+          "end": 38026
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 38026,
+          "end": 39935
+        },
+        {
+          "name": "Gi",
+          "start": 39935,
+          "end": 40777
+        },
+        {
+          "name": "Ki",
+          "start": 40777,
+          "end": 40836
+        },
+        {
+          "name": "qi",
+          "start": 40836,
+          "end": 40865
+        },
+        {
+          "name": "Ji",
+          "start": 40865,
+          "end": 40915
+        },
+        {
+          "name": "Yi",
+          "start": 40915,
+          "end": 41013
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 41013,
+          "end": 41517
+        },
+        {
+          "name": "Xi",
+          "start": 41521,
+          "end": 41977
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 41978,
+          "end": 42123
+        },
+        {
+          "name": "Zi",
+          "start": 42123,
+          "end": 42161
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 42161,
+          "end": 42555
+        },
+        {
+          "name": "Qi",
+          "start": 42555,
+          "end": 42629
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 42629,
+          "end": 43500
+        },
+        {
+          "name": "$i",
+          "start": 43500,
+          "end": 43572
+        },
+        {
+          "name": "ea",
+          "start": 43572,
+          "end": 44675
+        },
+        {
+          "name": "ta",
+          "start": 44675,
+          "end": 44988
+        },
+        {
+          "name": "na",
+          "start": 44988,
+          "end": 45387
+        },
+        {
+          "name": "ra",
+          "start": 45387,
+          "end": 45439
+        },
+        {
+          "name": "ia",
+          "start": 45439,
+          "end": 45499
+        },
+        {
+          "name": "aa",
+          "start": 45499,
+          "end": 45514
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 45514,
+          "end": 46709
+        },
+        {
+          "name": "oa",
+          "start": 46709,
+          "end": 46851
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 46851,
+          "end": 46959
+        },
+        {
+          "name": "sa",
+          "start": 46963,
+          "end": 46968
+        }
+      ],
+      "originalTokensSha256": "a3bcdbe07db27e305e6aac912a9c86d6bab9b5ff2e43b3d9a3045e8aaa905022"
+    },
+    {
+      "file": "src/02-layout.js",
+      "first": "ca",
+      "last": "ua",
+      "originalRanges": [
+        {
+          "name": "ca",
+          "start": 46969,
+          "end": 46983
+        },
+        {
+          "name": "la",
+          "start": 46984,
+          "end": 47023
+        },
+        {
+          "name": "ua",
+          "start": 47023,
+          "end": 48206
+        }
+      ],
+      "originalTokensSha256": "f622dd3339d0485833c9f366207e0ee03d6a1f1a926a9ccc3f96f98b953f28a7"
+    },
+    {
+      "file": "vendor/03-bitcoin-primitives.js",
+      "first": "da",
+      "last": "ap",
+      "originalRanges": [
+        {
+          "name": "da",
+          "start": 48206,
+          "end": 48360
+        },
+        {
+          "name": "fa",
+          "start": 48360,
+          "end": 48424
+        },
+        {
+          "name": "pa",
+          "start": 48424,
+          "end": 48553
+        },
+        {
+          "name": "ma",
+          "start": 48553,
+          "end": 48638
+        },
+        {
+          "name": "ha",
+          "start": 48638,
+          "end": 48727
+        },
+        {
+          "name": "ga",
+          "start": 48727,
+          "end": 48886
+        },
+        {
+          "name": "_a",
+          "start": 48886,
+          "end": 48956
+        },
+        {
+          "name": "va",
+          "start": 48956,
+          "end": 49037
+        },
+        {
+          "name": "ya",
+          "start": 49037,
+          "end": 49118
+        },
+        {
+          "name": "ba",
+          "start": 49118,
+          "end": 49256
+        },
+        {
+          "name": "xa",
+          "start": 49256,
+          "end": 49690
+        },
+        {
+          "name": "Sa",
+          "start": 49690,
+          "end": 49815
+        },
+        {
+          "name": "Ca",
+          "start": 49815,
+          "end": 50192
+        },
+        {
+          "name": "wa",
+          "start": 50192,
+          "end": 50249
+        },
+        {
+          "name": "Ta",
+          "start": 50249,
+          "end": 50978
+        },
+        {
+          "name": "Ea",
+          "start": 50982,
+          "end": 51009
+        },
+        {
+          "name": "Da",
+          "start": 51010,
+          "end": 51033
+        },
+        {
+          "name": "Oa",
+          "start": 51034,
+          "end": 51098
+        },
+        {
+          "name": "ka",
+          "start": 51099,
+          "end": 51800
+        },
+        {
+          "name": "Aa",
+          "start": 51800,
+          "end": 52004
+        },
+        {
+          "name": "ja",
+          "start": 52004,
+          "end": 52352
+        },
+        {
+          "name": "Ma",
+          "start": 52352,
+          "end": 52431
+        },
+        {
+          "name": "Na",
+          "start": 52431,
+          "end": 52926
+        },
+        {
+          "name": "Pa",
+          "start": 52930,
+          "end": 53053
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 53054,
+          "end": 53448
+        },
+        {
+          "name": "Fa",
+          "start": 53452,
+          "end": 53544
+        },
+        {
+          "name": "Ia",
+          "start": 53545,
+          "end": 53561
+        },
+        {
+          "name": "La",
+          "start": 53562,
+          "end": 53745
+        },
+        {
+          "name": "Ra",
+          "start": 53746,
+          "end": 53926
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 53927,
+          "end": 54201
+        },
+        {
+          "name": "za",
+          "start": 54205,
+          "end": 54313
+        },
+        {
+          "name": "Ba",
+          "start": 54314,
+          "end": 54366
+        },
+        {
+          "name": "Va",
+          "start": 54367,
+          "end": 54372
+        },
+        {
+          "name": "Ha",
+          "start": 54373,
+          "end": 54425
+        },
+        {
+          "name": "Ua",
+          "start": 54426,
+          "end": 54481
+        },
+        {
+          "name": "Wa",
+          "start": 54482,
+          "end": 54588
+        },
+        {
+          "name": "Ga",
+          "start": 54588,
+          "end": 54890
+        },
+        {
+          "name": "Ka",
+          "start": 54890,
+          "end": 56152
+        },
+        {
+          "name": "qa",
+          "start": 56156,
+          "end": 56186
+        },
+        {
+          "name": "Ja",
+          "start": 56187,
+          "end": 56218
+        },
+        {
+          "name": "Ya",
+          "start": 56219,
+          "end": 56327
+        },
+        {
+          "name": "Xa",
+          "start": 56328,
+          "end": 57603
+        },
+        {
+          "name": "Za",
+          "start": 57604,
+          "end": 57979
+        },
+        {
+          "name": "Qa",
+          "start": 57980,
+          "end": 58066
+        },
+        {
+          "name": "K",
+          "start": 58067,
+          "end": 58371
+        },
+        {
+          "name": "$a",
+          "start": 58372,
+          "end": 58526
+        },
+        {
+          "name": "eo",
+          "start": 58526,
+          "end": 58754
+        },
+        {
+          "name": "to",
+          "start": 58754,
+          "end": 58994
+        },
+        {
+          "name": "no",
+          "start": 58994,
+          "end": 59264
+        },
+        {
+          "name": "ro",
+          "start": 59264,
+          "end": 59417
+        },
+        {
+          "name": "io",
+          "start": 59417,
+          "end": 59573
+        },
+        {
+          "name": "ao",
+          "start": 59573,
+          "end": 59631
+        },
+        {
+          "name": "oo",
+          "start": 59631,
+          "end": 59702
+        },
+        {
+          "name": "so",
+          "start": 59702,
+          "end": 59740
+        },
+        {
+          "name": "co",
+          "start": 59740,
+          "end": 59782
+        },
+        {
+          "name": "lo",
+          "start": 59786,
+          "end": 59872
+        },
+        {
+          "name": "uo",
+          "start": 59873,
+          "end": 59938
+        },
+        {
+          "name": "fo",
+          "start": 59939,
+          "end": 60040
+        },
+        {
+          "name": "po",
+          "start": 60044,
+          "end": 60081
+        },
+        {
+          "name": "mo",
+          "start": 60082,
+          "end": 60212
+        },
+        {
+          "name": "ho",
+          "start": 60212,
+          "end": 60758
+        },
+        {
+          "name": "go",
+          "start": 60758,
+          "end": 60881
+        },
+        {
+          "name": "_o",
+          "start": 60881,
+          "end": 60948
+        },
+        {
+          "name": "vo",
+          "start": 60948,
+          "end": 61130
+        },
+        {
+          "name": "yo",
+          "start": 61130,
+          "end": 61283
+        },
+        {
+          "name": "bo",
+          "start": 61283,
+          "end": 61476
+        },
+        {
+          "name": "xo",
+          "start": 61476,
+          "end": 61783
+        },
+        {
+          "name": "So",
+          "start": 61787,
+          "end": 61847
+        },
+        {
+          "name": "Co",
+          "start": 61848,
+          "end": 61883
+        },
+        {
+          "name": "wo",
+          "start": 61883,
+          "end": 61921
+        },
+        {
+          "name": "To",
+          "start": 61925,
+          "end": 63349
+        },
+        {
+          "name": "Eo",
+          "start": 63350,
+          "end": 63459
+        },
+        {
+          "name": "Do",
+          "start": 63460,
+          "end": 63655
+        },
+        {
+          "name": "Oo",
+          "start": 63656,
+          "end": 63674
+        },
+        {
+          "name": "ko",
+          "start": 63675,
+          "end": 63688
+        },
+        {
+          "name": "Ao",
+          "start": 63689,
+          "end": 63794
+        },
+        {
+          "name": "jo",
+          "start": 63794,
+          "end": 63946
+        },
+        {
+          "name": "Mo",
+          "start": 63950,
+          "end": 63967
+        },
+        {
+          "name": "No",
+          "start": 63968,
+          "end": 63993
+        },
+        {
+          "name": "Po",
+          "start": 63994,
+          "end": 64019
+        },
+        {
+          "name": "Fo",
+          "start": 64020,
+          "end": 64045
+        },
+        {
+          "name": "Io",
+          "start": 64046,
+          "end": 64074
+        },
+        {
+          "name": "Lo",
+          "start": 64075,
+          "end": 64103
+        },
+        {
+          "name": "Ro",
+          "start": 64104,
+          "end": 64181
+        },
+        {
+          "name": "zo",
+          "start": 64185,
+          "end": 64220
+        },
+        {
+          "name": "Bo",
+          "start": 64221,
+          "end": 64254
+        },
+        {
+          "name": "Vo",
+          "start": 64255,
+          "end": 64300
+        },
+        {
+          "name": "Ho",
+          "start": 64301,
+          "end": 64338
+        },
+        {
+          "name": "Uo",
+          "start": 64339,
+          "end": 64394
+        },
+        {
+          "name": "Wo",
+          "start": 64395,
+          "end": 64436
+        },
+        {
+          "name": "Go",
+          "start": 64437,
+          "end": 65147
+        },
+        {
+          "name": "Ko",
+          "start": 65148,
+          "end": 65170
+        },
+        {
+          "name": "qo",
+          "start": 65171,
+          "end": 66025
+        },
+        {
+          "name": "Jo",
+          "start": 66026,
+          "end": 66151
+        },
+        {
+          "name": "Yo",
+          "start": 66152,
+          "end": 67709
+        },
+        {
+          "name": "Xo",
+          "start": 67710,
+          "end": 67718
+        },
+        {
+          "name": "Zo",
+          "start": 67719,
+          "end": 67727
+        },
+        {
+          "name": "Qo",
+          "start": 67728,
+          "end": 67750
+        },
+        {
+          "name": "$o",
+          "start": 67751,
+          "end": 67773
+        },
+        {
+          "name": "es",
+          "start": 67774,
+          "end": 69546
+        },
+        {
+          "name": "ts",
+          "start": 69547,
+          "end": 69774
+        },
+        {
+          "name": "ns",
+          "start": 69775,
+          "end": 69798
+        },
+        {
+          "name": "rs",
+          "start": 69799,
+          "end": 69822
+        },
+        {
+          "name": "q",
+          "start": 69823,
+          "end": 69843
+        },
+        {
+          "name": "is",
+          "start": 69844,
+          "end": 69849
+        },
+        {
+          "name": "as",
+          "start": 69850,
+          "end": 69855
+        },
+        {
+          "name": "os",
+          "start": 69856,
+          "end": 69875
+        },
+        {
+          "name": "ss",
+          "start": 69876,
+          "end": 69887
+        },
+        {
+          "name": "cs",
+          "start": 69888,
+          "end": 69893
+        },
+        {
+          "name": "ls",
+          "start": 69894,
+          "end": 69905
+        },
+        {
+          "name": "us",
+          "start": 69906,
+          "end": 69918
+        },
+        {
+          "name": "ds",
+          "start": 69919,
+          "end": 69931
+        },
+        {
+          "name": "fs",
+          "start": 69932,
+          "end": 70062
+        },
+        {
+          "name": "ps",
+          "start": 70062,
+          "end": 70183
+        },
+        {
+          "name": "ms",
+          "start": 70183,
+          "end": 70403
+        },
+        {
+          "name": "hs",
+          "start": 70403,
+          "end": 70469
+        },
+        {
+          "name": "gs",
+          "start": 70469,
+          "end": 70592
+        },
+        {
+          "name": "_s",
+          "start": 70592,
+          "end": 70624
+        },
+        {
+          "name": "vs",
+          "start": 70624,
+          "end": 70674
+        },
+        {
+          "name": "ys",
+          "start": 70674,
+          "end": 70851
+        },
+        {
+          "name": "bs",
+          "start": 70851,
+          "end": 70893
+        },
+        {
+          "name": "xs",
+          "start": 70893,
+          "end": 70937
+        },
+        {
+          "name": "Ss",
+          "start": 70937,
+          "end": 71217
+        },
+        {
+          "name": "Cs",
+          "start": 71221,
+          "end": 71252
+        },
+        {
+          "name": "ws",
+          "start": 71253,
+          "end": 71310
+        },
+        {
+          "name": "Ts",
+          "start": 71310,
+          "end": 71414
+        },
+        {
+          "name": "Es",
+          "start": 71414,
+          "end": 71530
+        },
+        {
+          "name": "Ds",
+          "start": 71534,
+          "end": 71558
+        },
+        {
+          "name": "Os",
+          "start": 71559,
+          "end": 72125
+        },
+        {
+          "name": "ks",
+          "start": 72125,
+          "end": 72594
+        },
+        {
+          "name": "As",
+          "start": 72598,
+          "end": 72610
+        },
+        {
+          "name": "js",
+          "start": 72611,
+          "end": 72623
+        },
+        {
+          "name": "Ms",
+          "start": 72624,
+          "end": 72636
+        },
+        {
+          "name": "Ns",
+          "start": 72637,
+          "end": 72649
+        },
+        {
+          "name": "Ps",
+          "start": 72650,
+          "end": 72662
+        },
+        {
+          "name": "Fs",
+          "start": 72663,
+          "end": 72675
+        },
+        {
+          "name": "Is",
+          "start": 72676,
+          "end": 72688
+        },
+        {
+          "name": "Ls",
+          "start": 72689,
+          "end": 72701
+        },
+        {
+          "name": "Rs",
+          "start": 72702,
+          "end": 72714
+        },
+        {
+          "name": "zs",
+          "start": 72715,
+          "end": 72728
+        },
+        {
+          "name": "Bs",
+          "start": 72729,
+          "end": 72838
+        },
+        {
+          "name": "Vs",
+          "start": 72838,
+          "end": 72965
+        },
+        {
+          "name": "Hs",
+          "start": 72965,
+          "end": 73279
+        },
+        {
+          "name": "Us",
+          "start": 73279,
+          "end": 73367
+        },
+        {
+          "name": "Ws",
+          "start": 73367,
+          "end": 73442
+        },
+        {
+          "name": "Gs",
+          "start": 73442,
+          "end": 73593
+        },
+        {
+          "name": "Ks",
+          "start": 73593,
+          "end": 73893
+        },
+        {
+          "name": "qs",
+          "start": 73893,
+          "end": 74559
+        },
+        {
+          "name": "Js",
+          "start": 74559,
+          "end": 74629
+        },
+        {
+          "name": "Ys",
+          "start": 74633,
+          "end": 74751
+        },
+        {
+          "name": "Xs",
+          "start": 74752,
+          "end": 75059
+        },
+        {
+          "name": "Zs",
+          "start": 75059,
+          "end": 75266
+        },
+        {
+          "name": "Qs",
+          "start": 75266,
+          "end": 75483
+        },
+        {
+          "name": "$s",
+          "start": 75483,
+          "end": 75676
+        },
+        {
+          "name": "ec",
+          "start": 75676,
+          "end": 76049
+        },
+        {
+          "name": "tc",
+          "start": 76053,
+          "end": 76067
+        },
+        {
+          "name": "nc",
+          "start": 76068,
+          "end": 78073
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 78074,
+          "end": 78102
+        },
+        {
+          "name": "rc",
+          "start": 78102,
+          "end": 78141
+        },
+        {
+          "name": "ic",
+          "start": 78141,
+          "end": 78316
+        },
+        {
+          "name": "ac",
+          "start": 78316,
+          "end": 78367
+        },
+        {
+          "name": "oc",
+          "start": 78367,
+          "end": 78568
+        },
+        {
+          "name": "sc",
+          "start": 78572,
+          "end": 78584
+        },
+        {
+          "name": "cc",
+          "start": 78585,
+          "end": 78597
+        },
+        {
+          "name": "lc",
+          "start": 78598,
+          "end": 78645
+        },
+        {
+          "name": "uc",
+          "start": 78645,
+          "end": 78743
+        },
+        {
+          "name": "dc",
+          "start": 78743,
+          "end": 78865
+        },
+        {
+          "name": "fc",
+          "start": 78865,
+          "end": 79003
+        },
+        {
+          "name": "pc",
+          "start": 79003,
+          "end": 79222
+        },
+        {
+          "name": "mc",
+          "start": 79226,
+          "end": 79240
+        },
+        {
+          "name": "hc",
+          "start": 79241,
+          "end": 79255
+        },
+        {
+          "name": "gc",
+          "start": 79256,
+          "end": 79291
+        },
+        {
+          "name": "_c",
+          "start": 79291,
+          "end": 79344
+        },
+        {
+          "name": "vc",
+          "start": 79348,
+          "end": 80616
+        },
+        {
+          "name": "yc",
+          "start": 80617,
+          "end": 80764
+        },
+        {
+          "name": "bc",
+          "start": 80764,
+          "end": 80903
+        },
+        {
+          "name": "xc",
+          "start": 80903,
+          "end": 81397
+        },
+        {
+          "name": "Sc",
+          "start": 81397,
+          "end": 81480
+        },
+        {
+          "name": "Cc",
+          "start": 81484,
+          "end": 82704
+        },
+        {
+          "name": "wc",
+          "start": 82705,
+          "end": 82802
+        },
+        {
+          "name": "Tc",
+          "start": 82803,
+          "end": 82833
+        },
+        {
+          "name": "Ec",
+          "start": 82834,
+          "end": 83122
+        },
+        {
+          "name": "Dc",
+          "start": 83122,
+          "end": 83265
+        },
+        {
+          "name": "Oc",
+          "start": 83265,
+          "end": 83437
+        },
+        {
+          "name": "kc",
+          "start": 83441,
+          "end": 85552
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 85553,
+          "end": 85617
+        },
+        {
+          "name": "Ac",
+          "start": 85621,
+          "end": 85633
+        },
+        {
+          "name": "jc",
+          "start": 85634,
+          "end": 85646
+        },
+        {
+          "name": "Mc",
+          "start": 85647,
+          "end": 85659
+        },
+        {
+          "name": "Nc",
+          "start": 85660,
+          "end": 85672
+        },
+        {
+          "name": "Pc",
+          "start": 85673,
+          "end": 85685
+        },
+        {
+          "name": "Fc",
+          "start": 85686,
+          "end": 91926
+        },
+        {
+          "name": "Ic",
+          "start": 91926,
+          "end": 91969
+        },
+        {
+          "name": "Lc",
+          "start": 91969,
+          "end": 92108
+        },
+        {
+          "name": "Rc",
+          "start": 92108,
+          "end": 93211
+        },
+        {
+          "name": "zc",
+          "start": 93211,
+          "end": 97178
+        },
+        {
+          "name": "Bc",
+          "start": 97182,
+          "end": 97540
+        },
+        {
+          "name": "Vc",
+          "start": 97541,
+          "end": 97823
+        },
+        {
+          "name": "Hc",
+          "start": 97824,
+          "end": 97836
+        },
+        {
+          "name": "Uc",
+          "start": 97837,
+          "end": 97849
+        },
+        {
+          "name": "Wc",
+          "start": 97850,
+          "end": 98219
+        },
+        {
+          "name": "Gc",
+          "start": 98223,
+          "end": 98244
+        },
+        {
+          "name": "Kc",
+          "start": 98245,
+          "end": 98270
+        },
+        {
+          "name": "qc",
+          "start": 98271,
+          "end": 98283
+        },
+        {
+          "name": "Jc",
+          "start": 98284,
+          "end": 98289
+        },
+        {
+          "name": "Yc",
+          "start": 98290,
+          "end": 98393
+        },
+        {
+          "name": "Xc",
+          "start": 98397,
+          "end": 98425
+        },
+        {
+          "name": "Zc",
+          "start": 98426,
+          "end": 98441
+        },
+        {
+          "name": "Qc",
+          "start": 98442,
+          "end": 98556
+        },
+        {
+          "name": "$c",
+          "start": 98556,
+          "end": 98778
+        },
+        {
+          "name": "el",
+          "start": 98782,
+          "end": 98787
+        },
+        {
+          "name": "tl",
+          "start": 98788,
+          "end": 98860
+        },
+        {
+          "name": "nl",
+          "start": 98860,
+          "end": 98894
+        },
+        {
+          "name": "rl",
+          "start": 98894,
+          "end": 99339
+        },
+        {
+          "name": "il",
+          "start": 99339,
+          "end": 99738
+        },
+        {
+          "name": "al",
+          "start": 99742,
+          "end": 100056
+        },
+        {
+          "name": "ol",
+          "start": 100057,
+          "end": 100116
+        },
+        {
+          "name": "sl",
+          "start": 100117,
+          "end": 100168
+        },
+        {
+          "name": "cl",
+          "start": 100169,
+          "end": 100193
+        },
+        {
+          "name": "ll",
+          "start": 100194,
+          "end": 100295
+        },
+        {
+          "name": "ul",
+          "start": 100296,
+          "end": 100304
+        },
+        {
+          "name": "dl",
+          "start": 100305,
+          "end": 100313
+        },
+        {
+          "name": "fl",
+          "start": 100314,
+          "end": 100555
+        },
+        {
+          "name": "pl",
+          "start": 100556,
+          "end": 100592
+        },
+        {
+          "name": "ml",
+          "start": 100593,
+          "end": 100629
+        },
+        {
+          "name": "hl",
+          "start": 100630,
+          "end": 100698
+        },
+        {
+          "name": "gl",
+          "start": 100699,
+          "end": 100767
+        },
+        {
+          "name": "_l",
+          "start": 100768,
+          "end": 100862
+        },
+        {
+          "name": "vl",
+          "start": 100866,
+          "end": 100888
+        },
+        {
+          "name": "yl",
+          "start": 100889,
+          "end": 101728
+        },
+        {
+          "name": "bl",
+          "start": 101729,
+          "end": 101746
+        },
+        {
+          "name": "xl",
+          "start": 101747,
+          "end": 101758
+        },
+        {
+          "name": "Sl",
+          "start": 101759,
+          "end": 101767
+        },
+        {
+          "name": "Cl",
+          "start": 101768,
+          "end": 101777
+        },
+        {
+          "name": "wl",
+          "start": 101778,
+          "end": 101841
+        },
+        {
+          "name": "Tl",
+          "start": 101842,
+          "end": 101879
+        },
+        {
+          "name": "El",
+          "start": 101880,
+          "end": 101893
+        },
+        {
+          "name": "Dl",
+          "start": 101894,
+          "end": 101909
+        },
+        {
+          "name": "Ol",
+          "start": 101910,
+          "end": 101937
+        },
+        {
+          "name": "kl",
+          "start": 101938,
+          "end": 102211
+        },
+        {
+          "name": "Al",
+          "start": 102212,
+          "end": 106527
+        },
+        {
+          "name": "jl",
+          "start": 106528,
+          "end": 106963
+        },
+        {
+          "name": "Ml",
+          "start": 106963,
+          "end": 107040
+        },
+        {
+          "name": "Nl",
+          "start": 107040,
+          "end": 107459
+        },
+        {
+          "name": "Pl",
+          "start": 107463,
+          "end": 107484
+        },
+        {
+          "name": "Fl",
+          "start": 107485,
+          "end": 107601
+        },
+        {
+          "name": "Il",
+          "start": 107601,
+          "end": 107738
+        },
+        {
+          "name": "Ll",
+          "start": 107738,
+          "end": 107842
+        },
+        {
+          "name": "Rl",
+          "start": 107842,
+          "end": 107944
+        },
+        {
+          "name": "zl",
+          "start": 107948,
+          "end": 108014
+        },
+        {
+          "name": "Bl",
+          "start": 108015,
+          "end": 108308
+        },
+        {
+          "name": "Vl",
+          "start": 108308,
+          "end": 108377
+        },
+        {
+          "name": "Hl",
+          "start": 108377,
+          "end": 108443
+        },
+        {
+          "name": "Ul",
+          "start": 108443,
+          "end": 108496
+        },
+        {
+          "name": "Wl",
+          "start": 108500,
+          "end": 108522
+        },
+        {
+          "name": "Gl",
+          "start": 108523,
+          "end": 108592
+        },
+        {
+          "name": "Kl",
+          "start": 108596,
+          "end": 108614
+        },
+        {
+          "name": "ql",
+          "start": 108615,
+          "end": 108634
+        },
+        {
+          "name": "Jl",
+          "start": 108635,
+          "end": 108686
+        },
+        {
+          "name": "Yl",
+          "start": 108687,
+          "end": 108983
+        },
+        {
+          "name": "Xl",
+          "start": 108984,
+          "end": 109093
+        },
+        {
+          "name": "Zl",
+          "start": 109093,
+          "end": 109446
+        },
+        {
+          "name": "Ql",
+          "start": 109450,
+          "end": 109474
+        },
+        {
+          "name": "$l",
+          "start": 109475,
+          "end": 109544
+        },
+        {
+          "name": "eu",
+          "start": 109544,
+          "end": 109698
+        },
+        {
+          "name": "tu",
+          "start": 109698,
+          "end": 109919
+        },
+        {
+          "name": "nu",
+          "start": 109923,
+          "end": 109977
+        },
+        {
+          "name": "ru",
+          "start": 109978,
+          "end": 109990
+        },
+        {
+          "name": "iu",
+          "start": 109991,
+          "end": 110003
+        },
+        {
+          "name": "au",
+          "start": 110004,
+          "end": 110016
+        },
+        {
+          "name": "ou",
+          "start": 110017,
+          "end": 110029
+        },
+        {
+          "name": "su",
+          "start": 110030,
+          "end": 110043
+        },
+        {
+          "name": "cu",
+          "start": 110044,
+          "end": 110058
+        },
+        {
+          "name": "lu",
+          "start": 110059,
+          "end": 110135
+        },
+        {
+          "name": "J",
+          "start": 110135,
+          "end": 110180
+        },
+        {
+          "name": "uu",
+          "start": 110184,
+          "end": 110235
+        },
+        {
+          "name": "du",
+          "start": 110236,
+          "end": 110352
+        },
+        {
+          "name": "fu",
+          "start": 110353,
+          "end": 111152
+        },
+        {
+          "name": "pu",
+          "start": 111153,
+          "end": 112987
+        },
+        {
+          "name": "mu",
+          "start": 112988,
+          "end": 113723
+        },
+        {
+          "name": "hu",
+          "start": 113724,
+          "end": 116881
+        },
+        {
+          "name": "gu",
+          "start": 116882,
+          "end": 119027
+        },
+        {
+          "name": "_u",
+          "start": 119028,
+          "end": 119062
+        },
+        {
+          "name": "vu",
+          "start": 119063,
+          "end": 119371
+        },
+        {
+          "name": "yu",
+          "start": 119371,
+          "end": 119610
+        },
+        {
+          "name": "bu",
+          "start": 119610,
+          "end": 119957
+        },
+        {
+          "name": "xu",
+          "start": 119961,
+          "end": 120480
+        },
+        {
+          "name": "Su",
+          "start": 120481,
+          "end": 120550
+        },
+        {
+          "name": "Cu",
+          "start": 120551,
+          "end": 120697
+        },
+        {
+          "name": "wu",
+          "start": 120697,
+          "end": 121147
+        },
+        {
+          "name": "Tu",
+          "start": 121151,
+          "end": 121512
+        },
+        {
+          "name": "Eu",
+          "start": 121513,
+          "end": 121803
+        },
+        {
+          "name": "Du",
+          "start": 121803,
+          "end": 122861
+        },
+        {
+          "name": "Ou",
+          "start": 122861,
+          "end": 123304
+        },
+        {
+          "name": "ku",
+          "start": 123308,
+          "end": 123411
+        },
+        {
+          "name": "Au",
+          "start": 123412,
+          "end": 123496
+        },
+        {
+          "name": "ju",
+          "start": 123497,
+          "end": 124583
+        },
+        {
+          "name": "Mu",
+          "start": 124584,
+          "end": 124611
+        },
+        {
+          "name": "Nu",
+          "start": 124612,
+          "end": 124638
+        },
+        {
+          "name": "Pu",
+          "start": 124639,
+          "end": 124668
+        },
+        {
+          "name": "Fu",
+          "start": 124669,
+          "end": 124913
+        },
+        {
+          "name": "Iu",
+          "start": 124914,
+          "end": 125346
+        },
+        {
+          "name": "Y",
+          "start": 125347,
+          "end": 125437
+        },
+        {
+          "name": "Lu",
+          "start": 125438,
+          "end": 125529
+        },
+        {
+          "name": "Ru",
+          "start": 125530,
+          "end": 125619
+        },
+        {
+          "name": "zu",
+          "start": 125620,
+          "end": 125711
+        },
+        {
+          "name": "Bu",
+          "start": 125712,
+          "end": 125795
+        },
+        {
+          "name": "Vu",
+          "start": 125796,
+          "end": 126483
+        },
+        {
+          "name": "Hu",
+          "start": 126484,
+          "end": 126582
+        },
+        {
+          "name": "Uu",
+          "start": 126586,
+          "end": 126701
+        },
+        {
+          "name": "Wu",
+          "start": 126702,
+          "end": 127058
+        },
+        {
+          "name": "Gu",
+          "start": 127062,
+          "end": 127617
+        },
+        {
+          "name": "Ku",
+          "start": 127618,
+          "end": 128142
+        },
+        {
+          "name": "qu",
+          "start": 128142,
+          "end": 128642
+        },
+        {
+          "name": "Ju",
+          "start": 128642,
+          "end": 128787
+        },
+        {
+          "name": "Yu",
+          "start": 128787,
+          "end": 129308
+        },
+        {
+          "name": "Xu",
+          "start": 129308,
+          "end": 130645
+        },
+        {
+          "name": "Zu",
+          "start": 130649,
+          "end": 130660
+        },
+        {
+          "name": "Qu",
+          "start": 130661,
+          "end": 130669
+        },
+        {
+          "name": "$u",
+          "start": 130670,
+          "end": 130684
+        },
+        {
+          "name": "ed",
+          "start": 130685,
+          "end": 130699
+        },
+        {
+          "name": "X",
+          "start": 130700,
+          "end": 130712
+        },
+        {
+          "name": "td",
+          "start": 130713,
+          "end": 130730
+        },
+        {
+          "name": "nd",
+          "start": 130731,
+          "end": 130747
+        },
+        {
+          "name": "rd",
+          "start": 130748,
+          "end": 130753
+        },
+        {
+          "name": "id",
+          "start": 130754,
+          "end": 130769
+        },
+        {
+          "name": "ad",
+          "start": 130770,
+          "end": 130797
+        },
+        {
+          "name": "od",
+          "start": 130798,
+          "end": 130822
+        },
+        {
+          "name": "sd",
+          "start": 130823,
+          "end": 130853
+        },
+        {
+          "name": "cd",
+          "start": 130854,
+          "end": 130869
+        },
+        {
+          "name": "ld",
+          "start": 130870,
+          "end": 131202
+        },
+        {
+          "name": "ud",
+          "start": 131206,
+          "end": 131232
+        },
+        {
+          "name": "dd",
+          "start": 131233,
+          "end": 131273
+        },
+        {
+          "name": "fd",
+          "start": 131274,
+          "end": 131311
+        },
+        {
+          "name": "pd",
+          "start": 131312,
+          "end": 131587
+        },
+        {
+          "name": "md",
+          "start": 131587,
+          "end": 131713
+        },
+        {
+          "name": "hd",
+          "start": 131713,
+          "end": 131887
+        },
+        {
+          "name": "gd",
+          "start": 131887,
+          "end": 132033
+        },
+        {
+          "name": "_d",
+          "start": 132037,
+          "end": 132102
+        },
+        {
+          "name": "vd",
+          "start": 132103,
+          "end": 132331
+        },
+        {
+          "name": "yd",
+          "start": 132331,
+          "end": 132456
+        },
+        {
+          "name": "bd",
+          "start": 132460,
+          "end": 133731
+        },
+        {
+          "name": "xd",
+          "start": 133732,
+          "end": 133756
+        },
+        {
+          "name": "Sd",
+          "start": 133757,
+          "end": 134366
+        },
+        {
+          "name": "Cd",
+          "start": 134366,
+          "end": 134505
+        },
+        {
+          "name": "wd",
+          "start": 134509,
+          "end": 134713
+        },
+        {
+          "name": "Td",
+          "start": 134714,
+          "end": 135659
+        },
+        {
+          "name": "Ed",
+          "start": 135660,
+          "end": 135765
+        },
+        {
+          "name": "Dd",
+          "start": 135766,
+          "end": 136244
+        },
+        {
+          "name": "Od",
+          "start": 136245,
+          "end": 136285
+        },
+        {
+          "name": "kd",
+          "start": 136286,
+          "end": 136310
+        },
+        {
+          "name": "Ad",
+          "start": 136311,
+          "end": 136316
+        },
+        {
+          "name": "jd",
+          "start": 136317,
+          "end": 136344
+        },
+        {
+          "name": "Md",
+          "start": 136345,
+          "end": 136350
+        },
+        {
+          "name": "Nd",
+          "start": 136351,
+          "end": 136365
+        },
+        {
+          "name": "Pd",
+          "start": 136366,
+          "end": 136441
+        },
+        {
+          "name": "Fd",
+          "start": 136442,
+          "end": 136485
+        },
+        {
+          "name": "Id",
+          "start": 136486,
+          "end": 136632
+        },
+        {
+          "name": "Ld",
+          "start": 136633,
+          "end": 136777
+        },
+        {
+          "name": "Rd",
+          "start": 136781,
+          "end": 136808
+        },
+        {
+          "name": "zd",
+          "start": 136809,
+          "end": 136883
+        },
+        {
+          "name": "Bd",
+          "start": 136884,
+          "end": 136917
+        },
+        {
+          "name": "Vd",
+          "start": 136918,
+          "end": 136949
+        },
+        {
+          "name": "Hd",
+          "start": 136950,
+          "end": 136983
+        },
+        {
+          "name": "Ud",
+          "start": 136984,
+          "end": 137108
+        },
+        {
+          "name": "Wd",
+          "start": 137109,
+          "end": 137114
+        },
+        {
+          "name": "Gd",
+          "start": 137115,
+          "end": 137154
+        },
+        {
+          "name": "Kd",
+          "start": 137155,
+          "end": 137191
+        },
+        {
+          "name": "qd",
+          "start": 137192,
+          "end": 137500
+        },
+        {
+          "name": "Jd",
+          "start": 137501,
+          "end": 137535
+        },
+        {
+          "name": "Yd",
+          "start": 137536,
+          "end": 137601
+        },
+        {
+          "name": "Xd",
+          "start": 137602,
+          "end": 137753
+        },
+        {
+          "name": "Zd",
+          "start": 137754,
+          "end": 138367
+        },
+        {
+          "name": "Qd",
+          "start": 138368,
+          "end": 138379
+        },
+        {
+          "name": "$d",
+          "start": 138380,
+          "end": 138389
+        },
+        {
+          "name": "ef",
+          "start": 138390,
+          "end": 138399
+        },
+        {
+          "name": "Z",
+          "start": 138400,
+          "end": 138563
+        },
+        {
+          "name": "tf",
+          "start": 138564,
+          "end": 138882
+        },
+        {
+          "name": "nf",
+          "start": 138883,
+          "end": 139846
+        },
+        {
+          "name": "rf",
+          "start": 139847,
+          "end": 139971
+        },
+        {
+          "name": "af",
+          "start": 139972,
+          "end": 140069
+        },
+        {
+          "name": "of",
+          "start": 140070,
+          "end": 140407
+        },
+        {
+          "name": "sf",
+          "start": 140408,
+          "end": 140428
+        },
+        {
+          "name": "cf",
+          "start": 140429,
+          "end": 140495
+        },
+        {
+          "name": "lf",
+          "start": 140496,
+          "end": 140590
+        },
+        {
+          "name": "uf",
+          "start": 140594,
+          "end": 140623
+        },
+        {
+          "name": "df",
+          "start": 140624,
+          "end": 141849
+        },
+        {
+          "name": "ff",
+          "start": 141853,
+          "end": 142746
+        },
+        {
+          "name": "pf",
+          "start": 142747,
+          "end": 142946
+        },
+        {
+          "name": "mf",
+          "start": 142947,
+          "end": 143352
+        },
+        {
+          "name": "hf",
+          "start": 143353,
+          "end": 143497
+        },
+        {
+          "name": "gf",
+          "start": 143498,
+          "end": 143644
+        },
+        {
+          "name": "_f",
+          "start": 143645,
+          "end": 143942
+        },
+        {
+          "name": "vf",
+          "start": 143942,
+          "end": 144216
+        },
+        {
+          "name": "yf",
+          "start": 144216,
+          "end": 144848
+        },
+        {
+          "name": "bf",
+          "start": 144848,
+          "end": 146377
+        },
+        {
+          "name": "xf",
+          "start": 146381,
+          "end": 146408
+        },
+        {
+          "name": "Sf",
+          "start": 146409,
+          "end": 146436
+        },
+        {
+          "name": "Cf",
+          "start": 146437,
+          "end": 146612
+        },
+        {
+          "name": "wf",
+          "start": 146613,
+          "end": 146668
+        },
+        {
+          "name": "Tf",
+          "start": 146672,
+          "end": 148973
+        },
+        {
+          "name": "Ef",
+          "start": 148974,
+          "end": 148996
+        },
+        {
+          "name": "Df",
+          "start": 148997,
+          "end": 150066
+        },
+        {
+          "name": "Of",
+          "start": 150067,
+          "end": 150417
+        },
+        {
+          "name": "kf",
+          "start": 150417,
+          "end": 151124
+        },
+        {
+          "name": "Af",
+          "start": 151128,
+          "end": 151387
+        },
+        {
+          "name": "jf",
+          "start": 151388,
+          "end": 151517
+        },
+        {
+          "name": "Mf",
+          "start": 151518,
+          "end": 151582
+        },
+        {
+          "name": "Nf",
+          "start": 151583,
+          "end": 151592
+        },
+        {
+          "name": "Pf",
+          "start": 151593,
+          "end": 151814
+        },
+        {
+          "name": "Ff",
+          "start": 151814,
+          "end": 151913
+        },
+        {
+          "name": "If",
+          "start": 151913,
+          "end": 151973
+        },
+        {
+          "name": "Lf",
+          "start": 151973,
+          "end": 153100
+        },
+        {
+          "name": "Rf",
+          "start": 153104,
+          "end": 153125
+        },
+        {
+          "name": "zf",
+          "start": 153126,
+          "end": 153169
+        },
+        {
+          "name": "Bf",
+          "start": 153170,
+          "end": 153190
+        },
+        {
+          "name": "Vf",
+          "start": 153191,
+          "end": 153595
+        },
+        {
+          "name": "Hf",
+          "start": 153596,
+          "end": 153609
+        },
+        {
+          "name": "Uf",
+          "start": 153610,
+          "end": 153634
+        },
+        {
+          "name": "Wf",
+          "start": 153635,
+          "end": 153961
+        },
+        {
+          "name": "Q",
+          "start": 153965,
+          "end": 154032
+        },
+        {
+          "name": "Gf",
+          "start": 154033,
+          "end": 154230
+        },
+        {
+          "name": "Kf",
+          "start": 154231,
+          "end": 154255
+        },
+        {
+          "name": "qf",
+          "start": 154256,
+          "end": 154337
+        },
+        {
+          "name": "Jf",
+          "start": 154337,
+          "end": 154494
+        },
+        {
+          "name": "Yf",
+          "start": 154494,
+          "end": 154726
+        },
+        {
+          "name": "Xf",
+          "start": 154726,
+          "end": 154802
+        },
+        {
+          "name": "Zf",
+          "start": 154806,
+          "end": 154837
+        },
+        {
+          "name": "Qf",
+          "start": 154838,
+          "end": 154944
+        },
+        {
+          "name": "$f",
+          "start": 154944,
+          "end": 155045
+        },
+        {
+          "name": "ep",
+          "start": 155045,
+          "end": 156390
+        },
+        {
+          "name": "tp",
+          "start": 156390,
+          "end": 157104
+        },
+        {
+          "name": "np",
+          "start": 157104,
+          "end": 157461
+        },
+        {
+          "name": "rp",
+          "start": 157461,
+          "end": 158117
+        },
+        {
+          "name": "ip",
+          "start": 158117,
+          "end": 159205
+        },
+        {
+          "name": "ap",
+          "start": 159209,
+          "end": 175396
+        }
+      ],
+      "originalTokensSha256": "849ed723493722a30b2d139907b26cbcdd84cb30c8ecd999fd8e942c2eadc378"
+    },
+    {
+      "file": "src/04-bitcoin.js",
+      "first": "op",
+      "last": "Up",
+      "originalRanges": [
+        {
+          "name": "op",
+          "start": 175397,
+          "end": 175410
+        },
+        {
+          "name": "sp",
+          "start": 175411,
+          "end": 175447
+        },
+        {
+          "name": "cp",
+          "start": 175448,
+          "end": 175477
+        },
+        {
+          "name": "lp",
+          "start": 175478,
+          "end": 175487
+        },
+        {
+          "name": "up",
+          "start": 175488,
+          "end": 175539
+        },
+        {
+          "name": "dp",
+          "start": 175539,
+          "end": 175607
+        },
+        {
+          "name": "fp",
+          "start": 175607,
+          "end": 175733
+        },
+        {
+          "name": "pp",
+          "start": 175733,
+          "end": 175791
+        },
+        {
+          "name": "mp",
+          "start": 175791,
+          "end": 175843
+        },
+        {
+          "name": "hp",
+          "start": 175843,
+          "end": 175937
+        },
+        {
+          "name": "gp",
+          "start": 175937,
+          "end": 176051
+        },
+        {
+          "name": "_p",
+          "start": 176051,
+          "end": 176146
+        },
+        {
+          "name": "vp",
+          "start": 176146,
+          "end": 176185
+        },
+        {
+          "name": "yp",
+          "start": 176185,
+          "end": 176280
+        },
+        {
+          "name": "bp",
+          "start": 176280,
+          "end": 176354
+        },
+        {
+          "name": "xp",
+          "start": 176354,
+          "end": 176411
+        },
+        {
+          "name": "Sp",
+          "start": 176411,
+          "end": 176554
+        },
+        {
+          "name": "Cp",
+          "start": 176554,
+          "end": 176672
+        },
+        {
+          "name": "wp",
+          "start": 176672,
+          "end": 177455
+        },
+        {
+          "name": "Tp",
+          "start": 177455,
+          "end": 177509
+        },
+        {
+          "name": "Ep",
+          "start": 177513,
+          "end": 177524
+        },
+        {
+          "name": "Dp",
+          "start": 177525,
+          "end": 177571
+        },
+        {
+          "name": "Op",
+          "start": 177571,
+          "end": 177934
+        },
+        {
+          "name": "kp",
+          "start": 177934,
+          "end": 178114
+        },
+        {
+          "name": "Ap",
+          "start": 178118,
+          "end": 178420
+        },
+        {
+          "name": "jp",
+          "start": 178421,
+          "end": 179006
+        },
+        {
+          "name": "Mp",
+          "start": 179006,
+          "end": 179286
+        },
+        {
+          "name": "Np",
+          "start": 179286,
+          "end": 179513
+        },
+        {
+          "name": "Pp",
+          "start": 179513,
+          "end": 179620
+        },
+        {
+          "name": "Fp",
+          "start": 179620,
+          "end": 179958
+        },
+        {
+          "name": "Ip",
+          "start": 179958,
+          "end": 180272
+        },
+        {
+          "name": "Lp",
+          "start": 180272,
+          "end": 180450
+        },
+        {
+          "name": "Rp",
+          "start": 180450,
+          "end": 181644
+        },
+        {
+          "name": "zp",
+          "start": 181644,
+          "end": 182219
+        },
+        {
+          "name": "Bp",
+          "start": 182219,
+          "end": 184833
+        },
+        {
+          "name": "Vp",
+          "start": 184837,
+          "end": 185520
+        },
+        {
+          "name": "Hp",
+          "start": 185521,
+          "end": 186061
+        },
+        {
+          "name": "Up",
+          "start": 186061,
+          "end": 186157
+        }
+      ],
+      "originalTokensSha256": "69fe2dea5615a3cef365a38a42e205f950f5f1369fdc038345d65b83afcd17f4"
+    },
+    {
+      "file": "vendor/05-buffer.js",
+      "first": "Wp",
+      "last": "ExpressionStatement",
+      "originalRanges": [
+        {
+          "name": "Wp",
+          "start": 186161,
+          "end": 187542
+        },
+        {
+          "name": "Gp",
+          "start": 187543,
+          "end": 188355
+        },
+        {
+          "name": "Kp",
+          "start": 188356,
+          "end": 213089
+        },
+        {
+          "name": "qp",
+          "start": 213090,
+          "end": 214742
+        },
+        {
+          "name": "Jp",
+          "start": 214743,
+          "end": 214750
+        },
+        {
+          "name": "Yp",
+          "start": 214751,
+          "end": 214763
+        },
+        {
+          "name": "Xp",
+          "start": 214764,
+          "end": 214777
+        },
+        {
+          "name": "ExpressionStatement",
+          "start": 214778,
+          "end": 214824
+        }
+      ],
+      "originalTokensSha256": "eef21324223b16a48daa217aba1d98477ad126333b9a770f790d54a3c1a0d08e"
+    },
+    {
+      "file": "src/06-session-download.js",
+      "first": "Zp",
+      "last": "em",
+      "originalRanges": [
+        {
+          "name": "Zp",
+          "start": 214828,
+          "end": 214843
+        },
+        {
+          "name": "Qp",
+          "start": 214844,
+          "end": 215119
+        },
+        {
+          "name": "$p",
+          "start": 215119,
+          "end": 215284
+        },
+        {
+          "name": "em",
+          "start": 215284,
+          "end": 215415
+        }
+      ],
+      "originalTokensSha256": "af46f02e4a03f4bdd74d00a91dcd5c6c72a6155be68b877128b31642c9620dae"
+    },
+    {
+      "file": "src/07-wordlist.js",
+      "first": "tm",
+      "last": "tm",
+      "originalRanges": [
+        {
+          "name": "tm",
+          "start": 215419,
+          "end": 228565
+        }
+      ],
+      "originalTokensSha256": "de36fb4bcfc23d96a286f01f08f77379e3e12be8e0e71f5f0a59da1eeb20edba"
+    },
+    {
+      "file": "src/08-scenarios.js",
+      "first": "nm",
+      "last": "wm",
+      "originalRanges": [
+        {
+          "name": "nm",
+          "start": 228566,
+          "end": 228640
+        },
+        {
+          "name": "$",
+          "start": 228640,
+          "end": 229091
+        },
+        {
+          "name": "rm",
+          "start": 229091,
+          "end": 229135
+        },
+        {
+          "name": "im",
+          "start": 229135,
+          "end": 229167
+        },
+        {
+          "name": "am",
+          "start": 229167,
+          "end": 229205
+        },
+        {
+          "name": "om",
+          "start": 229205,
+          "end": 229237
+        },
+        {
+          "name": "sm",
+          "start": 229237,
+          "end": 229374
+        },
+        {
+          "name": "cm",
+          "start": 229374,
+          "end": 229433
+        },
+        {
+          "name": "lm",
+          "start": 229433,
+          "end": 229815
+        },
+        {
+          "name": "um",
+          "start": 229819,
+          "end": 229826
+        },
+        {
+          "name": "dm",
+          "start": 229827,
+          "end": 230067
+        },
+        {
+          "name": "fm",
+          "start": 230068,
+          "end": 230129
+        },
+        {
+          "name": "pm",
+          "start": 230130,
+          "end": 230207
+        },
+        {
+          "name": "mm",
+          "start": 230208,
+          "end": 230239
+        },
+        {
+          "name": "hm",
+          "start": 230240,
+          "end": 230264
+        },
+        {
+          "name": "gm",
+          "start": 230265,
+          "end": 230397
+        },
+        {
+          "name": "_m",
+          "start": 230397,
+          "end": 230488
+        },
+        {
+          "name": "vm",
+          "start": 230488,
+          "end": 230573
+        },
+        {
+          "name": "ym",
+          "start": 230573,
+          "end": 230761
+        },
+        {
+          "name": "bm",
+          "start": 230761,
+          "end": 231776
+        },
+        {
+          "name": "xm",
+          "start": 231780,
+          "end": 232258
+        },
+        {
+          "name": "Sm",
+          "start": 232259,
+          "end": 232414
+        },
+        {
+          "name": "Cm",
+          "start": 232414,
+          "end": 232926
+        },
+        {
+          "name": "wm",
+          "start": 232926,
+          "end": 233104
+        }
+      ],
+      "originalTokensSha256": "54786d684ec2248e7f665e2fb6ad51ec9bc9fc351a8320fd0dc579276c220ab8"
+    },
+    {
+      "file": "vendor/09-ur.js",
+      "first": "Tm",
+      "last": "x_",
+      "originalRanges": [
+        {
+          "name": "Tm",
+          "start": 233108,
+          "end": 233896
+        },
+        {
+          "name": "Em",
+          "start": 233897,
+          "end": 234212
+        },
+        {
+          "name": "Dm",
+          "start": 234213,
+          "end": 234966
+        },
+        {
+          "name": "Om",
+          "start": 234967,
+          "end": 235074
+        },
+        {
+          "name": "km",
+          "start": 235075,
+          "end": 235111
+        },
+        {
+          "name": "Am",
+          "start": 235112,
+          "end": 235145
+        },
+        {
+          "name": "jm",
+          "start": 235146,
+          "end": 235178
+        },
+        {
+          "name": "Mm",
+          "start": 235179,
+          "end": 235215
+        },
+        {
+          "name": "Nm",
+          "start": 235216,
+          "end": 235253
+        },
+        {
+          "name": "Pm",
+          "start": 235254,
+          "end": 235295
+        },
+        {
+          "name": "Fm",
+          "start": 235296,
+          "end": 235334
+        },
+        {
+          "name": "Im",
+          "start": 235335,
+          "end": 235370
+        },
+        {
+          "name": "Lm",
+          "start": 235371,
+          "end": 235406
+        },
+        {
+          "name": "Rm",
+          "start": 235407,
+          "end": 235444
+        },
+        {
+          "name": "zm",
+          "start": 235445,
+          "end": 235480
+        },
+        {
+          "name": "Bm",
+          "start": 235481,
+          "end": 235516
+        },
+        {
+          "name": "Vm",
+          "start": 235517,
+          "end": 235552
+        },
+        {
+          "name": "Hm",
+          "start": 235553,
+          "end": 235590
+        },
+        {
+          "name": "Um",
+          "start": 235591,
+          "end": 235657
+        },
+        {
+          "name": "Wm",
+          "start": 235658,
+          "end": 235738
+        },
+        {
+          "name": "Gm",
+          "start": 235739,
+          "end": 235797
+        },
+        {
+          "name": "Km",
+          "start": 235798,
+          "end": 235874
+        },
+        {
+          "name": "qm",
+          "start": 235875,
+          "end": 235975
+        },
+        {
+          "name": "Jm",
+          "start": 235976,
+          "end": 236797
+        },
+        {
+          "name": "Ym",
+          "start": 236798,
+          "end": 236996
+        },
+        {
+          "name": "Xm",
+          "start": 236997,
+          "end": 237072
+        },
+        {
+          "name": "Zm",
+          "start": 237073,
+          "end": 237125
+        },
+        {
+          "name": "Qm",
+          "start": 237126,
+          "end": 238047
+        },
+        {
+          "name": "$m",
+          "start": 238048,
+          "end": 238112
+        },
+        {
+          "name": "eh",
+          "start": 238113,
+          "end": 238163
+        },
+        {
+          "name": "th",
+          "start": 238164,
+          "end": 238215
+        },
+        {
+          "name": "nh",
+          "start": 238216,
+          "end": 238285
+        },
+        {
+          "name": "rh",
+          "start": 238286,
+          "end": 238355
+        },
+        {
+          "name": "ih",
+          "start": 238356,
+          "end": 238520
+        },
+        {
+          "name": "ah",
+          "start": 238521,
+          "end": 238864
+        },
+        {
+          "name": "oh",
+          "start": 238865,
+          "end": 239093
+        },
+        {
+          "name": "sh",
+          "start": 239094,
+          "end": 239199
+        },
+        {
+          "name": "ch",
+          "start": 239200,
+          "end": 247277
+        },
+        {
+          "name": "lh",
+          "start": 247278,
+          "end": 247451
+        },
+        {
+          "name": "uh",
+          "start": 247452,
+          "end": 248785
+        },
+        {
+          "name": "dh",
+          "start": 248786,
+          "end": 249387
+        },
+        {
+          "name": "fh",
+          "start": 249388,
+          "end": 249593
+        },
+        {
+          "name": "ph",
+          "start": 249594,
+          "end": 249744
+        },
+        {
+          "name": "mh",
+          "start": 249745,
+          "end": 251033
+        },
+        {
+          "name": "hh",
+          "start": 251034,
+          "end": 251216
+        },
+        {
+          "name": "gh",
+          "start": 251217,
+          "end": 251693
+        },
+        {
+          "name": "_h",
+          "start": 251694,
+          "end": 251781
+        },
+        {
+          "name": "vh",
+          "start": 251782,
+          "end": 251980
+        },
+        {
+          "name": "yh",
+          "start": 251981,
+          "end": 252063
+        },
+        {
+          "name": "bh",
+          "start": 252064,
+          "end": 252957
+        },
+        {
+          "name": "xh",
+          "start": 252958,
+          "end": 253021
+        },
+        {
+          "name": "Sh",
+          "start": 253022,
+          "end": 253181
+        },
+        {
+          "name": "Ch",
+          "start": 253182,
+          "end": 254289
+        },
+        {
+          "name": "wh",
+          "start": 254290,
+          "end": 255231
+        },
+        {
+          "name": "Th",
+          "start": 255232,
+          "end": 256275
+        },
+        {
+          "name": "Eh",
+          "start": 256276,
+          "end": 257355
+        },
+        {
+          "name": "Dh",
+          "start": 257356,
+          "end": 259475
+        },
+        {
+          "name": "Oh",
+          "start": 259476,
+          "end": 260056
+        },
+        {
+          "name": "kh",
+          "start": 260057,
+          "end": 264478
+        },
+        {
+          "name": "Ah",
+          "start": 264479,
+          "end": 265245
+        },
+        {
+          "name": "jh",
+          "start": 265246,
+          "end": 265529
+        },
+        {
+          "name": "Mh",
+          "start": 265530,
+          "end": 286223
+        },
+        {
+          "name": "Nh",
+          "start": 286224,
+          "end": 286226
+        },
+        {
+          "name": "Ph",
+          "start": 286227,
+          "end": 286229
+        },
+        {
+          "name": "Fh",
+          "start": 286230,
+          "end": 286371
+        },
+        {
+          "name": "Ih",
+          "start": 286372,
+          "end": 286456
+        },
+        {
+          "name": "Lh",
+          "start": 286460,
+          "end": 286474
+        },
+        {
+          "name": "Rh",
+          "start": 286475,
+          "end": 286477
+        },
+        {
+          "name": "zh",
+          "start": 286478,
+          "end": 286480
+        },
+        {
+          "name": "Bh",
+          "start": 286481,
+          "end": 286654
+        },
+        {
+          "name": "Vh",
+          "start": 286655,
+          "end": 286657
+        },
+        {
+          "name": "Hh",
+          "start": 286658,
+          "end": 286660
+        },
+        {
+          "name": "Uh",
+          "start": 286661,
+          "end": 286663
+        },
+        {
+          "name": "Wh",
+          "start": 286664,
+          "end": 287802
+        },
+        {
+          "name": "Gh",
+          "start": 287803,
+          "end": 287805
+        },
+        {
+          "name": "Kh",
+          "start": 287806,
+          "end": 287808
+        },
+        {
+          "name": "qh",
+          "start": 287809,
+          "end": 287811
+        },
+        {
+          "name": "Jh",
+          "start": 287812,
+          "end": 288958
+        },
+        {
+          "name": "Yh",
+          "start": 288959,
+          "end": 288961
+        },
+        {
+          "name": "Xh",
+          "start": 288962,
+          "end": 288964
+        },
+        {
+          "name": "Zh",
+          "start": 288965,
+          "end": 288967
+        },
+        {
+          "name": "Qh",
+          "start": 288968,
+          "end": 290689
+        },
+        {
+          "name": "$h",
+          "start": 290690,
+          "end": 290692
+        },
+        {
+          "name": "eg",
+          "start": 290693,
+          "end": 290695
+        },
+        {
+          "name": "tg",
+          "start": 290696,
+          "end": 290698
+        },
+        {
+          "name": "ng",
+          "start": 290699,
+          "end": 292442
+        },
+        {
+          "name": "rg",
+          "start": 292443,
+          "end": 292445
+        },
+        {
+          "name": "ig",
+          "start": 292446,
+          "end": 292448
+        },
+        {
+          "name": "ag",
+          "start": 292449,
+          "end": 292451
+        },
+        {
+          "name": "og",
+          "start": 292452,
+          "end": 294197
+        },
+        {
+          "name": "sg",
+          "start": 294198,
+          "end": 294200
+        },
+        {
+          "name": "cg",
+          "start": 294201,
+          "end": 294203
+        },
+        {
+          "name": "lg",
+          "start": 294204,
+          "end": 294454
+        },
+        {
+          "name": "ug",
+          "start": 294455,
+          "end": 294457
+        },
+        {
+          "name": "dg",
+          "start": 294458,
+          "end": 294460
+        },
+        {
+          "name": "fg",
+          "start": 294461,
+          "end": 294463
+        },
+        {
+          "name": "pg",
+          "start": 294464,
+          "end": 296202
+        },
+        {
+          "name": "mg",
+          "start": 296203,
+          "end": 296205
+        },
+        {
+          "name": "hg",
+          "start": 296206,
+          "end": 296208
+        },
+        {
+          "name": "gg",
+          "start": 296209,
+          "end": 296211
+        },
+        {
+          "name": "_g",
+          "start": 296212,
+          "end": 298599
+        },
+        {
+          "name": "vg",
+          "start": 298600,
+          "end": 298602
+        },
+        {
+          "name": "yg",
+          "start": 298603,
+          "end": 298605
+        },
+        {
+          "name": "bg",
+          "start": 298606,
+          "end": 298608
+        },
+        {
+          "name": "xg",
+          "start": 298609,
+          "end": 301592
+        },
+        {
+          "name": "Sg",
+          "start": 301593,
+          "end": 301595
+        },
+        {
+          "name": "Cg",
+          "start": 301596,
+          "end": 301598
+        },
+        {
+          "name": "wg",
+          "start": 301599,
+          "end": 301601
+        },
+        {
+          "name": "Tg",
+          "start": 301602,
+          "end": 304579
+        },
+        {
+          "name": "Eg",
+          "start": 304580,
+          "end": 304771
+        },
+        {
+          "name": "Dg",
+          "start": 304772,
+          "end": 304774
+        },
+        {
+          "name": "Og",
+          "start": 304775,
+          "end": 304973
+        },
+        {
+          "name": "kg",
+          "start": 304974,
+          "end": 306095
+        },
+        {
+          "name": "Ag",
+          "start": 306096,
+          "end": 316326
+        },
+        {
+          "name": "jg",
+          "start": 316327,
+          "end": 316528
+        },
+        {
+          "name": "Mg",
+          "start": 316529,
+          "end": 317034
+        },
+        {
+          "name": "Ng",
+          "start": 317035,
+          "end": 317459
+        },
+        {
+          "name": "Pg",
+          "start": 317460,
+          "end": 317956
+        },
+        {
+          "name": "Fg",
+          "start": 317957,
+          "end": 318140
+        },
+        {
+          "name": "Ig",
+          "start": 318141,
+          "end": 318205
+        },
+        {
+          "name": "Lg",
+          "start": 318206,
+          "end": 318533
+        },
+        {
+          "name": "Rg",
+          "start": 318534,
+          "end": 322258
+        },
+        {
+          "name": "zg",
+          "start": 322259,
+          "end": 322413
+        },
+        {
+          "name": "Bg",
+          "start": 322414,
+          "end": 330283
+        },
+        {
+          "name": "Vg",
+          "start": 330284,
+          "end": 334534
+        },
+        {
+          "name": "Hg",
+          "start": 334535,
+          "end": 343072
+        },
+        {
+          "name": "Ug",
+          "start": 343073,
+          "end": 343326
+        },
+        {
+          "name": "Wg",
+          "start": 343327,
+          "end": 344906
+        },
+        {
+          "name": "Gg",
+          "start": 344907,
+          "end": 345241
+        },
+        {
+          "name": "Kg",
+          "start": 345242,
+          "end": 345756
+        },
+        {
+          "name": "qg",
+          "start": 345757,
+          "end": 346207
+        },
+        {
+          "name": "Jg",
+          "start": 346208,
+          "end": 346332
+        },
+        {
+          "name": "Yg",
+          "start": 346333,
+          "end": 346430
+        },
+        {
+          "name": "Xg",
+          "start": 346431,
+          "end": 346598
+        },
+        {
+          "name": "Zg",
+          "start": 346599,
+          "end": 347149
+        },
+        {
+          "name": "Qg",
+          "start": 347150,
+          "end": 347280
+        },
+        {
+          "name": "$g",
+          "start": 347281,
+          "end": 347409
+        },
+        {
+          "name": "e_",
+          "start": 347410,
+          "end": 347462
+        },
+        {
+          "name": "t_",
+          "start": 347463,
+          "end": 347567
+        },
+        {
+          "name": "n_",
+          "start": 347568,
+          "end": 347707
+        },
+        {
+          "name": "r_",
+          "start": 347708,
+          "end": 347836
+        },
+        {
+          "name": "i_",
+          "start": 347837,
+          "end": 355316
+        },
+        {
+          "name": "a_",
+          "start": 355317,
+          "end": 363371
+        },
+        {
+          "name": "o_",
+          "start": 363372,
+          "end": 382101
+        },
+        {
+          "name": "s_",
+          "start": 382102,
+          "end": 408496
+        },
+        {
+          "name": "c_",
+          "start": 408497,
+          "end": 410343
+        },
+        {
+          "name": "l_",
+          "start": 410344,
+          "end": 410366
+        },
+        {
+          "name": "u_",
+          "start": 410367,
+          "end": 410369
+        },
+        {
+          "name": "d_",
+          "start": 410370,
+          "end": 410372
+        },
+        {
+          "name": "f_",
+          "start": 410373,
+          "end": 410375
+        },
+        {
+          "name": "p_",
+          "start": 410376,
+          "end": 410378
+        },
+        {
+          "name": "m_",
+          "start": 410379,
+          "end": 411468
+        },
+        {
+          "name": "h_",
+          "start": 411469,
+          "end": 412145
+        },
+        {
+          "name": "g_",
+          "start": 412146,
+          "end": 414415
+        },
+        {
+          "name": "__",
+          "start": 414416,
+          "end": 417295
+        },
+        {
+          "name": "v_",
+          "start": 417296,
+          "end": 418383
+        },
+        {
+          "name": "y_",
+          "start": 418384,
+          "end": 422012
+        },
+        {
+          "name": "b_",
+          "start": 422013,
+          "end": 424486
+        },
+        {
+          "name": "x_",
+          "start": 424487,
+          "end": 424741
+        }
+      ],
+      "originalTokensSha256": "bb8d2c80fec607ab747e1af6d9b43e4e57597c1d77c702b78ee39fe06dbe9aff"
+    },
+    {
+      "file": "src/10-cbor-ur-export.js",
+      "first": "S_",
+      "last": "w_",
+      "originalRanges": [
+        {
+          "name": "S_",
+          "start": 424742,
+          "end": 424939
+        },
+        {
+          "name": "C_",
+          "start": 424939,
+          "end": 425536
+        },
+        {
+          "name": "w_",
+          "start": 425536,
+          "end": 425704
+        }
+      ],
+      "originalTokensSha256": "821b59655be8be1c9fccc6f4702703dc628469613be2aa4fc25b42312f4eac2b"
+    },
+    {
+      "file": "src/11-bbqr.js",
+      "first": "createTBWBBQrCodec",
+      "last": "tbwBBQrCodec",
+      "originalRanges": [
+        {
+          "name": "createTBWBBQrCodec",
+          "start": 425817,
+          "end": 434736
+        },
+        {
+          "name": "tbwBBQrInstance",
+          "start": 434741,
+          "end": 434763
+        },
+        {
+          "name": "tbwBBQrCodec",
+          "start": 434765,
+          "end": 434900
+        }
+      ],
+      "originalTokensSha256": "45f5bef4a1d2590540099aeb99d634f7c2240064da28e66f8f9e4873ac777044"
+    },
+    {
+      "file": "vendor/12-compression.js",
+      "first": "tbwBBQrCompressionInstance",
+      "last": "tbwBBQrCompression",
+      "originalRanges": [
+        {
+          "name": "tbwBBQrCompressionInstance",
+          "start": 434906,
+          "end": 434939
+        },
+        {
+          "name": "tbwBBQrCompression",
+          "start": 434941,
+          "end": 483247
+        }
+      ],
+      "originalTokensSha256": "6e55dae281eabd6c2c1415e2a75384a746ee82302663391280ed6cd0ab39eaa6"
+    },
+    {
+      "file": "src/13-qr-session.js",
+      "first": "T_",
+      "last": "E_",
+      "originalRanges": [
+        {
+          "name": "T_",
+          "start": 483278,
+          "end": 483311
+        },
+        {
+          "name": "E_",
+          "start": 483312,
+          "end": 486546
+        }
+      ],
+      "originalTokensSha256": "9f39f1fb951258fcc1f4b7c7f6620e24356e52bd6548de9370b697584884bf19"
+    },
+    {
+      "file": "vendor/14-qr-encode.js",
+      "first": "D_",
+      "last": "ev",
+      "originalRanges": [
+        {
+          "name": "D_",
+          "start": 486547,
+          "end": 486662
+        },
+        {
+          "name": "O_",
+          "start": 486663,
+          "end": 487354
+        },
+        {
+          "name": "k_",
+          "start": 487355,
+          "end": 487828
+        },
+        {
+          "name": "A_",
+          "start": 487829,
+          "end": 488254
+        },
+        {
+          "name": "j_",
+          "start": 488255,
+          "end": 488751
+        },
+        {
+          "name": "M_",
+          "start": 488752,
+          "end": 489169
+        },
+        {
+          "name": "N_",
+          "start": 489170,
+          "end": 489280
+        },
+        {
+          "name": "P_",
+          "start": 489281,
+          "end": 491222
+        },
+        {
+          "name": "F_",
+          "start": 491223,
+          "end": 492677
+        },
+        {
+          "name": "I_",
+          "start": 492678,
+          "end": 493009
+        },
+        {
+          "name": "L_",
+          "start": 493010,
+          "end": 493507
+        },
+        {
+          "name": "R_",
+          "start": 493508,
+          "end": 493998
+        },
+        {
+          "name": "z_",
+          "start": 493999,
+          "end": 494063
+        },
+        {
+          "name": "B_",
+          "start": 494064,
+          "end": 494780
+        },
+        {
+          "name": "V_",
+          "start": 494781,
+          "end": 495816
+        },
+        {
+          "name": "H_",
+          "start": 495817,
+          "end": 497017
+        },
+        {
+          "name": "U_",
+          "start": 497018,
+          "end": 497203
+        },
+        {
+          "name": "W_",
+          "start": 497204,
+          "end": 497723
+        },
+        {
+          "name": "G_",
+          "start": 497724,
+          "end": 498272
+        },
+        {
+          "name": "K_",
+          "start": 498273,
+          "end": 498687
+        },
+        {
+          "name": "q_",
+          "start": 498688,
+          "end": 499253
+        },
+        {
+          "name": "J_",
+          "start": 499254,
+          "end": 500366
+        },
+        {
+          "name": "Y_",
+          "start": 500367,
+          "end": 503021
+        },
+        {
+          "name": "X_",
+          "start": 503022,
+          "end": 506238
+        },
+        {
+          "name": "Z_",
+          "start": 506239,
+          "end": 507623
+        },
+        {
+          "name": "Q_",
+          "start": 507624,
+          "end": 508356
+        },
+        {
+          "name": "$_",
+          "start": 508357,
+          "end": 509259
+        },
+        {
+          "name": "ev",
+          "start": 509260,
+          "end": 510029
+        }
+      ],
+      "originalTokensSha256": "25d87fb6778054bf1503bd1829e774c68e32cb31ac11064db92837b3a372ea04"
+    },
+    {
+      "file": "src/15-qr-render.js",
+      "first": "tv",
+      "last": "nv",
+      "originalRanges": [
+        {
+          "name": "tv",
+          "start": 510030,
+          "end": 510569
+        },
+        {
+          "name": "nv",
+          "start": 510574,
+          "end": 511449
+        }
+      ],
+      "originalTokensSha256": "da97e28279c9c413819258bdf087854edd0f34732a236f681c90e4781a44d8f5"
+    },
+    {
+      "file": "vendor/16-qr-decode.js",
+      "first": "rv",
+      "last": "rv",
+      "originalRanges": [
+        {
+          "name": "rv",
+          "start": 511456,
+          "end": 641375
+        }
+      ],
+      "originalTokensSha256": "0c694e21edd6fa71197caeacac7f6aed2203a0c5d1b53b0fd8faacee6afc22e1"
+    },
+    {
+      "file": "src/17-camera.js",
+      "first": "iv",
+      "last": "iv",
+      "originalRanges": [
+        {
+          "name": "iv",
+          "start": 641376,
+          "end": 643300
+        }
+      ],
+      "originalTokensSha256": "79aa6e8d4293d9b1499e21223e32e7155788ff131d329d0d097f1c506c04cc6b"
+    },
+    {
+      "file": "src/18-form.js",
+      "first": "av",
+      "last": "Nv",
+      "originalRanges": [
+        {
+          "name": "av",
+          "start": 643301,
+          "end": 643314
+        },
+        {
+          "name": "ov",
+          "start": 643315,
+          "end": 643328
+        },
+        {
+          "name": "sv",
+          "start": 643329,
+          "end": 643425
+        },
+        {
+          "name": "cv",
+          "start": 643425,
+          "end": 643601
+        },
+        {
+          "name": "lv",
+          "start": 643601,
+          "end": 643719
+        },
+        {
+          "name": "uv",
+          "start": 643719,
+          "end": 643910
+        },
+        {
+          "name": "dv",
+          "start": 643910,
+          "end": 644106
+        },
+        {
+          "name": "fv",
+          "start": 644106,
+          "end": 644228
+        },
+        {
+          "name": "pv",
+          "start": 644228,
+          "end": 644542
+        },
+        {
+          "name": "mv",
+          "start": 644542,
+          "end": 644841
+        },
+        {
+          "name": "hv",
+          "start": 644841,
+          "end": 644983
+        },
+        {
+          "name": "gv",
+          "start": 644983,
+          "end": 645208
+        },
+        {
+          "name": "_v",
+          "start": 645208,
+          "end": 645336
+        },
+        {
+          "name": "vv",
+          "start": 645336,
+          "end": 645499
+        },
+        {
+          "name": "yv",
+          "start": 645499,
+          "end": 645627
+        },
+        {
+          "name": "bv",
+          "start": 645627,
+          "end": 645867
+        },
+        {
+          "name": "xv",
+          "start": 645867,
+          "end": 646036
+        },
+        {
+          "name": "Sv",
+          "start": 646040,
+          "end": 646068
+        },
+        {
+          "name": "Cv",
+          "start": 646069,
+          "end": 646073
+        },
+        {
+          "name": "wv",
+          "start": 646074,
+          "end": 646087
+        },
+        {
+          "name": "Tv",
+          "start": 646088,
+          "end": 646136
+        },
+        {
+          "name": "Ev",
+          "start": 646136,
+          "end": 646241
+        },
+        {
+          "name": "Dv",
+          "start": 646241,
+          "end": 646307
+        },
+        {
+          "name": "Ov",
+          "start": 646307,
+          "end": 646440
+        },
+        {
+          "name": "kv",
+          "start": 646440,
+          "end": 646578
+        },
+        {
+          "name": "Av",
+          "start": 646578,
+          "end": 646662
+        },
+        {
+          "name": "jv",
+          "start": 646662,
+          "end": 646963
+        },
+        {
+          "name": "Mv",
+          "start": 646963,
+          "end": 647133
+        },
+        {
+          "name": "Nv",
+          "start": 647133,
+          "end": 647259
+        }
+      ],
+      "originalTokensSha256": "6df8576cae1906e538d4e833148b5df69dbfaa770d8a1221b86c07ce2c0b3c01"
+    },
+    {
+      "file": "src/19-import.js",
+      "first": "Pv",
+      "last": "Pv",
+      "originalRanges": [
+        {
+          "name": "Pv",
+          "start": 647259,
+          "end": 648176
+        }
+      ],
+      "originalTokensSha256": "b7df6b7fd0bf425247a71a345165a2ffa92c23ab4d3dcf1bd62e2d59ef171edc"
+    },
+    {
+      "file": "src/20-application.js",
+      "first": "Fv",
+      "last": "Fv",
+      "originalRanges": [
+        {
+          "name": "Fv",
+          "start": 648176,
+          "end": 671802
+        }
+      ],
+      "originalTokensSha256": "537865edf04d4205869623120d7d108c541ec03dd83a997352c34217834ecea0"
+    },
+    {
+      "file": "src/21-navigation.js",
+      "first": "Iv",
+      "last": "Lv",
+      "originalRanges": [
+        {
+          "name": "Iv",
+          "start": 671802,
+          "end": 673677
+        },
+        {
+          "name": "Lv",
+          "start": 673677,
+          "end": 674027
+        }
+      ],
+      "originalTokensSha256": "fcce9008408bdd87129f6402a36e47c972d680612900332b77b7828b38f58dee"
+    },
+    {
+      "file": "src/22-bootstrap.js",
+      "first": "ExpressionStatement",
+      "last": "ExpressionStatement",
+      "originalRanges": [
+        {
+          "name": "ExpressionStatement",
+          "start": 674027,
+          "end": 675178
+        }
+      ],
+      "originalTokensSha256": "4204e60e9644294533a719b891b9828002ba23e617c4eaf67fd13746845d1def"
+    }
+  ]
+}

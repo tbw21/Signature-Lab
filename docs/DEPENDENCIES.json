@@ -1,0 +1,86 @@
+{
+  "runtimeSources": [
+    {
+      "file": "vendor/01-foundation.js",
+      "sha256": "a908cc8ec2005c9f408070a7af873ffd6c3021d414fe4e742786f7c119958f79",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/03-bitcoin-primitives.js",
+      "sha256": "98439ddaf9cc3239a6b6b479e6ed91b98733321cb49793cf8072284734f855e8",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/05-buffer.js",
+      "sha256": "4a30daa809be540d53bd45a52cf5af6aea894eb0c8ccfa986d229a226b519b7c",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/09-ur.js",
+      "sha256": "b51647fb9eceb43a889f50031e1917928c0887de416479f14ee54a39f0e62b62",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/12-compression.js",
+      "sha256": "eca3cf1ae72a72ea3fe6e886417fd529a409d19278a21c8cbb01bda6baaa63ee",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/14-qr-encode.js",
+      "sha256": "8626f9d413ff46ad96152f8109e928100be778c1d5cf98032a9208dbb9d151be",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/16-qr-decode.js",
+      "sha256": "bf5f43d8ad5803a66f9b43746d7fb3222170eceb337e0775f451407b09e4203c",
+      "provenance": "Reconstructed from supplied rc2 bundle",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": false
+    },
+    {
+      "file": "vendor/pako-1.0.11.min.js",
+      "sha256": "29cfa0542b9864b6640cfdcc8f15b184db6431b532db2702a3ce97e5f2a7fc1c",
+      "provenance": "Supplied locally pinned pako 1.0.11 bytes",
+      "upstreamAuthenticated": false,
+      "exactUpstreamVersionRecovered": true
+    }
+  ],
+  "knownEmbeddedAlpineVersion": "3.15.12",
+  "pakoVersion": "1.0.11",
+  "qualificationScope": "Byte inventory is not complete original package/lockfile recovery or a dependency security/licensing audit. Runtime uses no remote dependencies. Reconstructed vendor bytes require upstream provenance review.",
+  "testOnlyAcorn": {
+    "version": "8.15.0",
+    "file": "tests/vendor/acorn.cjs",
+    "sha256": "fdb08546776ec6228b03e8d02b40d4ab3255bae5f401adba7ff5dad927ac5c9c",
+    "provenance": "Locally installed test parser; not shipped in runtime"
+  },
+  "auditReportedBehavioralValidation": {
+    "source": "2026-09-21-source-audit-0.18.5-rc2.md",
+    "sourceSha256": "d365f5a0470f03b80bdb31b14aad965236e48793dca22f52f08a566afd427908",
+    "baselineVersion": "0.18.5-rc2",
+    "reportedUpstreamPackage": "@noble/curves",
+    "reportedUpstreamVersion": "2.4.0",
+    "reportedSignatureComparisons": 1200,
+    "reportedVerificationComparisons": 400,
+    "reportedDisagreements": 0,
+    "rawCorpusOrRunnerSupplied": false,
+    "upstreamComparisonReproducedInThisRemediation": false,
+    "meaning": "Audit-reported behavioral evidence, not authentication of reconstructed vendor bytes or proof of all input behavior. BIP84 literal known answers are separately rerun in tests/audit.cjs."
+  },
+  "deferredVendorWork": [
+    "Inert Vite modulepreload fetch polyfill remains in foundation chunk; no modulepreload links are shipped. Remove during a pinned reviewed vendor refresh.",
+    "Alpine evaluator still requires unsafe-eval; CSP-build migration is a separate reviewed vendor change."
+  ]
+}

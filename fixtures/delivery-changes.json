@@ -1,0 +1,242 @@
+{
+  "architectureSha256": "a3fbe400a58c33ed709aa6d1e972dcae1d94011aa4fb286200ab18e9a993147a",
+  "baselineVersion": "0.18.2-rc1",
+  "candidateVersion": "0.18.5-rc2",
+  "runtime": {
+    "src/reliability-common.js": "c81a0997938d05871a6573b449e9edcd6cc3ce9574fc7b8b0894974de902a0dd",
+    "vendor/01-foundation.js": "a908cc8ec2005c9f408070a7af873ffd6c3021d414fe4e742786f7c119958f79",
+    "src/02-layout.js": "8d5e485002922a02f0e5a48740eb3d0019ddf4c9fcdf1bcb20f55cd7b7425402",
+    "vendor/03-bitcoin-primitives.js": "98439ddaf9cc3239a6b6b479e6ed91b98733321cb49793cf8072284734f855e8",
+    "src/04-bitcoin.js": "4694cb7d7a6722749a7dc852e42fff57034e49b8930abf79240a2a18ad5e24bf",
+    "src/metadata.js": "f23300ebe7edb5e65e3884b898710a92e093825b3db3452fa82217cf9cd07ebd",
+    "vendor/05-buffer.js": "4a30daa809be540d53bd45a52cf5af6aea894eb0c8ccfa986d229a226b519b7c",
+    "src/06-session-download.js": "f728ae55468f6b17226866de4211dc56ef932731b83f58c5f73f2c71b66cbfed",
+    "src/07-wordlist.js": "54cc898955a3706584ed3275b2d41daa8a23ac944cb89e5f25f93d6871d11a5d",
+    "src/08-scenarios.js": "ce7c709098094910bd1218f30a97fd0a0998d794cc4c106e9725970b2605bbf4",
+    "vendor/09-ur.js": "b51647fb9eceb43a889f50031e1917928c0887de416479f14ee54a39f0e62b62",
+    "src/10-cbor-ur-export.js": "045226f0261699267f4d5f2b62fe091492a0bf0f5820f9a841e6b3e3a65c0897",
+    "src/11-bbqr.js": "ebf5192eebfa46b3d0525de2135a4c8254048443d8198c411ce26a67e7f44091",
+    "vendor/12-compression.js": "eca3cf1ae72a72ea3fe6e886417fd529a409d19278a21c8cbb01bda6baaa63ee",
+    "src/13-qr-session.js": "53006c90d6bfbb572d24928afe6e97564f39562296341df2ae56f2b85bc1af7f",
+    "vendor/14-qr-encode.js": "8626f9d413ff46ad96152f8109e928100be778c1d5cf98032a9208dbb9d151be",
+    "src/15-qr-render.js": "757d2fee409b51707d944e9927eb706ed205964962673815042fd99c254c696b",
+    "vendor/16-qr-decode.js": "bf5f43d8ad5803a66f9b43746d7fb3222170eceb337e0775f451407b09e4203c",
+    "src/17-camera.js": "8ef6dc845869a5dd6210f5b6e0a65bb6d5b4deaab11c05e46aade719d062a41c",
+    "src/18-form.js": "52505f181bc7b5bce48d8349eb06fc071377213dab54a458ab045ddd224aa9a5",
+    "src/19-import.js": "5592a32da47cd23cb9e2436b66b00d055db9d118f93daa146ce7d446f3fecb3c",
+    "src/evidence.js": "6da8c9596de43e0e62906a488f3519e3d50593daae50c565099704a1f8db2b90",
+    "src/guided-plan.js": "59675989e92035d7e97e2c15f04c863766d7846e8617610207384aa8659a57dd",
+    "src/session-journal.js": "39d75d9baad20806f48c4fb2189e0bc4930db2fa10a81fc2fd94aa8f1ecd86cb",
+    "src/output-review.js": "5fa0c2c90238cb66fc9de8e59b2a4102a535d63cb3ae4724647fa6b408475a8f",
+    "src/reference-self-test.js": "311b8c7a749f5d1751e8ef143eb8705b5887fb65e2e06481676936fbb13e1085",
+    "src/20-application.js": "15ca69fea6eba641e78a44e591f97cf806ee62398a1baaf21a76cb5f39506019",
+    "src/21-navigation.js": "19c698b7507ef7e7d3c1fb26dc928da45b4b3b2fad0ac09271718ef9052c1dc4",
+    "src/22-bootstrap.js": "dd57d86070a06feea3fff029f1596a80b72bf150c6a52ec9baba2910fc66950f"
+  },
+  "before": {
+    "src/20-application.js": "15ca69fea6eba641e78a44e591f97cf806ee62398a1baaf21a76cb5f39506019",
+    "src/page.html": "4d310d58df2850be0bcc14a7c3e996f2897074c58f40e83816de9e3dd90a1283",
+    "src/style.css": "2f86279925118e8728cccda393a209ea1cdb8805a75ca5bce28195f81a0ef320"
+  },
+  "after": {
+    "src/20-application.js": "4f0f8a861a86b2f7de75096ca2372068cf9b1708040062b88c9a6c32b00f1f39",
+    "src/page.html": "85d05a9b04301d05ab25e9ba278bcdfa6da5bf7ba7f86db5ed7fd6207a81fd62",
+    "src/style.css": "d53accec3ca8782829d4f42d6f502186830c6f953eb5fe028f399cd010c987a7"
+  },
+  "edits": {
+    "src/20-application.js": [
+      {
+        "before": "async focusSection(e) { let t = ++f, n = this.epoch, r = this.step, view = this.workspaceView; try {",
+        "after": "async focusSection(e, { scroll = true } = {}) { let t = ++f, n = this.epoch, r = this.step, view = this.workspaceView; try {"
+      },
+      {
+        "before": "la(i?.ownerDocument), i?.focus?.({ preventScroll: !0 }), (i?.closest?.(`[data-scroll-anchor]`) ?? i)?.scrollIntoView?.({ block: `start`, behavior: `auto` });",
+        "after": "la(i?.ownerDocument); i?.focus?.({ preventScroll: !0 });\n            // Navigation keeps the common controls stationary; explicit task actions may reveal their target.\n            if (scroll) (i?.closest?.(`[data-scroll-anchor]`) ?? i)?.scrollIntoView?.({ block: `start`, behavior: `auto` });"
+      },
+      {
+        "before": "focusCurrentSection() { if (this.workspaceView !== 'test') { this.focusSection(this.workspaceView === 'advanced' ? 'advancedTitle' : 'sessionTitle'); return; } this.focusSection(this.step === 1 ? `prepareTitle` : this.step === 2 ? `signTitle` : this.resultState === `unverified` ? `intakeSection` : `resultTitle`); },",
+        "after": "focusCurrentSection(options = {}) {\n    const target = this.workspaceView !== 'test' ? (this.workspaceView === 'advanced' ? 'advancedTitle' : 'sessionTitle')\n        : this.step === 1 ? 'prepareTitle' : this.step === 2 ? 'signTitle'\n        : this.resultState === 'unverified' ? 'intakeSection' : 'resultTitle';\n    return this.focusSection(target, options);\n},"
+      },
+      {
+        "before": "confirmWalletLoaded() { this.isTestComplete || (this.acknowledged = !0, this.goToStep(2)); },",
+        "after": "confirmWalletLoaded() {\n    if (this.isTestComplete) return;\n    this.recompute();\n    if (this.buildProblem) { this.notice = this.buildProblem; return; }\n    this.acknowledged = true;\n    // This is a task action, not a navigation tab: reveal the review on a long mobile wallet page.\n    return this.goToStep(2, { scroll: true });\n},"
+      },
+      {
+        "before": "goToStep(e) { if (![1, 2, 3].includes(e))\n            throw RangeError(`Unknown test step`); if (e !== 1 && !this.acknowledged) {\n            this.notice = `Confirm you are using a disposable test wallet first.`;\n            return;\n        } if (this.stopScan(), e !== 1 && (this.recompute(), this.buildProblem)) {\n            this.notice = this.buildProblem;\n            return;\n        } this.workspaceRequest++; this.workspaceView = 'test'; this.step = e, this.notice = ``, this.focusCurrentSection(); },\n",
+        "after": "goToStep(e, { scroll = false } = {}) {\n    if (![1, 2, 3].includes(e)) throw new RangeError('Unknown test step');\n    if (e !== 1 && !this.acknowledged) {\n        this.notice = 'Confirm you are using a disposable test wallet first.';\n        return false;\n    }\n    // Re-selecting Results is a no-op during capture: do not cancel a live/starting camera.\n    if (e === 3 && this.step === 3 && this.workspaceView === 'test' && this.scan.active) return true;\n    this.cancelSectionFocus();\n    this.stopScan();\n    if (e !== 1) {\n        this.recompute();\n        if (this.buildProblem) { this.notice = this.buildProblem; return false; }\n    }\n    this.workspaceRequest++;\n    this.workspaceView = 'test'; this.step = e; this.notice = '';\n    // Reopening intake is presentation only. Keep errors, evidence, paste content and guided holds.\n    if (e === 3) this.intakeOpen = !this.isTestComplete;\n    this.focusCurrentSection({ scroll });\n    return true;\n},\n"
+      },
+      {
+        "before": "let journal = new TbwSessionJournal(), installingGuided = false, seedRenderRequest = 0;",
+        "after": "let journal = new TbwSessionJournal(), installingGuided = false, seedRenderRequest = 0;\n    let pendingWalletChange = null; // Transient operator intent; only randomizeAll changes the wallet."
+      },
+      {
+        "before": "this.notice === 'Fresh test wallet created. Load this seed on your signing device.';",
+        "after": "this.notice === 'Fresh test wallet created. Load this seed on your signing device.' ||\n        this.notice === 'Session ended. Its record is in Session. Your current result is unchanged.';"
+      },
+      {
+        "before": "get recordedIncompleteCount() { return this.sessionHistory.filter(row => row.type === 'check' && !row.completed).length; },",
+        "after": "get recordedIncompleteCount() { return this.sessionHistory.filter(row => row.type === 'check' && !row.completed).length; },\nget recordedOperationFailureCount() { return this.sessionHistory.filter(row => row.type !== 'check' && row.type !== 'end').length; },"
+      },
+      {
+        "before": "historyTone(row) {\n    return row.type !== 'check' || !row.completed ? 'incomplete' : tbwFindingState(row.result,{status:row.metadataStatus});\n},",
+        "after": "historyTone(row) {\n    if (row.type === 'end' && row.previousPhase !== 'halted') return 'ended';\n    return row.type !== 'check' || !row.completed ? 'incomplete' : tbwFindingState(row.result,{status:row.metadataStatus});\n},"
+      },
+      {
+        "before": "selectSeedLength(e) { if (e !== 12 && e !== 24)",
+        "after": "walletChangeRevision: 0,\nwalletChangeWords: 12,\nwalletChangeError: '',\nget walletChangePending() { this.walletChangeRevision; return pendingWalletChange !== null; },\nrequestWalletChange(words = this.wordCount === '24' ? 24 : 12, replaceSameLength = true) {\n    if (words !== 12 && words !== 24) throw new RangeError('Choose 12 or 24 test words.');\n    if (!replaceSameLength && String(words) === this.wordCount) return false;\n    if (journal.locked) { this.notice = 'End the guided session before creating another test wallet. Its record remains in Session.'; return false; }\n    if (this.scan.active) { this.notice = 'Stop the camera before replacing the test wallet.'; return false; }\n    if (pendingWalletChange) return false;\n    const used = this.acknowledged || this.hasGuidedSession || this.sessionHistory.length > 0 ||\n        !!this.artifactText || !!this.parseProblem || !!this.scan.diagnostics;\n    if (!used) {\n        const previous = this.walletSession; this.randomizeAll(words);\n        return this.walletSession !== previous;\n    }\n    const dialog = this.$refs?.walletChangeDialog;\n    if (!dialog || dialog.isConnected === false || dialog.open || typeof dialog.showModal !== 'function') {\n        this.notice = 'Wallet replacement confirmation is unavailable. Your wallet and records are unchanged.'; return false;\n    }\n    pendingWalletChange = Object.freeze({words, epoch:this.epoch, walletSession:this.walletSession,\n        stateKey:this.stateSignature, resultRevision:this.resultRevision, sessionRevision:this.sessionRevision,\n        fileRequest:this.fileRequest, wordCount:this.wordCount});\n    this.walletChangeWords = words; this.walletChangeError = ''; this.walletChangeRevision++;\n    this.cancelSectionFocus();\n    try {\n        dialog.showModal(); dialog.scrollTop = 0;\n        this.$refs?.keepWallet?.focus?.({preventScroll:true});\n        return true;\n    } catch {\n        this.cancelWalletChange();\n        this.notice = 'Wallet replacement confirmation could not open. Your wallet and records are unchanged.'; return false;\n    }\n},\ncancelWalletChange() {\n    pendingWalletChange = null; this.walletChangeRevision++;\n    try { if (this.$refs?.walletChangeDialog?.open) this.$refs.walletChangeDialog.close(); } catch {}\n},\nconfirmWalletChange() {\n    const intent = pendingWalletChange;\n    if (!intent) return false;\n    const unchanged = !journal.locked && !this.scan.active && intent.epoch === this.epoch &&\n        intent.walletSession === this.walletSession && intent.stateKey === this.stateSignature &&\n        intent.resultRevision === this.resultRevision && intent.sessionRevision === this.sessionRevision &&\n        intent.fileRequest === this.fileRequest && intent.wordCount === this.wordCount;\n    // Consume before applying: double clicks and stale/replayed callbacks cannot reset twice.\n    this.cancelWalletChange();\n    if (!unchanged) { this.notice = 'The test changed while confirmation was open. Nothing was replaced. Review the current result before trying again.'; return false; }\n    this.randomizeAll(intent.words);\n    return this.walletSession !== intent.walletSession;\n},\nsaveBeforeWalletChange(kind) {\n    if (!pendingWalletChange) return false;\n    if (kind !== 'result' && kind !== 'session') throw new RangeError('Unknown export choice');\n    this.notice = ''; this.walletChangeError = '';\n    try {\n        if (kind === 'result') this.downloadResult(); else this.downloadHistory();\n        if (this.notice) this.walletChangeError = this.notice;\n    } catch { this.walletChangeError = 'Download unavailable. Keep this wallet to preserve its result and record.'; }\n    return !this.walletChangeError;\n},\nselectSeedLength(e) { if (e !== 12 && e !== 24)"
+      },
+      {
+        "before": "if (dialog.open) return true;\n    this.cancelSectionFocus();",
+        "after": "if (dialog.open) { dialog.scrollTop = 0; this.$refs?.exampleTitle?.focus?.({preventScroll:true}); return true; }\n    this.cancelSectionFocus();"
+      },
+      {
+        "before": "dialog.showModal();\n        this.runDemonstration();",
+        "after": "dialog.showModal();\n        dialog.scrollTop = 0;\n        this.runDemonstration();"
+      },
+      {
+        "before": "pause() { this.cancelSectionFocus(), this.fileRequest++,",
+        "after": "pause() { this.cancelWalletChange(); this.cancelSectionFocus(), this.fileRequest++,"
+      },
+      {
+        "before": "this.notice = 'Session ended. Its report remains available until a new wallet or reload. No device signing operation was undone.';",
+        "after": "this.notice = 'Session ended. Its record is in Session. Your current result is unchanged.';\n    // Focus a stable visible control when the ended banner leaves the active workspace.\n    this.$refs?.sessionNav?.focus?.({preventScroll:true});"
+      },
+      {
+        "before": "exportHistory() {\n    return tbwFreeze({schema:'tbw-session-history-v1'",
+        "after": "exportHistory() {\n    // Detach public projection data before freezing. Freezing reactive proxies can break JSON export.\n    return tbwFreeze(JSON.parse(JSON.stringify({schema:'tbw-session-history-v1'"
+      },
+      {
+        "before": "A matching session does not certify firmware.'});\n},\ndownloadHistory()",
+        "after": "A matching session does not certify firmware.'})));\n},\ndownloadHistory()"
+      }
+    ],
+    "src/page.html": [
+      {
+        "before": ">Dark Skippy example</button>",
+        "after": ">Run Dark Skippy demo</button>"
+      },
+      {
+        "before": "</div></div><p id=\"word-count-help\" class=\"muted compact\">Changing length creates a new wallet.</p></div>",
+        "after": "</div><p id=\"word-count-help\" class=\"muted compact\">Changing length creates a new test wallet.</p></div></div>"
+      },
+      {
+        "before": "Compare the wallet fingerprint on your signer, then continue.",
+        "after": "Check that the fingerprint matches your signer."
+      },
+      {
+        "before": " Test wallet loaded ",
+        "after": " Wallet confirmed "
+      },
+      {
+        "before": "resultState === 'unverified' ? 'Bring back the signature.' : 'Your signature check.'",
+        "after": "resultState === 'unverified' ? 'Import the signed response.' : 'Your signature check.'"
+      },
+      {
+        "before": "Scan, import or paste. BBQr, BC-UR and Specter responses are detected automatically. Complete data is checked on this device.",
+        "after": "Scan, import or paste the signed response from your signer."
+      },
+      {
+        "before": "aria-controls=\"session-view\" id=\"workspace-session\" type=\"button\"",
+        "after": "aria-controls=\"session-view\" id=\"workspace-session\" x-ref=\"sessionNav\" type=\"button\""
+      },
+      {
+        "before": "x-show=\"recordedReviewCount || recordedIncompleteCount || sessionSummary.differed\"",
+        "after": "x-show=\"recordedReviewCount || recordedIncompleteCount || recordedOperationFailureCount || sessionSummary.differed\""
+      },
+      {
+        "before": "x-text=\"recordedReviewCount + ' file reviews'\"",
+        "after": "x-text=\"recordedReviewCount + (recordedReviewCount === 1 ? ' file review' : ' file reviews')\""
+      },
+      {
+        "before": "<span aria-hidden=\"true\" class=\"tracker-chevron\">\u203a</span>",
+        "after": "<span class=\"review-count\" x-show=\"recordedOperationFailureCount\" x-text=\"recordedOperationFailureCount + (recordedOperationFailureCount === 1 ? ' stopped operation' : ' stopped operations')\"></span><span aria-hidden=\"true\" class=\"tracker-chevron\">\u203a</span>"
+      },
+      {
+        "before": "class=\"guided-status\" x-show=\"hasGuidedSession\"",
+        "after": "class=\"guided-status\" x-show=\"hasGuidedSession &amp;&amp; (guidedLocked || workspaceView === 'session')\""
+      },
+      {
+        "before": "<span class=\"tag\" x-text=\"'CASE ' + guidedStatus.current + ' / ' + guidedStatus.requested\"></span>",
+        "after": "<span class=\"tag\" x-text=\"guidedStatus.phase === 'ended' ? guidedStatus.completed + ' / ' + guidedStatus.requested + ' CHECKED' : 'CASE ' + guidedStatus.current + ' / ' + guidedStatus.requested\"></span>"
+      },
+      {
+        "before": "<p class=\"muted compact\" x-show=\"guidedStatus.phase === 'complete'\">The requested responses have been checked. This does not certify the signer or prove that it produced the responses.</p>",
+        "after": "<p class=\"muted compact\" x-show=\"guidedStatus.phase === 'complete'\">The requested responses have been checked. This does not certify the signer or prove that it produced the responses.</p>\n<p class=\"muted compact\" x-show=\"guidedStatus.phase === 'ended'\">This session has ended. Its plan, findings and uncompleted cases remain in this record. Ending did not undo any device signature.</p>"
+      },
+      {
+        "before": "<button id=\"try-example\" type=\"button\" class=\"button secondary small\" @click=\"openExample()\" :disabled=\"scan.active\" aria-haspopup=\"dialog\" aria-controls=\"attack-example\">Run Dark Skippy demo</button>",
+        "after": "<div class=\"example-entry\"><button id=\"try-example\" type=\"button\" class=\"button secondary small\" @click=\"openExample()\" :disabled=\"scan.active\" aria-haspopup=\"dialog\" aria-controls=\"attack-example\" aria-describedby=\"example-entry-help\">View Dark Skippy example</button><small id=\"example-entry-help\">Recorded transaction \u00b7 Not your device</small></div>"
+      },
+      {
+        "before": "@click=\"selectSeedLength(12)\"",
+        "after": "@click=\"requestWalletChange(12, false)\""
+      },
+      {
+        "before": "@click=\"selectSeedLength(24)\"",
+        "after": "@click=\"requestWalletChange(24, false)\""
+      },
+      {
+        "before": "<p id=\"word-count-help\" class=\"muted compact\">Changing length creates a new test wallet.</p></div></div>",
+        "after": "<p id=\"word-count-help\" class=\"muted compact\">Changing length creates a new test wallet.</p></div><div class=\"wallet-reset-control\"><button :disabled=\"guidedLocked || scan.active\" @click=\"requestWalletChange()\" class=\"button secondary small\" id=\"new-test-wallet\" type=\"button\" aria-describedby=\"new-wallet-help\" aria-haspopup=\"dialog\">New test wallet</button><small id=\"new-wallet-help\" x-text=\"guidedLocked ? 'End the guided session first.' : 'New words, same length.'\"></small></div></div>"
+      },
+      {
+        "before": "<details class=\"details advanced-section\" id=\"wallet-options\"><summary>Replace this test wallet</summary><div class=\"details-body\"><p>This creates new words of the same length and clears this tab\u2019s session. Save your results first. An active guided session must be ended before replacing its wallet.</p><div class=\"button-group\"><button :disabled=\"guidedLocked\" @click=\"randomizeAll()\" class=\"button secondary small\"><svg aria-hidden=\"true\" class=\"icon\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.7\" viewBox=\"0 0 24 24\"><path d=\"M3 7h3c4 0 8 10 12 10h3m-4-4 4 4-4 4M3 17h3c1.5 0 3-1.5 4-3m4-4c1-1.5 2.5-3 4-3h3m-4-4 4 4-4 4\"></path></svg> Create new wallet</button></div></div></details>",
+        "after": "<div class=\"ended-session-next\" x-show=\"hasGuidedSession &amp;&amp; !guidedLocked\"><p class=\"muted compact\">Your guided session has ended. Its record is in Session. To plan another, create a new test wallet.</p><div class=\"button-group\"><button @click=\"goToStep(1)\" class=\"button secondary small\" type=\"button\">Go to test wallet</button><button @click=\"openWorkspace('session')\" class=\"text-button\" type=\"button\">View session record</button></div></div>"
+      },
+      {
+        "before": "This edition keeps its known-attack example separate in Help so it cannot replace an active test.",
+        "after": "This edition opens its recorded-attack example separately from the wallet workflow, so it cannot replace an active test."
+      },
+      {
+        "before": "<p id=\"example-scope\" class=\"muted\">Recorded attack, not a device test. Your wallet and session are unchanged.</p>",
+        "after": "<p id=\"example-scope\" class=\"muted\">Recorded attack, not a device test. Your wallet and session are unchanged.</p>\n<p id=\"example-operation\">The Lab checks the published signed transaction against expected signatures. It does not run malicious firmware, connect to a signer or recover a seed.</p>"
+      },
+      {
+        "before": "<span class=\"demo-label\">PUBLISHED EXAMPLE</span><h3>Signatures differ, as expected</h3>",
+        "after": "<span class=\"demo-label\">PUBLISHED EXAMPLE \u00b7 CHECK COMPLETE</span><h3>Signatures differ, as expected</h3>"
+      },
+      {
+        "before": "<p>Transaction ID</p><code class=\"example-txid\" x-text=\"demonstration.analysis?.evidence?.transactionId || 'Unavailable'\"></code>",
+        "after": "<p>Transaction ID</p><code class=\"example-txid\" x-text=\"demonstration.analysis?.evidence?.transactionId || 'Unavailable'\"></code><label for=\"example-raw\" x-show=\"demonstration.analysis?.ok\">Recorded signed transaction</label><textarea id=\"example-raw\" readonly=\"\" rows=\"3\" spellcheck=\"false\" x-show=\"demonstration.analysis?.ok\" :value=\"demonstration.analysis?.txHex || ''\"></textarea>"
+      },
+      {
+        "before": "</dialog>\n<footer class=\"footer\">",
+        "after": "</dialog>\n<dialog id=\"wallet-replacement\" x-ref=\"walletChangeDialog\" class=\"example-dialog wallet-replacement\" aria-labelledby=\"wallet-change-title\" aria-describedby=\"wallet-change-warning\" @cancel.prevent=\"cancelWalletChange()\" @close=\"cancelWalletChange()\">\n<div class=\"example-dialog-heading\"><h2 id=\"wallet-change-title\">Replace this test wallet?</h2></div>\n<p id=\"wallet-change-warning\">This creates new test words and clears this tab\u2019s current result and session record. Nothing is saved automatically.</p>\n<p class=\"muted compact\">Save what you need, then load the new words on your signer before testing again.</p>\n<div class=\"button-group wallet-preserve-actions\"><button @click=\"saveBeforeWalletChange('result')\" x-show=\"resultState !== 'unverified'\" class=\"button secondary small\" type=\"button\">Save current result</button><button @click=\"saveBeforeWalletChange('session')\" x-show=\"sessionHistory.length || hasGuidedSession\" class=\"button secondary small\" type=\"button\">Save session record</button></div>\n<p class=\"notice\" role=\"status\" x-show=\"walletChangeError\" x-text=\"walletChangeError\"></p>\n<div class=\"button-group wallet-replacement-actions\"><button @click=\"cancelWalletChange()\" x-ref=\"keepWallet\" class=\"button secondary\" type=\"button\" autofocus=\"\">Keep this wallet</button><button @click=\"confirmWalletChange()\" :disabled=\"!walletChangePending || guidedLocked || scan.active\" class=\"button primary\" type=\"button\" id=\"confirm-new-wallet\">Create new test wallet</button></div>\n</dialog>\n<footer class=\"footer\">"
+      },
+      {
+        "before": "@close=\"cancelWalletChange()\"",
+        "after": "@close=\"if (!$el.open) cancelWalletChange()\""
+      },
+      {
+        "before": ">View Dark Skippy example</button><small id=\"example-entry-help\">Recorded transaction \u00b7 Not your device</small>",
+        "after": ">Dark Skippy example</button><small id=\"example-entry-help\">Checks a recorded attack</small>"
+      },
+      {
+        "before": "<small id=\"new-wallet-help\" x-text=",
+        "after": "<small class=\"sr-only\" id=\"new-wallet-help\" x-text="
+      },
+      {
+        "before": "<div class=\"example-entry\">",
+        "after": "<div class=\"demo-launch\">"
+      }
+    ],
+    "src/style.css": [
+      {
+        "before": "ns{margin-inline-start:auto}.brand-name{font-size:17.75px}}\n@media(forced-colors:active){.header-actions .help-control,.seed-layout .seed-scan{border-color:CanvasText}.header-actions .help-control,.header-actions .release-status a{color:LinkText}.help-control:focus-visible{outline-color:Highlight}}\n",
+        "after": "ns{margin-inline-start:auto}.brand-name{font-size:17.75px}}\n@media(forced-colors:active){.header-actions .help-control,.seed-layout .seed-scan{border-color:CanvasText}.header-actions .help-control,.header-actions .release-status a{color:LinkText}.help-control:focus-visible{outline-color:Highlight}}\n\n/* v0.18.4 navigation recovery: remove only the decorative QR rail, not its geometry.\n   Empty framing has no security meaning; QR quiet zone and action alignment remain intact. */\n.brand-copy{gap:2px}\n.seed-layout .seed-scan,.seed-layout .seed-scan.seed-expanded{border-color:transparent;background:transparent;border-radius:0}\n.seed-length-control{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 12px;width:max-content;max-width:100%}\n.seed-length-control>.unit-toggle{justify-self:start;margin-inline-start:0}\n.seed-length-control>#word-count-help{grid-column:2;margin:0;text-align:left;color:#94a9ba;font-size:12px;line-height:1.6;min-width:0;max-width:100%;overflow-wrap:anywhere}\n@media(max-width:760px){.seed-length-control{width:100%;grid-template-columns:minmax(0,1fr)}.seed-length-control>span{grid-row:1}.seed-length-control>.unit-toggle{grid-row:2;justify-self:start}.seed-length-control>#word-count-help{grid-column:1;grid-row:3}}\n@media(forced-colors:active){.seed-layout .seed-scan,.seed-layout .seed-scan.seed-expanded{border-color:transparent;background:Canvas}.seed-length-control>#word-count-help{color:CanvasText}}\n"
+      },
+      {
+        "before": " .seed-scan,.seed-layout .seed-scan.seed-expanded{border-color:transparent;background:Canvas}.seed-length-control>#word-count-help{color:CanvasText}}\n",
+        "after": " .seed-scan,.seed-layout .seed-scan.seed-expanded{border-color:transparent;background:Canvas}.seed-length-control>#word-count-help{color:CanvasText}}\n\n/* Feedback refinement: visible outcomes, ordinary wallet controls, no new state owner. */\n.example-entry{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:0;margin-left:auto;max-width:100%}\n.example-entry small,.wallet-reset-control small{color:var(--muted);font-size:12px;line-height:1.5}\n#prepare-heading>.example-entry{flex:0 1 auto}\n.seed-toolbar{align-items:flex-start;gap:12px 20px}.seed-toolbar>.seed-length-control{width:auto;min-width:0;flex:1 1 220px}\n.wallet-reset-control{display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-left:auto;min-width:0;max-width:100%}\n.wallet-reset-control .button{min-height:44px}.wallet-replacement-actions{margin-top:22px;gap:10px;justify-content:flex-end}\n.wallet-preserve-actions{margin:14px 0;gap:10px;justify-content:flex-start}.wallet-replacement .notice{margin:14px 0}\n.ended-session-next{padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:12px}.ended-session-next p{margin:0 0 8px}\n.example-dialog #example-operation{color:#c3d0da;font-size:14px}.example-dialog #example-raw{margin:8px 0 14px;max-width:100%;overflow-wrap:anywhere}\n@media(max-width:520px){#prepare-heading>.example-entry{align-items:flex-end;flex:1 1 200px}.wallet-replacement-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.wallet-replacement-actions>.button{width:100%}.wallet-preserve-actions>.button{flex:1 1 160px}.wallet-reset-control{flex:0 1 auto}.seed-toolbar>.seed-length-control{flex:1 1 190px}}\n@media(forced-colors:active){.example-entry small,.wallet-reset-control small,.example-dialog #example-operation{color:CanvasText}}\n"
+      },
+      {
+        "before": "d-toolbar>.seed-length-control{flex:1 1 190px}}\n@media(forced-colors:active){.example-entry small,.wallet-reset-control small,.example-dialog #example-operation{color:CanvasText}}\n",
+        "after": "d-toolbar>.seed-length-control{flex:1 1 190px}}\n@media(forced-colors:active){.example-entry small,.wallet-reset-control small,.example-dialog #example-operation{color:CanvasText}}\n\n/* Ordinary controls share a row when their actual labels fit; extra text must not force clutter. */\n#prepare-heading>div:first-child{flex:0 1 auto;min-width:0}#prepare-heading>.example-entry{flex:0 1 auto}\n#prepare-heading .example-entry small{text-align:right}.seed-toolbar{column-gap:12px}\n.seed-toolbar>.seed-length-control{flex:1 1 166px;max-width:100%}.wallet-reset-control{padding-top:25px}\n@media(max-width:359px){.wallet-reset-control{padding-top:0}.seed-toolbar>.seed-length-control{flex-basis:100%}}\n"
+      },
+      {
+        "before": "/* Feedback refinement: visible outcomes, ordinary wallet controls, no new state owner. */\n.example-entry{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:0;margin-left:auto;max-width:100%}\n.example-entry small,.wallet-reset-control small{color:var(--muted);font-size:12px;line-height:1.5}\n#prepare-heading>.example-entry{flex:0 1 auto}\n.seed-toolbar{align-items:flex-start;gap:12px 20px}.seed-toolbar>.seed-length-control{width:auto;min-width:0;flex:1 1 220px}\n.wallet-reset-control{display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-left:auto;min-width:0;max-width:100%}\n.wallet-reset-control .button{min-height:44px}.wallet-replacement-actions{margin-top:22px;gap:10px;justify-content:flex-end}\n.wallet-preserve-actions{margin:14px 0;gap:10px;justify-content:flex-start}.wallet-replacement .notice{margin:14px 0}\n.ended-session-next{padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:12px}.ended-session-next p{margin:0 0 8px}\n.example-dialog #example-operation{color:#c3d0da;font-size:14px}.example-dialog #example-raw{margin:8px 0 14px;max-width:100%;overflow-wrap:anywhere}\n@media(max-width:520px){#prepare-heading>.example-entry{align-items:flex-end;flex:1 1 200px}.wallet-replacement-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.wallet-replacement-actions>.button{width:100%}.wallet-preserve-actions>.button{flex:1 1 160px}.wallet-reset-control{flex:0 1 auto}.seed-toolbar>.seed-length-control{flex:1 1 190px}}\n@media(forced-colors:active){.example-entry small,.wallet-reset-control small,.example-dialog #example-operation{color:CanvasText}}\n\n/* Ordinary controls share a row when their actual labels fit; extra text must not force clutter. */\n#prepare-heading>div:first-child{flex:0 1 auto;min-width:0}#prepare-heading>.example-entry{flex:0 1 auto}\n#prepare-heading .example-entry small{text-align:right}.seed-toolbar{column-gap:12px}\n.seed-toolbar>.seed-length-control{flex:1 1 166px;max-width:100%}.wallet-reset-control{padding-top:25px}\n@media(max-width:359px){.wallet-reset-control{padding-top:0}.seed-toolbar>.seed-length-control{flex-basis:100%}}\n",
+        "after": "/* Feedback refinement: visible outcomes, ordinary wallet controls, no new state owner. */\n.demo-launch{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:0;margin-left:auto;max-width:100%}\n.demo-launch small,.wallet-reset-control small{color:var(--muted);font-size:12px;line-height:1.5}\n#prepare-heading>.demo-launch{flex:0 1 auto}\n.seed-toolbar{align-items:flex-start;gap:12px 20px}.seed-toolbar>.seed-length-control{width:auto;min-width:0;flex:1 1 220px}\n.wallet-reset-control{display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-left:auto;min-width:0;max-width:100%}\n.wallet-reset-control .button{min-height:44px}.wallet-replacement-actions{margin-top:22px;gap:10px;justify-content:flex-end}\n.wallet-preserve-actions{margin:14px 0;gap:10px;justify-content:flex-start}.wallet-replacement .notice{margin:14px 0}\n.ended-session-next{padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:12px}.ended-session-next p{margin:0 0 8px}\n.example-dialog #example-operation{color:#c3d0da;font-size:14px}.example-dialog #example-raw{margin:8px 0 14px;max-width:100%;overflow-wrap:anywhere}\n@media(max-width:520px){#prepare-heading>.demo-launch{align-items:flex-end;flex:1 1 200px}.wallet-replacement-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.wallet-replacement-actions>.button{width:100%}.wallet-preserve-actions>.button{flex:1 1 160px}.wallet-reset-control{flex:0 1 auto}.seed-toolbar>.seed-length-control{flex:1 1 190px}}\n@media(forced-colors:active){.demo-launch small,.wallet-reset-control small,.example-dialog #example-operation{color:CanvasText}}\n\n/* Ordinary controls share a row when their actual labels fit; extra text must not force clutter. */\n#prepare-heading>div:first-child{flex:0 1 auto;min-width:0}#prepare-heading>.demo-launch{flex:0 1 auto}\n#prepare-heading .demo-launch small{text-align:right}.seed-toolbar{column-gap:12px}\n.seed-toolbar>.seed-length-control{flex:1 1 166px;max-width:100%}.wallet-reset-control{padding-top:25px}\n@media(max-width:359px){.wallet-reset-control{padding-top:0}.seed-toolbar>.seed-length-control{flex-basis:100%}}\n"
+      }
+    ]
+  }
+}
