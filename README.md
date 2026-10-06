@@ -1,4 +1,4 @@
-# Signature Lab v0.20.0-rc1
+# Signature Lab v0.20.3-rc1
 
 Offline signature spot checker for disposable BIP84 P2WPKH single-signature wallets.
 Never enter real wallet words, fund generated addresses or broadcast test transactions.
@@ -6,17 +6,23 @@ A matching response is not firmware certification or proof of a physical-device 
 
 ## Current scope
 
-This candidate starts from the exact v0.19.0-rc1 HTML and source archive. It adds optional bounded
-session evidence retention, diagnostic packages, independent psbt-envelope-v3 replay, critical browser
-workflow automation and a targeted deliberate-defect campaign. The main layout, signing calculations,
-metadata policy, QR codecs, camera controller and startup self-check are unchanged.
+This readability candidate retains all 29 runtime JavaScript modules and vendor bytes from the exact
+v0.20.0-rc1 source. It recovers the approved readability preview: Helvetica-first local typography,
+larger default text, no orange title dot, and a readable footer immediately following active content.
+The continuation corrects a hidden Scenario label and narrow result-action layout. No licensed font
+file is included or fetched. Helvetica is used when available; local fallback rendering varies by OS.
+Only presentation, qualification tests, source locks and handoff documentation change.
+
+The reported v0.20.2 source/candidate/acceptance records were not recovered. No prior incomplete results
+are carried forward. New version v0.20.3-rc1 has its own canonical plan and qualification evidence.
 
 One coordinator, immutable result and session journal remain authoritative. Retention is off by default,
 stays in the open tab and uses the existing public evidence exporter. No storage permission, upload,
 network integration, new signing method or vendor replacement is introduced.
 
-See docs/EVIDENCE-ARCHITECTURE-FROZEN.md, docs/EVIDENCE-SCOPED-REVIEW.md and
- docs/EVIDENCE-FIX-MATRIX.md. The separate qualification report identifies the exact accepted bytes,
+Current scope: docs/READABILITY-DELIVERY-ARCHITECTURE.md and docs/READABILITY-FIX-MATRIX.md.
+The retained evidence contracts are in docs/EVIDENCE-ARCHITECTURE-FROZEN.md,
+docs/EVIDENCE-SCOPED-REVIEW.md and docs/EVIDENCE-FIX-MATRIX.md. The separate qualification report identifies the exact accepted bytes,
 completed checks, failures, unavailable environments and limits; old version totals are not current passes.
 
 ## Normal workflow

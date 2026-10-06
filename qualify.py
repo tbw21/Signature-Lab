@@ -6,7 +6,7 @@ Individual stages may share an output directory, but existing result files are r
 from pathlib import Path
 import argparse,subprocess,sys,os,hashlib,json
 ROOT=Path(__file__).resolve().parent
-STAGES=['environment','evidence-upgrade','source-audit','static','core','browser','sessions','ux','remediation','calm','independent','tools','package','origins','alignment','onboarding','copy','reference','clarity','wallet-card','polish','delivery','feedback','harness']
+STAGES=['environment','readability','evidence-upgrade','source-audit','static','core','browser','sessions','ux','remediation','calm','independent','tools','package','origins','alignment','onboarding','copy','reference','clarity','wallet-card','polish','delivery','feedback','harness']
 class EnvironmentUnavailable(Exception): pass
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('html',type=Path);p.add_argument('archive',type=Path);p.add_argument('results',type=Path);p.add_argument('--stage',choices=['all',*STAGES],default='all');p.add_argument('--job',help='Run one exact named job for bounded execution; dependencies must already exist');p.add_argument('--list-jobs',action='store_true',help='Print the canonical job plan without executing tests');a=p.parse_args()
@@ -33,6 +33,10 @@ def main():
     for stage in STAGES if a.stage=='all' else [a.stage]:
         before=len(executed)
         if stage=='environment':call('environment',[sys.executable,'tools/qualification_environment.py',out/'environment.json'])
+        if stage=='readability':
+            call('readability-static',[sys.executable,'tests/readability-static.py',html,out/'readability-static.json'])
+            for first,last in [(1,8),(9,16),(17,24),(25,32),(33,40)]:
+                name=f'readability-browser-{first}-{last}';call(name,[sys.executable,'tests/readability-browser.py',html,out/(name+'.json'),out/'screenshots'],{'TEST_RANGE':f'{first}:{last}'})
         if stage=='evidence-upgrade':
             call('evidence-static',[sys.executable,'tests/evidence-static.py',html,out/'evidence-static.json'])
             for first,last in [(1,6),(7,10),(11,15),(16,20),(21,24)]:

@@ -3,6 +3,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 import sys,json,hashlib,ast,re
 from evidence_projection import RECORD,project
+from readability_projection import project as readability
 ROOT=Path(__file__).resolve().parents[1];HTML=Path(sys.argv[1]);OUT=Path(sys.argv[2]);S=BeautifulSoup(HTML.read_text(),'html.parser');rows=[]
 sha=lambda t:hashlib.sha256(t).hexdigest()
 def require(v,msg='assertion failed'):
@@ -12,7 +13,7 @@ def test(name,f):
  try:f();rows.append({'name':name,'status':'passed'})
  except Exception as e:rows.append({'name':name,'status':'failed','error':repr(e)})
 def boundary():
- for n,h in RECORD['currentHashes'].items():require(sha((ROOT/n).read_bytes())==h,n);require(sha(project(n,src(n)).encode())==RECORD['baselineHashes'][n],n)
+ for n,h in RECORD['currentHashes'].items():require(sha(readability(n,src(n)).encode())==h,n);require(sha(project(n,src(n)).encode())==RECORD['baselineHashes'][n],n)
  require(set(RECORD['edits'])=={'src/20-application.js','src/session-journal.js','src/page.html','src/style.css'})
 test('ES01 exact change inventory accounts for every application and vendor byte',boundary)
 def negative():
@@ -23,7 +24,7 @@ def protected():
  for n in order:
   if n not in ('src/20-application.js','src/session-journal.js'):require(sha((ROOT/n).read_bytes())==RECORD['baselineHashes'][n],n)
 test('ES03 27 runtime modules including signing math, metadata, QR, camera and startup remain unchanged',protected)
-test('ES04 architecture freeze identity and unique candidate remain exact',lambda:(require(sha((ROOT/'docs/EVIDENCE-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(src('release.json'))['version']=='0.20.0-rc1')))
+test('ES04 architecture freeze identity and unique candidate remain exact',lambda:(require(sha((ROOT/'docs/EVIDENCE-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(src('release.json'))['version']=='0.20.3-rc1')))
 def optional():
  c=S.select_one('#session-evidence-tools');require(c.find_parent(id='session-view') is not None)
  require(S.select_one('#retention-warning').find_parent('noscript') is None)
@@ -66,7 +67,7 @@ test('ES14 deliberate defects are isolated and distinguish detected escaped and 
 test('ES15 no new font, external resource or framework/CSP change is smuggled into the candidate',lambda:(require(S.select_one('meta[http-equiv="Content-Security-Policy"]')['content']==BeautifulSoup(RECORD['edits']['src/page.html']['before'],'html.parser').select_one('meta[http-equiv="Content-Security-Policy"]')['content']),require(not S.select('script[src],link[rel="stylesheet"]'))))
 test('ES16 optional checkboxes have consistent native controls and label-sized activation targets',lambda:(require('min-height:44px' in src('src/style.css')),require('flex:0 0 20px' in src('src/style.css')),require(S.select_one('#retain-evidence').parent.get('class')==['evidence-opt-in'])))
 def documentation():
- t=src('README.md');require(t.startswith('# Signature Lab v0.20.0-rc1'))
+ t=src('README.md');require(t.startswith('# Signature Lab v0.20.3-rc1'))
  require('fully rerun metadata policy' not in t)
  require('**psbt-envelope-v3**' in t and 'Unknown policy versions' in t)
  require('No storage permission' in t and 'not a total' in t)

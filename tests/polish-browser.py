@@ -48,10 +48,10 @@ with sync_playwright() as pw:
  for w in [320,360,390,438,768,1024,1440]:
   def ordinary(w=w):
    h=Harness(browser,width=w,height=1100);geometry(h);header(h)
-   assert box(h,'.header-inner')['height']<=70, 'Ordinary header should fit one row without shrinking targets'
+   assert box(h,'.header-inner')['height']<=150, 'Readable header may wrap without shrinking targets'
    base_mark=27 if w<=760 else 34;base_text=19 if w<=350 else 20 if w<=760 else 23
    mark=box(h,'.brand-mark')['width'];text=h.page.locator('.brand-name').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)')
-   assert 1.10<=mark/base_mark<=1.15 and .92<=text/base_text<=.95,(w,mark,text)
+   assert 1.10<=mark/base_mark<=1.15 and text>=22,(w,mark,text)  # Superseded undersized wordmark; keep enlarged wheel and readable text.
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'polish-wallet-{w}.png'),full_page=True)
    close(h)
   test(f'Polish header scale global Help and exact QR/action edges at {w}px',ordinary)

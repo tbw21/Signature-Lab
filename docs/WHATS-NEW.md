@@ -1,11 +1,10 @@
-# What is new in Signature Lab v0.20.0-rc1
-- Optional Session evidence keeps earlier public result responses in the open tab for one export.
-- Explicit retention limits and missing-response reporting; no silent eviction or background storage.
-- Diagnostic-only packages by default, with original current response included only by explicit choice.
-- Optional capture-attempt history stays separate from signature counts in the same journal.
-- Independent replay reconstructs psbt-envelope-v3 findings and validates session attachment bindings.
-- Available-browser critical workflows and eight deliberately broken safeguard tests extend qualification.
-- Main visual design, signing calculations, metadata policy, QR handling and camera owner are unchanged.
+# What is new in v0.20.3-rc1
 
-This is a candidate. Consult Qualification.md for actual completed tests and unavailable environments.
-Physical acceptance, publisher authentication, vendor provenance and external review remain separate.
+- Helvetica-first local typography throughout, with no external fonts.
+- Larger default body, controls, instructions and supporting text.
+- Removed the orange dot after Signature Lab; wheel and attribution retained.
+- Readable footer follows the active content rather than a screen-height spacer.
+- Restored the hidden Scenario label and aligned mobile result actions.
+- All runtime JavaScript, signing/metadata checks, QR/camera handling and evidence retention unchanged.
+
+Consult the separate qualification report for actual completed checks and open hardware/browser, dependency and publisher requirements. This is a controlled-testing candidate, not firmware certification.

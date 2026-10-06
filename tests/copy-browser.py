@@ -27,7 +27,7 @@ with sync_playwright() as pw:
    # Native system fonts differ in glyph widths. Preserve natural wrapping, not a fixed line count.
    if m['naturalWidth']<=m['width']:assert m['lines']==1,m
    else:assert m['lines']>1,m
-   if w>=1024:assert m['font']==14,m
+   if w>=1024:assert m['font']==16,m  # Approved readability requirement; no forced one-line text.
    if w<=438:assert m['lines']>1,m
    assert h.page.locator('.seed-scan .wallet-fingerprint-help').count()==0
    assert h.page.locator('#wallet-fingerprint-value').is_visible()

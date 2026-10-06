@@ -1,5 +1,5 @@
 {
-  "version": "0.20.0-rc1",
-  "baseline": "0.19.0-rc1; optional journal evidence, diagnostic export, independent metadata replay and qualification hardening",
+  "version": "0.20.3-rc1",
+  "baseline": "0.20.0-rc1 with recovered approved 0.20.1 readability preview; restart because 0.20.2 candidate/receipts unavailable",
   "status": "release-candidate"
 }

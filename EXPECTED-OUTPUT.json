@@ -1,9 +1,9 @@
 {
   "schema": "tbw-expected-output-v1",
-  "version": "0.20.0-rc1",
-  "filename": "TBW-Signature-Lab-v0.20.0-rc1.html",
-  "sha256": "25b8215cedb653ec470d667556f60493f39fcccda0de0f4a19ec0d53504bf73d",
-  "bytes": 1223630,
-  "sourceSha256": "e12cf0e7992ea7be108b6db8323a3fcccacc99e94328d601c8d6dcfef6f13000",
+  "version": "0.20.3-rc1",
+  "filename": "TBW-Signature-Lab-v0.20.3-rc1.html",
+  "sha256": "21025dc6be73f79e09ab3a3c3c50fe68ed4380efde86152cce2bce315b2b2f6e",
+  "bytes": 1227326,
+  "sourceSha256": "2d3efc10cc76eb27f24cb5198b7909a27a4f35cb9986817c172601e01afe5a36",
   "publisherAuthenticated": false
 }

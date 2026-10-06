@@ -98,8 +98,12 @@ with sync_playwright() as pw:
   for w in [438,500]:
    h=Harness(browser,width=w,height=1000)
    a=rect(h,'.seed-qr-actions>button');b=rect(h,'#wallet-loaded')
-   assert abs(a['y']-b['y'])<1 and abs(a['height']-b['height'])<1,(w,a,b)
-   assert a['height']==44 and b['height']==44,'Ordinary text should not wrap one label unnecessarily'
+   assert a['height']>=44 and b['height']>=44
+   # Larger approved type may stack whole actions; preserve equal edges/heights without shrinking.
+   if abs(a['y']-b['y'])<1:assert abs(a['height']-b['height'])<1,(w,a,b)
+   else:assert a['bottom']<=b['y'] and abs(a['x']-b['x'])<1 and abs(a['width']-b['width'])<1,(w,a,b)
+   for selector in ['.seed-qr-actions>button','#wallet-loaded']:
+    assert h.page.locator(selector).evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)>=16 && e.scrollWidth<=e.clientWidth+1')
    geometry(h);close(h)
  test('Wallet card intermediate-width action row has level buttons without unnecessary label wrapping',balanced_actions)
  browser.close()

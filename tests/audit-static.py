@@ -14,7 +14,7 @@ def test(n,f):
 def source(n):
  from evidence_projection import project as evidence
  return evidence(n,(ROOT/n).read_text()) # retained historical boundaries; new ES tests assert current bytes
-test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(source('release.json'))['version']=='0.20.0-rc1')))
+test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(source('release.json'))['version']=='0.20.3-rc1')))
 def boundaries():
  for n,old in RECORD['baselineHashes'].items():
   raw=source(n);require(sha(raw.encode())==RECORD['currentHashes'][n],n);require(sha(project(n,raw).encode())==old,n)

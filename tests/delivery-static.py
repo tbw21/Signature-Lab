@@ -14,7 +14,7 @@ def case(n,f):
  except Exception as e:rows.append({'name':n,'status':'failed','error':repr(e)})
 def one(s):
  e=S.select(s);require(len(e)==1,s);return e[0]
-case('D-S01 scope was frozen before edits and uniquely identifies reconstructed candidate',lambda:(require(sha((ROOT/'docs/DELIVERY-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.0-rc1')))
+case('D-S01 scope was frozen before edits and uniquely identifies reconstructed candidate',lambda:(require(sha((ROOT/'docs/DELIVERY-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.3-rc1')))
 def preserve():
  require(len(R['runtime'])==29)
  for name,digest in R['runtime'].items():

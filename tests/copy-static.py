@@ -75,7 +75,7 @@ test('C-S09 FAQ headings, groups and IDs stay unchanged so the generated content
 def architecture():
  p=ROOT/'docs/COPY-ARCHITECTURE-FROZEN.md';record=json.loads((ROOT/'fixtures/copy-projection.json').read_text())
  check(sha(p.read_bytes())==record['architectureSha256']);check(INTRO in p.read_text())
- check(json.loads((ROOT/'release.json').read_text())['version']=='0.20.0-rc1')
+ check(json.loads((ROOT/'release.json').read_text())['version']=='0.20.3-rc1')
 test('C-S10 architecture remains frozen and candidate version is unique to the refinement',architecture)
 r={'suite':'Copy/scope static and preservation contracts','complete':True,'sha256':sha(FILE.read_bytes()),'passed':sum(x['status']=='passed' for x in results),'failed':sum(x['status']=='failed' for x in results),'results':results}
 OUT.write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2));sys.exit(bool(r['failed']))

@@ -17,7 +17,7 @@ def reverse(name,t):
  for e in reversed(R['edits'].get(name,[])):
   require(e['after'] and t.count(e['after'])==1,name);t=t.replace(e['after'],e['before'],1)
  return t
-case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.0-rc1')))
+case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.3-rc1')))
 def runtime():
  require(len(R['runtime'])==29)
  for n,d in R['runtime'].items():

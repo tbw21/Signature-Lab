@@ -6,7 +6,7 @@ def stable_state(h):return h.call('return JSON.stringify([a.stateSignature,a.wal
 def geom(h):return h.page.evaluate('''()=>{const rect=e=>{const r=e.getBoundingClientRect();return [r.left,r.top,r.width,r.height]};const pane=[...document.querySelectorAll('.panel,.aux-view')].find(e=>e.checkVisibility());return {nav:rect(document.querySelector('.workspace-heading')),panel:rect(pane),scroll:scrollY,width:document.documentElement.clientWidth};}''')
 def fonts(h):
  result=h.page.evaluate('''()=>{const b=getComputedStyle(document.body).fontFamily;const wrong=[...document.querySelectorAll('body *')].filter(e=>e.checkVisibility()&&!['SCRIPT','STYLE','TEMPLATE'].includes(e.tagName)&&getComputedStyle(e).fontFamily!==b).map(e=>[e.tagName,e.id,getComputedStyle(e).fontFamily]);return {b,wrong};}''')
- assert result['b'].startswith('system-ui'),result
+ assert result['b'].startswith('Helvetica'),result
  assert not result['wrong'],result
 
 def dialog(h):
@@ -36,13 +36,21 @@ with sync_playwright() as pw:
   test(f'Clarity stable navigation/panel origin and one native family across views at {width}px',geometry)
  for width in [320,390,1440]:
   def scroll(w=width):
-   h=Harness(browser,width=w,height=900);h.page.evaluate('scrollTo(0,60)');start=geom(h)
+   h=Harness(browser,width=w,height=900);h.page.evaluate('scrollTo(0,60)');start=geom(h);before=stable_state(h)
+   h.page.evaluate("""()=>{window.unrequestedScrolls=[];const into=Element.prototype.scrollIntoView,to=window.scrollTo;
+    Element.prototype.scrollIntoView=function(...x){unrequestedScrolls.push('into');return into.apply(this,x)};
+    window.scrollTo=function(...x){unrequestedScrolls.push('to');return to.apply(this,x)};}""")
    for v in ['advanced','session','test']:
-    h.page.locator('#workspace-'+v).click();h.page.wait_for_timeout(50);g=geom(h)
-    assert abs(g['scroll']-start['scroll'])<1,(w,start,g)
-    assert abs(g['nav'][1]-start['nav'][1])<1,(w,start,g)
+    previous=geom(h);h.page.locator('#workspace-'+v).click();h.page.wait_for_timeout(50);g=geom(h)
+    maximum=h.page.evaluate('Math.max(0,document.documentElement.scrollHeight-innerHeight)')
+    # A content-following footer may make a short view unscrollable. Preserve every
+    # still-representable offset; accept only the browser's mandatory height clamp.
+    assert abs(g['scroll']-min(previous['scroll'],maximum))<1,(w,previous,g,maximum)
+    assert abs(g['nav'][1]+g['scroll']-start['nav'][1]-start['scroll'])<1,(w,start,g)
+    assert not h.page.evaluate('unrequestedScrolls'),h.page.evaluate('unrequestedScrolls')
+    assert stable_state(h)==before
    close(h)
-  test(f'Clarity visible workspace navigation does not pull a scrolled page at {width}px',scroll)
+  test(f'Clarity visible navigation preserves possible scroll and document alignment at {width}px',scroll)
  for width in [320,390,768,1440]:
   for words in [12,24]:
    def sizes(w=width,n=words):
