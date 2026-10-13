@@ -1,5 +1,5 @@
 {
-  "version": "0.20.3-rc1",
-  "baseline": "0.20.0-rc1 with recovered approved 0.20.1 readability preview; restart because 0.20.2 candidate/receipts unavailable",
-  "status": "release-candidate"
+  "version": "0.20.9-dev",
+  "baseline": "v0.20.8-dev frozen; scoped Session and Advanced visual hierarchy remediation",
+  "status": "development-not-a-release-candidate"
 }

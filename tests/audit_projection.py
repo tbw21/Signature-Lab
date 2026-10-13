@@ -6,9 +6,10 @@ from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
 RECORD=json.loads((ROOT/'fixtures/source-audit-changes.json').read_text())
-def project(name,text):
- from evidence_projection import project as evidence
- text=evidence(name,text)
+def project(name,text,already_evidence_projected=False):
+ if not already_evidence_projected:
+  from evidence_projection import project as evidence
+  text=evidence(name,text)
  for edit in reversed(RECORD['edits'].get(name,[])):
   if text.count(edit['after'])==1:text=text.replace(edit['after'],edit['before'],1)
   elif text.count(edit['before'])==1:continue  # already projected by another historical layer

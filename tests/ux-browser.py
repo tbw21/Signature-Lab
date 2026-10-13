@@ -63,7 +63,7 @@ with sync_playwright() as pw:
         assert h.page.locator('#workspace-advanced').is_visible()
         assert not h.page.locator('.session-tracker').is_visible()
         assert h.page.locator('#wallet-loaded').is_visible()
-        assert 'Never enter a real seed' in h.page.locator('.warning:visible').inner_text();assert 'send bitcoin to this wallet' in h.page.locator('.warning:visible').inner_text()
+        warning=h.page.locator('#wallet-safety').inner_text().lower();assert all(term in warning for term in ['never enter','real seed','overwrite','send bitcoin to this wallet']),warning
         assert 'hardware acceptance pending' in h.page.locator('.release-status a').get_attribute('aria-label');layout(h);close(h)
     test('UX default: optional tools closed and essential warning/action/discovery visible',initial)
     def normal():

@@ -76,8 +76,9 @@ function Fv() {
             app.intakeOpen = app.pasteOpen = app.settingsOpen = false;
         }
     }
-    const g = jv();
+    const g = jv([], 'small');
     return {
+retired: false,
 get referenceSelfCheck() { return tbwReferenceSelfTest.status(); },
 githubUrl: `https://github.com/oren-z0/exfil-tester`,
 step: 1,
@@ -361,7 +362,7 @@ generateRandomOutputs() { if (journal.locked) { this.notice = 'End the guided se
             return;
         } this.invalidate(), this.notice = ``, this.outputs = t; },
 scheduleRecompute() {
-    if (this.isTestComplete || this.stateSignature === d) return;
+    if (this.retired || this.isTestComplete || this.stateSignature === d) return;
     this.invalidate(); if (c !== null) clearTimeout(c);
     c = setTimeout(() => { c = null; this.recompute(); }, 150);
 },
@@ -441,7 +442,7 @@ renderPsbtQr(bytes) {
             }
         },
 recompute(options = {}) {
-    if (this.isTestComplete) return;
+    if (this.retired || this.isTestComplete) return;
     if (journal.locked && !installingGuided && !this.checkGuidedBinding()) return;
     const key = this.stateSignature; d = key;
     // Failure latch and the successful cache are keyed by the complete form and policy.
@@ -724,7 +725,7 @@ selectSeedLength(e) { if (e !== 12 && e !== 24)
             throw RangeError(`Choose 12 or 24 test words.`); String(e) !== this.wordCount && this.randomizeAll(e); },
 randomizeAll(e = this.wordCount === `24` ? 24 : 12) { if (journal.locked) { this.notice = 'Save the session report and end the session before creating another wallet.'; return; } if (e !== 12 && e !== 24)
             throw RangeError(`Choose 12 or 24 test words.`); let t, n; try {
-            t = { mnemonic: rm(e), session: tbwUUID(), words: e }, n = jv();
+            t = { mnemonic: rm(e), session: tbwUUID(), words: e }, n = jv([], 'small');
         }
         catch {
             this.notice = `Could not generate a new wallet. The current test is unchanged. Try again explicitly.`;
@@ -819,6 +820,24 @@ pause() { this.cancelWalletChange(); this.cancelSectionFocus(), this.fileRequest
 destroy() {
     this.epoch++; this.pause(); seedRenderRequest++; this.seedQrVisible = false; i = ''; prepared = null; failedPreparation = null;
     clearResult(this); this.preparedRevision++; t = null; e = ''; intake = null;
+},
+finishTesting() {
+    if (this.retired || journal.locked) return false;
+    // The user explicitly confirmed deletion of volatile session state. No secure-erasure claim.
+    this.retired = true; this.destroy();
+    this.seed = Sv(''); this.artifactText = ''; this.accountXpub = ''; this.receiveAddressesText = '';
+    this.walletSession = ''; this.acknowledged = false; this.inputs = []; this.outputs = [];
+    this.demonstration.analysis = null; this.demonstration.error = '';
+    journal = new TbwSessionJournal(); this.sessionRevision++; this.scan.diagnostics = null;
+    d = ''; p = ''; m = ''; this.notice = ''; this.buildProblem = 'This tab is finished.';
+    // Browsers may deny scripted closing. Replace visible content first so the wallet cannot be redisplayed.
+    if (typeof document !== 'undefined' && document.body) {
+        const msg = document.createElement('main');
+        msg.textContent = 'Signature Lab testing finished. Close this tab. Reopen the verified HTML file to start a new session. Browser-managed memory cannot be guaranteed erased.';
+        document.body.replaceChildren(msg);
+    }
+    try { window.location.replace('about:blank'); } catch { /* Leave the non-secret finished message. */ }
+    return true;
 },
 parsedTotalOut() { let e = 0n; for (let t of this.outputs) {
             let n = lv(t.amount.value);

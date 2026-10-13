@@ -14,14 +14,14 @@ def test(n,f):
 def source(n):
  from evidence_projection import project as evidence
  return evidence(n,(ROOT/n).read_text()) # retained historical boundaries; new ES tests assert current bytes
-test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(source('release.json'))['version']=='0.20.3-rc1')))
+test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(source('release.json'))['version']=='0.20.4-dev')))
 def boundaries():
  for n,old in RECORD['baselineHashes'].items():
-  raw=source(n);require(sha(raw.encode())==RECORD['currentHashes'][n],n);require(sha(project(n,raw).encode())==old,n)
+  raw=source(n);require(sha(raw.encode())==RECORD['currentHashes'][n],n);require(sha(project(n,raw,already_evidence_projected=True).encode())==old,n)
  require(set(RECORD['edits'])=={'src/metadata.js','src/06-session-download.js','src/session-journal.js','src/20-application.js','src/22-bootstrap.js','src/page.html'})
 test('SA-S02 all application bytes mapped and only five runtime modules plus template changed',boundaries)
 def negative():
- for n,old in RECORD['baselineHashes'].items():require(sha(project(n,source(n)+'\n// undeclared').encode())!=old,n)
+ for n,old in RECORD['baselineHashes'].items():require(sha(project(n,source(n)+'\n// undeclared',already_evidence_projected=True).encode())!=old,n)
 test('SA-S03 projections cannot hide appended undeclared mutation',negative)
 def protected():
  for n in ['src/04-bitcoin.js','src/evidence.js','src/reference-self-test.js','src/13-qr-session.js','src/17-camera.js','src/11-bbqr.js','src/19-import.js']:

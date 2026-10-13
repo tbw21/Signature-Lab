@@ -1,0 +1,76 @@
+{
+  "schema": "tbw-signature-lab-v0204-development-audit-v1",
+  "version": "0.20.4-dev",
+  "status": "DEVELOPMENT ONLY \u2014 NO PUBLIC RELEASE APPROVAL",
+  "originalHandoffSha256": "16c183865a4c64d3761ac44a7299aeea89cde1f0cdc47c4b9ea9698cfab52cc9",
+  "originalHtmlSha256": "21025dc6be73f79e09ab3a3c3c50fe68ed4380efde86152cce2bce315b2b2f6e",
+  "developmentHtmlSha256": "bb77243aff1530ec60a0f66aab10446913c065666ddb0a73436f0629f13cbead",
+  "developmentHtmlBytes": 1233366,
+  "runtimeModulesChanged": [
+    "src/page.html",
+    "src/style.css",
+    "src/20-application.js"
+  ],
+  "verifiedCryptoVerifierSourceChanged": false,
+  "sourceLocked": true,
+  "publisherAuthenticated": false,
+  "runtimeTests": [
+    {
+      "suite": "Privacy/UX regressions",
+      "passed": 9,
+      "failed": 0,
+      "evidenceFile": "privacy-ux-contract.json"
+    },
+    {
+      "suite": "Optional demo isolation",
+      "passed": 10,
+      "failed": 0,
+      "evidenceFile": "onboarding-final.json"
+    },
+    {
+      "suite": "Session-state contracts",
+      "passed": 38,
+      "failed": 0,
+      "evidenceFile": "sessions-final.json"
+    },
+    {
+      "suite": "Controlled Chromium setContent 1440px/390px",
+      "passed": 6,
+      "failed": 0,
+      "limitation": "not native file/HTTP(S) or actual camera"
+    },
+    {
+      "suite": "Synthetic metadata matrix fixture generation",
+      "passed": 32,
+      "failed": 0,
+      "limitation": "successful generation and completed response check, not an independent full replay or hardware test"
+    }
+  ],
+  "completedRuntimeTestPasses": 95,
+  "completedRuntimeTestFailures": 0,
+  "staticHtml": {
+    "editableFieldsWithTextServiceOptOuts": 16,
+    "translateProtectedCodeElements": 9,
+    "uniqueIds": 136,
+    "duplicateIds": 0
+  },
+  "metadataMatrixEvidenceSha256": "0f7b59ad4dcc872d7962a121439032bd01a41749ad6abdc1af560f2a7caaf666",
+  "timeouts": [
+    "An earlier metadata-fixture run was interrupted at 45 seconds; the final-byte full 32-case generation completed successfully."
+  ],
+  "unavailableOrSkipped": [
+    "full baseline 1356-case requalification not executed on this version",
+    "real signer signing / optical QR tests not available",
+    "native file:// and HTTPS hosting acceptance not executed",
+    "Firefox/Safari/WebKit cross-engine tests not executed",
+    "actual mobile camera permission not tested",
+    "publisher key identity, signatures, upstream vendor provenance and independent external code audit not completed",
+    "site deployment and cookie/header/DNS validation not executed",
+    "true memory erasure unprovable for JS strings and browser or OS memory",
+    "power-loss/read-only-full-disk/restart/native installation/recovery scenarios not exhaustively tested"
+  ],
+  "qualificationGrade": "Scoped developmental verification; NOT an acceptance/release candidate",
+  "sourceAndBuildFrozen": false,
+  "productionChanged": false,
+  "trustClaims": "Only offline source consistency; no firmware safety or release-origin certification."
+}

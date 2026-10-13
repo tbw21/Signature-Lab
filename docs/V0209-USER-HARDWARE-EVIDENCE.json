@@ -1,0 +1,15 @@
+{
+  "schema": "tbw-operator-reported-hardware-evidence-v1",
+  "reporter": "project operator (user)",
+  "device": "SeedSigner",
+  "firmwareReported": "0.8.7 (user wrote \"0.87\")",
+  "reportedRunCount": 30,
+  "application": "Original HTML supplied at start of this chat; believed v0.20.3-rc1, needs exact hash match",
+  "perRunResultsProvided": false,
+  "testScenarioCoverageProvided": false,
+  "qrTransportCoverageProvided": false,
+  "originalHardwareLogsProvided": false,
+  "independentlyWitnessed": false,
+  "evidenceClassification": "user-reported physical testing; not candidate acceptance",
+  "followUp": "Request GitHub repo URL, original HTML hash, counts of passes/failures, model board, PSBT v0/v2, BC-UR/BBQr, transport, optical scan vs import, firmware image hash."
+}
