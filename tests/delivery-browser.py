@@ -35,7 +35,10 @@ with sync_playwright() as pw:
    h=Harness(browser,width=w,height=1100)
    for words in [12,24]:
     if words==24:h.page.get_by_role('button',name='24 words',exact=True).click();stable(h)
-    q=pos(h,'#word-count');hint=pos(h,'#word-count-help');assert hint['y']>=q['bottom'] and abs(hint['x']-q['x'])<1,(q,hint)
+    q=pos(h,'#word-count');hint=pos(h,'#word-count-help');assert hint['y']>=q['bottom'],(q,hint)
+    # Current responsive toolbar allows its full-width description below the control.
+    assert hint['x']>=pos(h,'.seed-toolbar')['x']-1 and hint['right']<=pos(h,'.seed-toolbar')['right']+1,(q,hint)
+    assert h.page.locator('#word-count-help').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)>=14')
     assert h.page.locator('.seed-scan').evaluate('(e)=>getComputedStyle(e).backgroundColor')=='rgba(0, 0, 0, 0)'
     assert h.page.locator('.seed-scan').evaluate('(e)=>getComputedStyle(e).borderTopColor')=='rgba(0, 0, 0, 0)'
     pixel=h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(e)=>e.toDataURL()')
@@ -69,7 +72,7 @@ with sync_playwright() as pw:
  def paused():
   h=Harness(browser,width=390,media=True);h.config();h.page.locator('.stepper>button').nth(2).click();stable(h)
   assert h.page.locator('.intake').is_visible();assert not h.page.locator('#scan-section').is_visible();assert camera_count(h)==0
-  assert h.page.locator('#verify-title').inner_text()=='Import the signed response.';close(h)
+  assert h.page.locator('#verify-title').inner_text()=='Import signed response';close(h)
  test('Delivery Results exposes import controls but no camera starts automatically',paused)
  def live():
   h=Harness(browser,width=390,media=True);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"');assert camera_count(h)==1

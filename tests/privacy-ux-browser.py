@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,sys,traceback
 from playwright.sync_api import sync_playwright
-html=Path(sys.argv[1]).read_text();out=Path(sys.argv[2]);out.mkdir(exist_ok=True,parents=True)
+html=Path(sys.argv[1]).read_text();out=Path(sys.argv[2]);report_file=out if out.suffix=='.json' else out/'browser-report.json';shots=out.parent/'privacy-browser-screenshots' if out.suffix=='.json' else out;shots.mkdir(exist_ok=True,parents=True)
 report={'suite':'Privacy UX controlled Chromium set_content probe','results':[],'environment':'Chromium setContent only, not file:// or HTTPS browser acceptance'}
 def check(name,action):
  try: detail=action();report['results'].append({'name':name,'status':'passed','detail':detail or ''});print('PASSED',name,flush=True)
@@ -22,11 +22,11 @@ with sync_playwright() as pw:
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
    assert not errors,errors
    assert not requests,requests
-   page.screenshot(path=str(out/f'start-{width}.png'),full_page=True)
+   page.screenshot(path=str(shots/f'start-{width}.png'),full_page=True)
   check(f'{width}: startup/seed and support scope, no overflow/network/error',test_start)
   def test_sign():
    page.locator('#wallet-loaded').click()
-   page.locator('#retain-evidence-before-sign').wait_for(state='attached')
+   page.locator('#retain-evidence-before-sign').wait_for(state='visible',timeout=10000)
    evidence=page.locator('#retain-evidence-before-sign')
    print('Evidence visibility',width,evidence.is_visible(), 'step',page.locator('html').get_attribute('data-app-ready'),flush=True)
    assert evidence.is_visible()
@@ -38,7 +38,7 @@ with sync_playwright() as pw:
    assert page.locator('#retain-evidence').is_checked()
    page.locator('#finish-testing-open').wait_for(state='visible',timeout=8000)
    assert page.locator('#finish-testing-open').is_visible()
-   page.screenshot(path=str(out/f'session-{width}.png'),full_page=True)
+   page.screenshot(path=str(shots/f'session-{width}.png'),full_page=True)
   check(f'{width}: opt-in synchronized across signing and Session views',test_sign)
   def test_close():
    page.locator('#finish-testing-open').click()
@@ -52,5 +52,5 @@ with sync_playwright() as pw:
  browser.close()
 report['passed']=len([x for x in report['results'] if x['status']=='passed'])
 report['failed']=len([x for x in report['results'] if x['status']=='failed'])
-(out/'browser-report.json').write_text(json.dumps(report,indent=2));print(json.dumps({'passed':report['passed'],'failed':report['failed']},indent=2))
+report_file.write_text(json.dumps(report,indent=2));print(json.dumps({'passed':report['passed'],'failed':report['failed']},indent=2))
 sys.exit(1 if report['failed'] else 0)

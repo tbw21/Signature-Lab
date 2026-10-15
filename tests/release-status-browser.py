@@ -21,7 +21,7 @@ with sync_playwright() as pw:
    assert 'development preview' in (link.get_attribute('aria-label') or '')
    assert 'not approved for public deployment' in (link.get_attribute('aria-label') or '')
    assert 'Development preview.' in (link.get_attribute('title') or '')
-   assert 'v0.20.5-dev' in link.inner_text()
+   assert 'v'+json.loads((Path(__file__).resolve().parents[1]/'release.json').read_text())['version'] in link.inner_text()
   check(f'{width} release status accessible',release)
   def help_state():
    link=page.locator('.release-status a');link.click()

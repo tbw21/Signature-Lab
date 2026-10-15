@@ -1,7 +1,11 @@
 'use strict';
 // New behavior regressions. Existing mathematical verifier remains the production authority.
 const fs=require('fs'),cp=require('child_process'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto'),{load}=require('./load.cjs');
-const FILE=process.argv[2],OUT=process.argv[3],{A,ctx}=load(FILE),results=[];let index=0;
+// Synthetic Node VM cases are about signing and evidence semantics, not host scheduling.
+// Use monotonic process CPU time inside this VM ONLY; browser self-check and
+// real/injected timeout regression tests keep their original clock contracts.
+const vmCpuTimeMs=()=>{const usage=process.cpuUsage();return (usage.user+usage.system)/1000};
+const FILE=process.argv[2],OUT=process.argv[3],{A,ctx}=load(FILE,{performance:{now:vmCpuTimeMs}}),results=[];let index=0;
 const range=(process.env.TEST_RANGE||'1:999').split(':').map(Number);
 function test(name,fn){index++;if(index<range[0]||index>range[1])return;try{fn();results.push({id:index,name,status:'passed'});console.log('PASS',index,name)}catch(e){results.push({id:index,name,status:'failed',error:e.stack});console.error('FAIL',index,name,e.message)}}
 const hex=x=>A.K.encode(x),bytes=x=>A.K.decode(x),bw=A.__().default;

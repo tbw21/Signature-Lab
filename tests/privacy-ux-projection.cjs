@@ -4,8 +4,10 @@
 const fs=require('fs'),path=require('path'),crypto=require('crypto'),assert=require('node:assert/strict');
 const record=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../fixtures/privacy-ux-qualification-projection.json'),'utf8')).files;
 const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+const historical=require('./current-to-historical.cjs').project;
 exports.project=(name,text)=>{
  const r=record[name]; if(!r)return text;
+ text=historical(name,text);
  assert.equal(sha(text),r.newSha256,'Unauthorized change to v0.20.4 source: '+name);
  for(const e of [...r.edits].reverse()){
   assert(e.after&&text.split(e.after).length-1===1,'Non-unique exact privacy/UX reversal: '+name);

@@ -491,7 +491,7 @@ small{font-size:.875rem}
 .stepper button.current{background:#1d2a35;color:#f2f6fa;box-shadow:none}
 .step-number{width:18px;height:18px;font-size:0.8125rem}
 .workspace-nav{gap:3px;padding:4px;border-radius:12px;border-color:#ffffff10;background:#0c1720;align-self:flex-start}
-.workspace-nav button{min-height:38px;padding:9px 12px;color:#9cafbd;font-size:0.9375rem;gap:7px}
+.workspace-nav button{min-height:44px;padding:9px 12px;color:#9cafbd;font-size:0.9375rem;gap:7px}
 .workspace-nav button[aria-pressed=true]{background:#1d2a35;color:#f2f6fa}
 .workspace-nav .icon{width:16px;height:16px}
 .workspace-nav button span.workspace-alert{color:#f0b56b;margin-left:2px}
@@ -746,9 +746,9 @@ small{font-size:.875rem}
 #session-view .session-counts{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px}
 #session-view .session-summary{display:flex;flex-direction:column;align-items:flex-start;gap:7px}
 #session-view .session-summary h2{font-size:.875rem;letter-spacing:.025em;color:#aebfcb;font-weight:600}
-#session-view .session-summary p{display:flex;align-items:baseline;gap:6px;color:#e1e8ed;font-size:1rem}
+#session-view .session-summary p{display:flex;flex-wrap:wrap;min-width:0;max-width:100%;align-items:baseline;gap:0 6px;color:#e1e8ed;font-size:1rem}
 #session-view .session-summary p strong{font-size:2.75rem;line-height:1;letter-spacing:-.045em;margin:0;color:#f2f5f7;font-weight:650}
-#session-view .session-summary .session-goal{font-size:.875rem;color:#94aabd}
+#session-view .session-summary .session-goal{font-size:.875rem;color:#94aabd;white-space:normal;overflow-wrap:anywhere}
 #session-view .session-outcomes{display:flex;gap:0;align-items:baseline;justify-content:flex-end;color:#b4c5d0;font-size:.875rem}
 #session-view .session-outcomes>span:not(.session-stat-separator){padding:0 12px;border-right:1px solid #ffffff13;white-space:nowrap}
 #session-view .session-outcomes>span:not(.session-stat-separator):first-child{padding-left:0}
@@ -796,3 +796,6 @@ small{font-size:.875rem}
  #session-view .finish-testing .button{margin-top:2px}
  #advanced-view .advanced-body>.details>summary{padding:16px 0}
 }
+
+/* Current high-contrast override follows all general workspace-nav rules. */
+@media(forced-colors:active){.workspace-nav button[aria-pressed=true]{border:2px solid Highlight}}

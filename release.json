@@ -1,5 +1,5 @@
 {
-  "version": "0.20.9-dev",
-  "baseline": "v0.20.8-dev frozen; scoped Session and Advanced visual hierarchy remediation",
+  "version": "0.20.11-dev",
+  "baseline": "v0.20.10-dev frozen; focused 200% reflow, 44px navigation and forced-colors repair",
   "status": "development-not-a-release-candidate"
 }

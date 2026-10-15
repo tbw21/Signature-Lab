@@ -6,7 +6,7 @@ Individual stages may share an output directory, but existing result files are r
 from pathlib import Path
 import argparse,subprocess,sys,os,hashlib,json
 ROOT=Path(__file__).resolve().parent
-STAGES=['environment','readability','evidence-upgrade','source-audit','static','core','browser','sessions','ux','remediation','calm','independent','tools','package','origins','alignment','onboarding','copy','reference','clarity','wallet-card','polish','delivery','feedback','harness']
+STAGES=['environment','current','readability','evidence-upgrade','source-audit','static','core','browser','sessions','ux','remediation','calm','independent','tools','package','origins','alignment','onboarding','copy','reference','clarity','wallet-card','polish','delivery','feedback','harness']
 class EnvironmentUnavailable(Exception): pass
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('html',type=Path);p.add_argument('archive',type=Path);p.add_argument('results',type=Path);p.add_argument('--stage',choices=['all',*STAGES],default='all');p.add_argument('--job',help='Run one exact named job for bounded execution; dependencies must already exist');p.add_argument('--list-jobs',action='store_true',help='Print the canonical job plan without executing tests');a=p.parse_args()
@@ -33,6 +33,14 @@ def main():
     for stage in STAGES if a.stage=='all' else [a.stage]:
         before=len(executed)
         if stage=='environment':call('environment',[sys.executable,'tools/qualification_environment.py',out/'environment.json'])
+        if stage=='current':
+            call('current-release-contract',[sys.executable,'tests/current-release-contract.py',html,out/'current-release-contract.json'])
+            call('v0209-ui-contract',[sys.executable,'tests/v0209-ui-contract.py',out/'v0209-ui-contract.json'])
+            call('privacy-ux-contract',['node','tests/privacy-ux-contract.cjs',html,out/'privacy-ux-contract.json'])
+            call('privacy-ux-browser',[sys.executable,'tests/privacy-ux-browser.py',html,out/'privacy-ux-browser'])
+            call('release-status-browser',[sys.executable,'tests/release-status-browser.py',html,out/'release-status-browser.json'])
+            call('current-assurance',[sys.executable,'tests/current-assurance.py',html,out/'current-assurance.json'])
+            call('current-accessibility',[sys.executable,'tests/current-accessibility.py',html,out/'current-accessibility.json'])
         if stage=='readability':
             call('readability-static',[sys.executable,'tests/readability-static.py',html,out/'readability-static.json'])
             for first,last in [(1,8),(9,16),(17,24),(25,32),(33,40)]:

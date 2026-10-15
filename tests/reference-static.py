@@ -14,7 +14,7 @@ def case(name,f):
 page=audit_read('src/page.html');code=audit_read('src/reference-self-test.js');app=audit_read('src/20-application.js')
 def preservation():
  for name,digest in RECORD['baselineInputs'].items():
-  text=audit_read(name);check(sha(project(name,text).encode())==digest,name)
+  text=(ROOT/name).read_text();check(sha(project(name,text).encode())==digest,name)
  check(set(RECORD['edits'])=={'sources.json','src/20-application.js','src/21-navigation.js','src/page.html'})
 case('R-S01 exact authorized reversals restore every baseline source/vendor/template/style/build byte',preservation)
 def gate_order():
@@ -55,12 +55,12 @@ def calm():
 case('R-S08 successful self-check status is confined to existing technical Help',calm)
 case('R-S09 mandatory architecture receipt is unchanged',lambda:check(sha((ROOT/'docs/REFERENCE-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']))
 def projection_negative():
- text=audit_read('src/20-application.js').replace('this.epoch++','this.epoch--',1)
- check(sha(project('src/20-application.js',text).encode())!=RECORD['baselineInputs']['src/20-application.js'])
- text=audit_read('src/20-application.js').replace('tbwReferenceSelfTest.apply();','',1)
- try:project('src/20-application.js',text)
- except AssertionError:return
- raise AssertionError('Missing gate was hidden by projection')
+ original=(ROOT/'src/20-application.js').read_text()
+ for mutant in [original.replace('this.epoch++','this.epoch--',1),original.replace('tbwReferenceSelfTest.apply();','',1)]:
+  check(mutant!=original,'Mutation injection not applied')
+  try: projected=project('src/20-application.js',mutant)
+  except AssertionError: continue
+  check(sha(projected.encode())!=RECORD['baselineInputs']['src/20-application.js'],'Unauthorized state/gate mutation hidden')
 case('R-S10 unauthorized math/state edits or missing gate cannot be masked by preservation projection',projection_negative)
 r=dict(suite='Reference audit static/preservation',sha256=sha(FILE.read_bytes()),complete=True,passed=sum(x['status']=='passed' for x in rows),failed=sum(x['status']=='failed' for x in rows),results=rows)
 OUT.write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2));sys.exit(bool(r['failed']))

@@ -17,7 +17,7 @@ def one(s):
  es=S.select(s);require(len(es)==1,s);return es[0]
 case('P-S01 architecture remains exactly frozen',lambda:require(sha((ROOT/'docs/POLISH-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']))
 def preservation():
- for name,digest in R['runtime'].items():require(sha((delivery_project(name,audit_read(name)) if name=='src/20-application.js' else audit_read(name)).encode())==digest,name)
+ for name,digest in R['runtime'].items():require(sha((delivery_project(name,(ROOT/name).read_text()) if name=='src/20-application.js' else audit_read(name)).encode())==digest,name)
  require(len(R['runtime'])==len(json.loads((ROOT/'sources.json').read_text()))==29)
 case('P-S02 28 runtime units identical; declared navigation changes reverse exactly to v0.18.1',preservation)
 def reverse():
@@ -61,7 +61,7 @@ def callbacks():
  one('[x-ref="seedQrCanvas"]');one('.seed-grid')
 case('P-S09 original distinct callbacks and canvas/identity bindings preserved',callbacks)
 def safety():
- require('Never enter a real seed or send bitcoin' in one('#wallet-safety').get_text())
+ require('Never enter your real seed' in one('#wallet-safety').get_text())
  require('Do not add a passphrase.' in one('.seed-instructions').get_text())
  require('Signatures matched. File changes need review.' in H)
  require('Could not complete the check' in H);require('does not rule out seed leakage' in H)

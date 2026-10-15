@@ -15,12 +15,12 @@ def case(name,f):
 case('CL-S01 frozen architecture identity preserved',lambda:check(sha((ROOT/'docs/CLARITY-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']))
 def preservation():
  for name,digest in RECORD['runtimeBefore'].items():
-  check(sha(project(name,audit_read(name)).encode())==digest,name)
+  check(sha(project(name,(ROOT/name).read_text()).encode())==digest,name)
   if name!='src/20-application.js':check(sha(audit_read(name).encode())==digest,name)
 case('CL-S02 every crypto, vendor, startup, transport, result and journal byte unchanged; only declared app navigation differs',preservation)
 def reversals():
  for name,digest in RECORD['baselineHashes'].items():
-  check(sha(project(name,audit_read(name)).encode())==digest,name)
+  check(sha(project(name,(ROOT/name).read_text()).encode())==digest,name)
   check(sha(audit_read(name).encode())==RECORD['currentHashes'][name],name)
 case('CL-S03 complete template/style/app reversals restore exact verified baseline hashes',reversals)
 def mutation():

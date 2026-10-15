@@ -186,7 +186,7 @@ with sync_playwright() as pw:
         h=planned(browser);h.page.locator('#wallet-loaded').click()
         h.page.evaluate('Object.defineProperty(navigator,"mediaDevices",{configurable:true,value:{getUserMedia:()=>Promise.reject(new DOMException("denied","NotAllowedError"))}})')
         h.call('a.scan.supported=true; a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="failed"')
-        assert h.page.locator('[x-text="scan.error"]').is_visible();assert h.page.locator('.guided-status').is_visible();close(h)
+        h.page.locator('[x-text="scan.error"]').wait_for(state="visible");assert h.page.locator('[x-text="scan.error"]').is_visible();assert h.page.locator('.guided-status').is_visible();close(h)
     test('UX denied camera remains an explicit terminal session finding in beginner view',denied)
     def help_identity():
         h=Harness(browser);h.page.locator('.release-status a').click();box=h.page.locator('#release-status-help')

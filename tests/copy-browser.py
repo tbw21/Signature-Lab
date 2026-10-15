@@ -2,7 +2,7 @@
 """Gold scope copy and removed wallet note in exact candidate DOM; no physical device claims."""
 from pathlib import Path
 exec((Path(__file__).parent/'ux-browser.py').read_text().split('\nwith sync_playwright() as pw:')[0],globals())
-INTRO='Compare test signatures with expected results to flag deviations such as the published Dark Skippy example; a match cannot rule out all attacks.'
+INTRO='Compare signatures from a disposable test wallet with expected results. A match does not prove that firmware is safe.'
 def identity(h):return h.call('return JSON.stringify([a.stateSignature,a.psbtBase64,a.variants,a.walletSession,a.walletFingerprint,a.preparedRevision,a.sessionChecks,a.guidedStatus,a.resultState,a.completedAt,a.signingPolicy])')
 def help_topic(h,id):
  h.page.get_by_role('link',name='Help',exact=True).click()
@@ -20,7 +20,7 @@ with sync_playwright() as pw:
  for width in [320,360,390,438,768,1024,1440]:
   def responsive(w=width):
    h=Harness(browser,width=w,height=1050);m=metrics(h)
-   assert m['text']==INTRO and m['color']=='rgb(229, 182, 125)';assert m['whiteSpace']=='normal'
+   assert m['text']==INTRO and m['color']=='rgb(201, 214, 223)';assert m['whiteSpace']=='normal'
    assert m['scroll']<=m['width']+1 and m['font']>=13
    contrast=(max(luminance(m['color']),luminance(m['background']))+.05)/(min(luminance(m['color']),luminance(m['background']))+.05)
    assert contrast>=4.5,contrast
@@ -37,7 +37,7 @@ with sync_playwright() as pw:
     h.workspace(view);assert metrics(h)['text']==INTRO;assert identity(h)==before;layout(h)
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'copy-wallet-{w}.png'),full_page=True)
    close(h)
-  test(f'Copy layout: gold, readable contrast and natural reflow at {width}px',responsive)
+  test(f'Copy layout: restrained readable contrast and natural reflow at {width}px',responsive)
  for width in [390,1440]:
   for words in [12,24]:
    def wallet(w=width,n=words):

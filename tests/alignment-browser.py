@@ -83,7 +83,7 @@ with sync_playwright() as pw:
             for group in ['.return-actions>.button-group','.psbt-actions']:
                 assert h.page.locator(group).evaluate('(e)=>getComputedStyle(e).justifyContent')=='flex-end'
                 children=h.page.locator(group+' > :is(button,label)')
-                right=children.last.evaluate('(e)=>e.getBoundingClientRect().right')
+                children.last.wait_for(state='visible');right=children.last.evaluate('(e)=>e.getBoundingClientRect().right')
                 assert abs(right-box(h,group)['right'])<2,(group,right,box(h,group))
             h.config();h.accept(h.call('return a.variants[0].txHex'));before=state(h)
             trailing(h,'.result-actions>button[aria-describedby="save-result-help"]','.result-actions')

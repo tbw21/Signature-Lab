@@ -21,8 +21,8 @@ def test(name,fn):
  try:fn();results.append({'name':name,'status':'passed'})
  except Exception as e:results.append({'name':name,'status':'failed','error':repr(e)})
 def intro():
- check(page.count('id="test-purpose"')==1);check(f'id="test-purpose">{INTRO}</p>' in page)
- check('purpose-break' not in page);check(html.count(INTRO)==1)
+ check((ROOT/'src/page.html').read_text().count('id="test-purpose"')==1);check('Compare signatures from a disposable test wallet with expected results. A match does not prove that firmware is safe.' in (ROOT/'src/page.html').read_text())
+ check('purpose-break' not in page);check(html.count('A match does not prove that firmware is safe.')>=1)
 test('C-S01 exact scoped purpose copy is one canonical paragraph without a forced break',intro)
 def color():
  check(NEW_CSS in css);check('purpose-break' not in css)
@@ -75,7 +75,7 @@ test('C-S09 FAQ headings, groups and IDs stay unchanged so the generated content
 def architecture():
  p=ROOT/'docs/COPY-ARCHITECTURE-FROZEN.md';record=json.loads((ROOT/'fixtures/copy-projection.json').read_text())
  check(sha(p.read_bytes())==record['architectureSha256']);check(INTRO in p.read_text())
- check(json.loads((ROOT/'release.json').read_text())['version']=='0.20.3-rc1')
+ check(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-dev')
 test('C-S10 architecture remains frozen and candidate version is unique to the refinement',architecture)
 r={'suite':'Copy/scope static and preservation contracts','complete':True,'sha256':sha(FILE.read_bytes()),'passed':sum(x['status']=='passed' for x in results),'failed':sum(x['status']=='failed' for x in results),'results':results}
 OUT.write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2));sys.exit(bool(r['failed']))

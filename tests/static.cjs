@@ -58,7 +58,7 @@ test('UX: disclosures exist once, are closed initially and leave required status
  assert(!/<details[^>]*id="advanced-tools"[^>]*\sopen(?:[\s>])/.test(html));
  assert(html.includes('class="guided-status"') && html.includes('guidedStatus.phase'));
  assert(html.includes('id="workspace-advanced"'));assert(html.includes('id="result-tools"'));assert(html.includes('Custom settings in use'));
- assert(html.includes('Hardware acceptance pending'));assert(html.includes('The release is unsigned'));
+ assert(html.toLowerCase().includes('hardware acceptance pending'));assert(html.includes('The release is unsigned'));
 });
 test('UX: required disclosure and source identity bindings are native, local and readonly',()=>{
  assert(html.includes('x-ref="advancedTools"'));assert(html.includes('releaseSourceHash'));

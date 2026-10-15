@@ -133,7 +133,7 @@ with sync_playwright() as pw:
  test('FB-B13 optional overlays cannot hide a live camera or request another stream',camera)
  for w in [320,390,1440]:
   def large(w=w):
-   h=Harness(browser,width=w,height=950);h.page.evaluate('''()=>{for(const e of document.querySelectorAll('body *'))if(!['STYLE','SCRIPT','TEMPLATE'].includes(e.tagName))e.style.fontSize=(parseFloat(getComputedStyle(e).fontSize)*2)+'px'}''');settle(h);fits(h)
+   h=Harness(browser,width=w,height=950);h.page.evaluate('''()=>{const es=[...document.querySelectorAll('body *')].filter(e=>!['STYLE','SCRIPT','TEMPLATE'].includes(e.tagName));const sizes=es.map(e=>parseFloat(getComputedStyle(e).fontSize));es.forEach((e,i)=>e.style.fontSize=(sizes[i]*2)+'px')}''');settle(h);fits(h)
    used(h);ask(h);fits(h);h.page.keyboard.press('Escape');h.page.locator('#try-example').click();settle(h);fits(h);h.page.keyboard.press('Escape');clean(h)
   test(f'FB-B14 doubled text fits wallet controls and both dialogs at {w}px',large)
  def themes():

@@ -178,6 +178,7 @@
 <details class="details" id="guided-session-help" data-help-group="Repeat &amp; customize"><summary>What does a guided physical-device session do?</summary><div class="help-answer-nav"><a href="#help" data-help-link="">Back to contents</a></div><div class="details-body"><p>A session fixes 1–200 public test transactions before signing begins, using the same disposable wallet and selected policy. The six existing scenario types are balanced across the plan. Planned scenarios are not recorded as completed coverage until their returned signatures are checked.</p><p>The actual signing device still receives, reviews and signs each transaction. This page does not upload firmware, run a simulator, press device buttons, sign on behalf of the device or start its camera automatically. Every response goes through the same verifier as an individual check.</p><p>A signature difference, unexpected metadata, incomplete import or camera failure stops advancement. There is no automatic retry or silent skip. Save relevant evidence and end the session explicitly before investigating with individual tests. The session report retains the earlier finding; a later match does not erase it. A device refusal can be recorded when ending the session and is not automatically a malware finding.</p><p>The report contains the public plan and its hash, build identity, per-case result summaries, incomplete/capture failures and the number not completed. It does not contain the locally held seed or private keys, and is not a replay bundle. Use Save evidence for a current transaction before advancing when the original returned bytes are needed.</p><p>Counts describe imported responses, not proven physical executions. The browser knows the disposable seed and cannot attest where a response came from. A matching session is not a firmware certificate or a measured security confidence level. The short wallet fingerprint is a comparison aid, not a unique identity or proof of safety.</p><p>Nothing is saved automatically. A new wallet or page reload discards the session. Back/Forward restoration may keep it in memory, but capture and advancement do not restart automatically. Keep one Lab version open and do not fund any test address.</p></div></details>
 <details class="details" id="license-help" data-help-group="Method &amp; trust"><summary>Licensing &amp; original project</summary><div class="help-answer-nav"><a href="#help" data-help-link="">Back to contents</a></div><div class="details-body"><p>The original comparison approach is credited to oren-z0 / exfil-tester. The source package also contains third-party dependency notices.</p><pre class="license-notice">MIT License
 
+Copyright (c) 2026 The Bitcoin Way
 Copyright (c) 2026 oren-z0
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -246,6 +247,7 @@ SOFTWARE.</pre></div></details>
 <!--
 MIT License
 
+Copyright (c) 2026 The Bitcoin Way
 Copyright (c) 2026 oren-z0
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

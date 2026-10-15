@@ -17,7 +17,7 @@ def unique(selector):
  es=soup.select(selector);check(len(es)==1,selector);return es[0]
 test('WC-S01 architecture has not changed after scope freeze',lambda:check(sha((ROOT/'docs/WALLET-CARD-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']))
 def runtime():
- for name,digest in R['runtime'].items():check(sha((delivery_project(name,audit_read(name)) if name=='src/20-application.js' else audit_read(name)).encode())==digest,name)
+ for name,digest in R['runtime'].items():check(sha((delivery_project(name,(ROOT/name).read_text()) if name=='src/20-application.js' else audit_read(name)).encode())==digest,name)
  check(len(R['runtime'])==len(json.loads((ROOT/'sources.json').read_text())))
 test('WC-S02 runtime units preserve dev-4 after exact declared navigation reversal',runtime)
 def exactchanges():
@@ -44,10 +44,10 @@ def binding():
 test('WC-S05 fingerprint, enlargement and acknowledgement retain their distinct bindings',binding)
 test('WC-S06 one original seed canvas and word list with no duplicated wallet surface',lambda:(unique('[x-ref="seedQrCanvas"]'),unique('.seed-grid'),unique('.seed-instructions'),check(not soup.select('.panel-actions.acknowledgement'))))
 def safety():
- check('Never enter a real seed or send bitcoin to this wallet.' in unique('#wallet-safety').get_text())
+ check('Never enter your real seed' in unique('#wallet-safety').get_text())
  check('Do not add a passphrase.' in unique('.seed-instructions').get_text())
  check('Check that the fingerprint matches your signer' in unique('#wallet-compare-hint').get_text())
- check(H.index('id="wallet-safety"')<H.index('<ol class="seed-grid">'))
+ check(H.index('id="wallet-safety"')<H.index('class="seed-grid notranslate"'))
 test('WC-S07 disposal, no-passphrase and fingerprint-comparison guidance remain',safety)
 def actions():
  for b in soup.select('#wallet-load-card button'):check(b.get('type')=='button');check(not b.find_parent('button'))

@@ -16,7 +16,7 @@ for file,digest in F['trustedUnits'].items():
 for file,digest in F['vendorHashes'].items():
  check('vendor unchanged '+file,lambda file=file,digest=digest:req(sha(ROOT/file)==digest,file))
 check('build tool unchanged',lambda:req(sha(ROOT/'build.py')==F['buildToolHash'],'build tool'))
-check('version truthful',lambda:req(json.loads((ROOT/'release.json').read_text())['version']=='0.20.9-dev','version'))
+check('version truthful',lambda:req(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-dev','version'))
 page=(ROOT/'src/page.html').read_text()
 def critical():
  for text in ['How to read this record','These counts are not a safety score','No responses have been checked yet.','Finish testing','Never enter your real seed','A match does not prove that firmware is safe.','id="advanced-view"','id="session-view"','id="transaction-editor"','id="guided-setup"','id="save-history"','id="session-checked"','id="finish-testing-open"']:
