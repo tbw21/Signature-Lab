@@ -42,7 +42,7 @@ case('P-S05 one named Help control uses existing header navigation route',help_c
 case('P-S06 only Test Advanced Session remain workspace tabs',lambda:require([e.get('id') for e in S.select('.workspace-nav>button')]==['workspace-test','workspace-advanced','workspace-session']))
 def release():
  e=one('.release-status a');require(e.get('href')=='#release-status-help');require('hardware acceptance pending' in e['aria-label'])
- require('v'+json.loads((ROOT/'release.json').read_text())['version'] in e.get_text());require('Preview' in e.get_text())
+ require('v'+json.loads((ROOT/'release.json').read_text())['version'] in e.get_text());require('RC3' in e.get_text())
  require(e.find_parent(class_='header-actions') is not None)
 case('P-S07 unique version and release caveat stay accessible in header',release)
 def structure():

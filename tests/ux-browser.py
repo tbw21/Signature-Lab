@@ -70,12 +70,14 @@ with sync_playwright() as pw:
         h=Harness(browser,width=360);h.page.locator('#wallet-loaded').click()
         assert h.call('return a.step')==2
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open')
+        h.page.locator('#qr-format').wait_for(state='visible')
         assert h.page.locator('#qr-format').is_visible()
         tx=h.call('return a.variants[0].txHex')
         h.page.get_by_role('button',name='Paste signed transaction',exact=True).click()
         h.page.locator('#artifact').fill(tx)
         h.page.get_by_role('button',name='Verify signatures',exact=True).click()
         assert h.call('return a.resultState')=='match'
+        h.page.get_by_role('button',name='Save result',exact=True).wait_for(state='visible')
         assert h.page.get_by_role('button',name='Save result',exact=True).is_visible()
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open')
         assert not h.page.locator('#result-tools').evaluate('(e)=>e.open')

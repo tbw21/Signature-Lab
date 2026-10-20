@@ -1,6 +1,6 @@
-# The Bitcoin Way — Signature Lab v0.20.11-dev
+# The Bitcoin Way — Signature Lab v0.20.11-rc3
 
-**Development preview only. Not a release candidate or approved public release.**
+**Release candidate for operator disposable-wallet testing only. Not approved for public release. The 19 October 2026 independent audit reports a valid The Bitcoin Way signature on the exact RC3 HTML (SHA-256: `11eaae7d38dcdee21b5053fd359543bb170c131c706584edb9df8278e508d178`). This source archive does not itself re-verify the publisher key or include a detached signature; checksum verification alone is not publisher authentication.**
 
 Signature Lab is a self-contained offline HTML application for preparing disposable Bitcoin test wallets, checking returned ECDSA signatures, and reviewing supported PSBT/transaction metadata. A matching result is not a firmware-safety certificate. Never import real seed words, overwrite an existing wallet, or fund this disposable wallet.
 
@@ -38,3 +38,7 @@ One authoritative application coordinator, signature-verification path, journal 
 Current hardware/optical camera acceptance, genuine mobile browser and offline file/HTTPS origins, authenticated publisher identity, upstream dependency authenticity and independent security review are not fully qualified by synthetic software tests. A final release requires one clean, uninterrupted canonical campaign against frozen bytes followed by physical acceptance and explicit operator approval.
 
 The historical hardware checklists are checklists, not records of completed device testing. Development diagnostics and failure records must be retained separately.
+
+## Release-candidate naming and acceptance
+
+Current candidate naming is `vMAJOR.MINOR.PATCH-rcN` (e.g. `v0.20.11-rc3`); later changes to frozen RC bytes require a new candidate number, fresh SHA-256, and a complete new qualification campaign. A release candidate is not a public release. The exact RC3 bytes require operator physical acceptance and independent publisher authentication/security approval before public distribution.

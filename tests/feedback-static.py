@@ -17,7 +17,7 @@ def reverse(name,t):
  for e in reversed(R['edits'].get(name,[])):
   require(e['after'] and t.count(e['after'])==1,name);t=t.replace(e['after'],e['before'],1)
  return t
-case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-dev')))
+case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-rc3')))
 def runtime():
  require(len(R['runtime'])==29)
  for n,d in R['runtime'].items():
@@ -82,7 +82,7 @@ def style():
 case('FB-S14 no external font, stable touch targets and reflow/forced-color rules retained',style)
 def current_docs():
  text=(ROOT/'README.md').read_text();hardware=(ROOT/'docs/HARDWARE-ACCEPTANCE.md').read_text()
- require('v0.20.11-dev' in text)
+ require('v0.20.11-rc3' in text)
  require('docs/FEEDBACK-ARCHITECTURE-FROZEN.md' in text)
  require('Never choose an older release as an automatic' in text)
  require('opening untouched v0.14' not in hardware)

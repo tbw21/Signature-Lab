@@ -23,7 +23,7 @@ check('No source lock symlinks or traversals',lambda:[require(not Path(p).is_abs
 check('Offline CSP and network disallow',lambda:require("connect-src 'none'" in html.read_text() and "font-src 'none'" in html.read_text(),'Missing offline CSP'))
 check('Single app coordinator and session journal',lambda:require(html.read_text().count('function Fv(')==1 and html.read_text().count('class TbwSessionJournal')==1,'Controller duplication'))
 check('Seed and result safety caveats present',lambda:require('Never enter your real seed' in html.read_text() and 'A match does not prove that firmware is safe.' in html.read_text(),'Safety caveats'))
-check('Version remains development-only',lambda:require(json.loads((root/'release.json').read_text())['status']=='development-not-a-release-candidate' and expected['publisherAuthenticated'] is False,'Release claim'))
+check('RC version remains public-release blocked',lambda:require(json.loads((root/'release.json').read_text())['status']=='release-candidate-device-testing-only' and expected['publisherAuthenticated'] is False,'Release claim'))
 def mutation_test():
  for p,digest in lock.items():
   original=(root/p).read_bytes();changed=original+b'\n# intentional negative-mutation'

@@ -14,7 +14,7 @@ lock=json.loads((R/'source-lock.json').read_text());expected=json.loads((R/'EXPE
 old=json.loads((R/'fixtures/v0209-trusted-source.json').read_text())
 case('current source lock matches every authoritative build input',lambda:require(all(sha((R/k).read_bytes())==v for k,v in lock.items()),'source lock mismatch'))
 case('current build output matches recorded hash',lambda:require(sha(O.read_bytes())==expected['sha256'] and O.stat().st_size==expected['bytes'],'output mismatch'))
-case('development identity unchanged',lambda:require(version['version']==expected['version']=='0.20.11-dev' and version['status']=='development-not-a-release-candidate','version or status'))
+case('release candidate identity exact',lambda:require(version['version']==expected['version']=='0.20.11-rc3' and version['status']=='release-candidate-device-testing-only','version or status'))
 case('trusted module hashes unchanged from v0.20.9',lambda:require(all(sha((R/k).read_bytes())==v for k,v in old['trustedUnits'].items()),'trusted module edited'))
 case('vendor module hashes unchanged',lambda:require(all(sha((R/k).read_bytes())==v for k,v in old['vendorHashes'].items()),'vendor edited'))
 case('build tool unchanged',lambda:require(sha((R/'build.py').read_bytes())==old['buildToolHash'],'build altered'))

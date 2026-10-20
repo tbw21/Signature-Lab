@@ -46,3 +46,10 @@
 - Correct the optional firmware-version input markup.
 - Update Help and accessible release labels to distinguish development previews from approved releases.
 - Align The Bitcoin Way and original-author copyright notices across the license and application.
+
+## 19 October 2026 audit follow-up — qualification harness only
+
+- Fix two Chromium 154 visibility races in `tests/ux-browser.py` by waiting for the Test workspace QR-format selector and the Save result button to become visible before asserting their visibility.
+- Correct root `README.md`: the independent 19 October audit reported a good The Bitcoin Way signature on the exact RC3 HTML, but this archive does not independently establish publisher-key trust.
+- No application runtime, CSS, signing logic, camera handling, CSP, version, or HTML bytes changed. The application remains `v0.20.11-rc3`; this is a separately identified source/handoff revision.
+- No physical signer acceptance or Chromium 154 rerun is claimed by this change alone.

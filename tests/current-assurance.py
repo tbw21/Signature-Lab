@@ -19,8 +19,8 @@ def one(css):
  arr=soup.select(css);require(len(arr)==1,f'Expected exactly one {css}; got {len(arr)}');return arr[0]
 
 test('A01 source lock covers actual exact build inputs',lambda:[require(sha((ROOT/n).read_bytes())==x,n) for n,x in source.items()])
-test('A02 distribution HTML hash, byte count and current identity',lambda:(require(sha(HTML.read_bytes())==expected['sha256'],'HTML SHA-256 differs'),require(HTML.stat().st_size==expected['bytes'],'HTML length differs'),require(expected['version']==release['version']=='0.20.11-dev','Version differs')))
-test('A03 development status never implies release acceptance',lambda:(require(expected['publisherAuthenticated'] is False,'Publisher authenticated falsely'),require(release['status']=='development-not-a-release-candidate','Status promoted'),require('not approved for public deployment' in h,'Preview warning absent')))
+test('A02 distribution HTML hash, byte count and current identity',lambda:(require(sha(HTML.read_bytes())==expected['sha256'],'HTML SHA-256 differs'),require(HTML.stat().st_size==expected['bytes'],'HTML length differs'),require(expected['version']==release['version']=='0.20.11-rc3','Version differs')))
+test('A03 RC test status never implies public release acceptance',lambda:(require(expected['publisherAuthenticated'] is False,'Publisher authenticated falsely'),require(release['status']=='release-candidate-device-testing-only','Status promoted'),require('not approved for public deployment' in h,'Preview warning absent')))
 test('A04 cryptography, PSBT, QR, camera and journal modules preserved',lambda:[require(sha((ROOT/n).read_bytes())==v,'Trusted unit changed: '+n) for n,v in trusted['trustedUnits'].items()])
 test('A05 vendor identities preserved',lambda:[require(sha((ROOT/n).read_bytes())==v,'Vendor changed: '+n) for n,v in trusted['vendorHashes'].items()])
 test('A06 canonical source builder unchanged',lambda:require(sha((ROOT/'build.py').read_bytes())==trusted['buildToolHash'],'Build tool changed'))

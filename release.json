@@ -1,5 +1,5 @@
 {
-  "version": "0.20.11-dev",
-  "baseline": "v0.20.10-dev frozen; focused 200% reflow, 44px navigation and forced-colors repair",
-  "status": "development-not-a-release-candidate"
+  "version": "0.20.11-rc3",
+  "baseline": "v0.20.11-rc2 rejected due historical JavaScript projection missing exact release copy allowance",
+  "status": "release-candidate-device-testing-only"
 }

@@ -18,9 +18,9 @@ with sync_playwright() as pw:
   check(f'{width} startup ready',lambda:page.locator('html[data-app-ready="true"]').wait_for(timeout=20000))
   def release():
    link=page.locator('.release-status a')
-   assert 'development preview' in (link.get_attribute('aria-label') or '')
+   assert 'release candidate' in (link.get_attribute('aria-label') or '')
    assert 'not approved for public deployment' in (link.get_attribute('aria-label') or '')
-   assert 'Development preview.' in (link.get_attribute('title') or '')
+   assert 'Release candidate for disposable-wallet testing.' in (link.get_attribute('title') or '')
    assert 'v'+json.loads((Path(__file__).resolve().parents[1]/'release.json').read_text())['version'] in link.inner_text()
   check(f'{width} release status accessible',release)
   def help_state():
@@ -28,7 +28,7 @@ with sync_playwright() as pw:
    qa=page.locator('#release-status-help');qa.wait_for(state='visible')
    qa.locator('summary').click() if not qa.evaluate('(x)=>x.open') else None
    s=qa.inner_text()
-   assert 'is a development preview, not an approved release' in s
+   assert 'is a release candidate for disposable-wallet testing, not an approved public release' in s
    assert 'Publisher authentication and independent security review are not complete' in s
    assert 'Physical signing-device and optical-scanning acceptance remain pending' in s
   check(f'{width} help truthfulness',help_state)
