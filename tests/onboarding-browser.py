@@ -15,8 +15,9 @@ with sync_playwright() as pw:
  environment={'browser':browser.version,'mode':'exact HTML in offline Chromium harness','hardware':False,'optical':False}
  for width in [320,390,438,768,1440]:
   def first(w=width):
-   h=Harness(browser,width=w,height=1000);before=unchanged(h)
-   assert h.page.locator('#test-purpose').is_visible();assert h.page.locator('#try-example').is_visible()
+   h=Harness(browser,width=w,height=1000);h.workspace('test');before=unchanged(h)
+   assert 'firmware safety' in h.page.locator('#test-purpose').inner_text().lower() or 'firmware safety' in h.page.locator('#test-purpose').text_content().lower()
+   assert h.page.locator('#wallet-safety').is_visible();help_home(h);assert h.page.locator('#try-example').is_visible()
    assert h.call('return a.demonstration.analysis') is None
    assert h.page.locator('#try-example').get_attribute('aria-haspopup')=='dialog'
    layout(h)
@@ -25,7 +26,8 @@ with sync_playwright() as pw:
    assert h.call('return a.demonstration.analysis.evidence.signaturesVerified')==2
    assert 'not a device test' in h.page.locator('#attack-example').inner_text()
    assert unchanged(h)==before;layout(h)
-   h.page.get_by_role('button',name='Close example',exact=True).click();assert unchanged(h)==before
+   h.page.get_by_role('button',name='Close Dark Skippy example',exact=True).click();assert unchanged(h)==before
+   h.page.get_by_role('link',name='Back to test',exact=True).click();assert unchanged(h)==before
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'onboarding-wallet-{w}.png'),full_page=True)
    h.page.locator('#wallet-loaded').click();h.page.locator('#try-example').wait_for(state='hidden');assert h.call('return a.transactionReady')
    layout(h);close(h)
@@ -34,7 +36,7 @@ with sync_playwright() as pw:
   def links(w=width):
    h=Harness(browser,width=w,height=1100);before=unchanged(h);help_home(h)
    ids=h.page.locator('.help-contents a').evaluate_all('(es)=>es.map(e=>e.getAttribute("href").slice(1))')
-   assert len(ids)==22 and len(set(ids))==22
+   assert len(ids)==23 and len(set(ids))==23
    for id in ids:
     topic(h,id);assert h.page.locator('#'+id).evaluate('(e)=>e.open');assert h.page.evaluate('document.activeElement.parentElement.id')==id
     assert unchanged(h)==before;layout(h)
@@ -45,9 +47,9 @@ with sync_playwright() as pw:
     h.page.locator('.help-topic').evaluate_all('(es)=>es.forEach((e,i)=>e.open=i===1)')
     h.page.screenshot(path=str(SHOTS/f'onboarding-help-{w}.png'),full_page=False)
    h.page.get_by_role('link',name='Back to test',exact=True).click();assert unchanged(h)==before;close(h)
-  test(f'Help all 22 contents links focus/return without changing test at {width}px',links)
+  test(f'Help all 23 contents links focus/return without changing test at {width}px',links)
  def keyboard():
-  h=Harness(browser,width=390);h.page.locator('#try-example').focus();h.page.keyboard.press('Enter')
+  h=Harness(browser,width=390);help_home(h);h.page.locator('#try-example').focus();h.page.keyboard.press('Enter')
   assert h.call('return !!a.demonstration.analysis?.ok')
   h.page.keyboard.press('Escape');help_home(h)
   g=h.page.locator('.help-topic').nth(1);g.locator('summary').focus();h.page.keyboard.press('Enter');assert g.evaluate('(e)=>e.open')
@@ -56,7 +58,7 @@ with sync_playwright() as pw:
  test('Onboarding keyboard-only example and Help contents work',keyboard)
  for width in [320,1440]:
   def text(w=width):
-   h=Harness(browser,width=w,height=1000);h.call('a.selectSeedLength(24)');h.page.wait_for_function('document.querySelectorAll(".seed-grid li").length===24')
+   h=Harness(browser,width=w,height=1000);h.workspace('test');h.call('a.selectSeedLength(24)');h.page.wait_for_function('document.querySelectorAll(".seed-grid li").length===24')
    h.page.evaluate(ENLARGE);layout(h);h.page.get_by_role('button',name='Enlarge QR',exact=True).click();layout(h)
    help_home(h)
    for i in range(5):h.page.locator('.help-topic').nth(i).locator('summary').click();layout(h)
@@ -80,7 +82,7 @@ with sync_playwright() as pw:
   h.page.get_by_role('link',name='Back to test',exact=True).click();assert unchanged(h)==before;assert h.call('return a.resultState')=='incomplete';close(h)
  test('Help cannot turn an incomplete import into a matching result',incomplete)
  def optional_absence():
-  h=Harness(browser);h.page.evaluate('document.querySelector("#help").remove();document.querySelector("#try-example").remove();document.querySelector("#attack-example").remove()')
+  h=Harness(browser);h.page.evaluate('document.querySelector("#help")?.remove();document.querySelector("#try-example")?.remove();document.querySelector("#attack-example")?.remove()')
   d=h.config();h.accept(d['tx']);assert h.call('return a.resultState')=='match';assert h.call('return a.sessionSummary.checked')==1;close(h)
  test('Normal signature check works with optional Help and demo entry absent',optional_absence)
  def history():
@@ -91,7 +93,7 @@ with sync_playwright() as pw:
  def camera():
   h=Harness(browser,width=390,media=True);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"')
   before=h.page.evaluate('mediaCalls');help_home(h);assert not h.call('return a.scan.active');assert h.page.evaluate('testStreams.every(s=>s.getTracks().every(t=>t.readyState==="ended"))')
-  topic(h,'known-example');h.page.get_by_role('button',name='Check example',exact=True).click();h.page.get_by_role('button',name='Close example',exact=True).click();h.page.get_by_role('link',name='Back to test',exact=True).click()
+  topic(h,'known-example');h.page.get_by_role('button',name='Check example',exact=True).click();h.page.get_by_role('button',name='Close Dark Skippy example',exact=True).click();h.page.get_by_role('link',name='Back to test',exact=True).click()
   assert not h.call('return a.scan.active');assert h.page.evaluate('mediaCalls')==before;close(h)
  test('Optional example and Help stop capture without reacquiring camera on return',camera)
  def forced():

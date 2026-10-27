@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exact source boundary and real rendered-markup checks for feedback remediation."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from audit_projection import read as audit_read
 from bs4 import BeautifulSoup
 import json,hashlib,sys
@@ -17,7 +18,7 @@ def reverse(name,t):
  for e in reversed(R['edits'].get(name,[])):
   require(e['after'] and t.count(e['after'])==1,name);t=t.replace(e['after'],e['before'],1)
  return t
-case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-rc3')))
+case('FB-S01 requirement/architecture identity fixed before edits and new release identity unique',lambda:(require(sha((ROOT/'docs/FEEDBACK-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),archive_original_tests(),release_identity()))
 def runtime():
  require(len(R['runtime'])==29)
  for n,d in R['runtime'].items():
@@ -32,7 +33,7 @@ def tamper():
  for n,d in R['before'].items():require(sha(reverse(n,audit_read(n)+'\n// unexpected').encode())!=d,n)
 case('FB-S04 historical projections cannot erase an undeclared extra edit',tamper)
 def wallet():
- w=one('#new-test-wallet');require(w.find_parent(class_='seed-toolbar') is not None);require(w.get('@click')=='requestWalletChange()');require(not S.select('#wallet-options'))
+ w=one('#new-test-wallet');require(w.find_parent(class_='premium-wallet-toolbar') is not None or w.find_parent(class_='premium-seed-heading') is not None or w.find_parent(class_='premium-reset-row') is not None);require(w.get('@click')=='requestWalletChange()');require(not S.select('#wallet-options'))
  require(w.get(':disabled')=='guidedLocked || scan.active');require(w.get_text()=='New test wallet')
  for i,b in enumerate(S.select('#word-count button')):require(b.get('@click')==f'requestWalletChange({[12,24][i]}, false)')
 case('FB-S05 wallet and word length share one guarded request path with no duplicate Advanced reset',wallet)
@@ -52,12 +53,14 @@ def ended():
  require('CHECKED' in one('.guided-status-heading .tag').get('x-text'));require(one('.ended-session-next').find('button') is not None)
 case('FB-S08 ended plan is visible in Session only and not labelled an active case',ended)
 def warnings():
- require('recordedOperationFailureCount' in one('#workspace-session .workspace-alert').get('x-show'))
- require('recordedOperationFailureCount' in str(one('.tracker-session')));require("=== 1 ? ' file review'" in str(one('.tracker-session')))
+ stop=one('.session-tracker .review-count[x-show="recordedOperationFailureCount"]')
+ require('stopped operation' in stop.get('x-text',''),'Operator failures no longer announced')
+ require(one('.tracker-session-link').get('@click')=="openWorkspace('session')",'Findings route missing')
+ require('recordedOperationFailureCount' in str(one('.session-tracker')));require("=== 1 ? ' file review'" in str(one('.session-tracker')))
  require('File changes need review' in H and 'Could not complete the check' in H)
 case('FB-S09 genuine historical findings remain visible and one review is singular',warnings)
 def demo():
- b=one('#try-example');require(b.get('@click')=='openExample()');require(b.get_text()=='Dark Skippy example');require(b.get('aria-describedby')=='example-entry-help')
+ b=one('#try-example');require(b.get('@click')=='openExample()');require(b.get_text()=='View recorded example');require(b.get('aria-describedby')=='example-entry-help')
  require('does not run malicious firmware' in one('#example-operation').get_text());require('not a device test' in one('#example-scope').get_text())
  require('CHECK COMPLETE' in str(one('#attack-example')));require(one('#example-raw').has_attr('readonly'))
 case('FB-S10 demo is labelled as a recorded calculation with visible outcome and inspectable bytes',demo)
@@ -82,7 +85,7 @@ def style():
 case('FB-S14 no external font, stable touch targets and reflow/forced-color rules retained',style)
 def current_docs():
  text=(ROOT/'README.md').read_text();hardware=(ROOT/'docs/HARDWARE-ACCEPTANCE.md').read_text()
- require('v0.20.11-rc3' in text)
+ require(text.startswith('# Signature Lab v'+json.loads((ROOT/'release.json').read_text())['version']+' — DEVELOPMENT / NO-GO'))
  require('docs/FEEDBACK-ARCHITECTURE-FROZEN.md' in text)
  require('Never choose an older release as an automatic' in text)
  require('opening untouched v0.14' not in hardware)

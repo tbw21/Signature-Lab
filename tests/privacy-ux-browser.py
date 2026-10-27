@@ -16,7 +16,11 @@ with sync_playwright() as pw:
   page.set_content(html,wait_until='load',timeout=30000)
   page.wait_for_selector('html[data-app-ready="true"]',timeout=20000)
   def test_start():
-   assert page.locator('#supported-scope').is_visible()
+   assert page.locator('#tbw-landing-title').is_visible()
+   assert page.locator('.premium-landing-safety').is_visible()
+   assert 'Taproot/Schnorr, multisig' in html
+   page.locator('#start-safe-test').click()
+   page.locator('#wallet-safety').wait_for(state='visible',timeout=10000)
    assert page.locator('#wallet-safety').is_visible()
    assert page.locator('.seed-grid li').count() in (12,24)
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
@@ -33,7 +37,7 @@ with sync_playwright() as pw:
    print('Initial checked',width,evidence.is_checked(),flush=True)
    assert not evidence.is_checked()
    evidence.check()
-   page.locator('#workspace-session').click()
+   page.locator('.tracker-session-link').click()
    print('Mirrored checked',width,page.locator('#retain-evidence').is_checked(),flush=True)
    assert page.locator('#retain-evidence').is_checked()
    page.locator('#finish-testing-open').wait_for(state='visible',timeout=8000)

@@ -1,0 +1,5 @@
+{
+  "overwrite_refusal": "passed",
+  "source_tampering": "passed",
+  "false_signed_release": "passed"
+}

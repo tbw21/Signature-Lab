@@ -1,10 +1,10 @@
 {
   "schema": "tbw-expected-output-v1",
-  "version": "0.20.11-rc3",
-  "filename": "TBW-Signature-Lab-v0.20.11-rc3.html",
-  "sha256": "11eaae7d38dcdee21b5053fd359543bb170c131c706584edb9df8278e508d178",
-  "bytes": 1256996,
-  "sourceSha256": "17e794ac7fb13c1a6bd089e0724f0c51f39b249ecc8ff0b681f9876deee41d85",
+  "version": "0.20.12-rc36",
+  "filename": "Signature-Lab-v0.20.12-rc36-UNSIGNED.html",
+  "sha256": "c2c4ae702b966d25a2ecb020dc70190e5f56eb0290fc6295cf55def0bf72612b",
+  "bytes": 1381735,
+  "sourceSha256": "921ca8ad12b42765cce24956134d7f40676e13b79ec59a54a7564127b54d4649",
   "publisherAuthenticated": false,
-  "status": "release-candidate-device-testing-only"
+  "status": "development-ui-preview-unqualified"
 }

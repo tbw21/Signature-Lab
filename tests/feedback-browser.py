@@ -14,7 +14,7 @@ def fits(h):
  bad=h.page.evaluate('''()=>[...document.querySelectorAll('button,input,textarea,select')].filter(e=>e.checkVisibility()).filter(e=>{let r=e.getBoundingClientRect();return r.x< -1||r.right>innerWidth+1||e.scrollWidth>e.clientWidth+2}).map(e=>[e.id,e.textContent,e.scrollWidth,e.clientWidth])''')
  assert not bad,bad
 
-def used(h):h.page.locator('#wallet-loaded').click();settle(h);h.page.locator('.stepper button').first.click();settle(h)
+def used(h):h.workspace('test');h.page.locator('#wallet-loaded').click();settle(h);h.page.locator('.stepper button').first.click();settle(h)
 def ask(h,button='#new-test-wallet'):
  h.page.locator(button).click();h.page.wait_for_function('document.getElementById("wallet-replacement").open');settle(h)
  assert h.page.evaluate('document.activeElement===document.querySelector("[x-ref=keepWallet]")')
@@ -31,10 +31,10 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
  for w in [320,360,390,438,768,1024,1440]:
   def wallet(w=w):
-   h=Harness(browser,width=w,height=950);settle(h);assert h.page.locator('#new-test-wallet').is_visible();assert not h.page.locator('#wallet-options').count();fits(h)
+   h=Harness(browser,width=w,height=950);h.workspace('test');settle(h);assert h.page.locator('#new-test-wallet').is_visible();assert not h.page.locator('#wallet-options').count();fits(h)
    assert h.page.locator('#new-test-wallet').bounding_box()['height']>=44
    assert h.page.locator('#word-count-help').evaluate('(e)=>e.previousElementSibling.id==="word-count"')
-   assert h.page.locator('.demo-launch').evaluate('(e)=>getComputedStyle(e).borderTopWidth===\"0px\" && getComputedStyle(e).borderBottomWidth===\"0px\"')
+   assert h.page.locator('.demo-launch').count()==0;assert h.page.get_by_role('link',name='Help',exact=True).is_visible()
    seed=h.call('return a.walletSession');h.page.locator('#new-test-wallet').click();settle(h);assert h.call('return a.walletSession')!=seed
    assert not h.page.locator('#wallet-replacement').is_visible();assert h.call('return a.wordCount')=='12'
    h.page.locator('#word-count button').last.click();h.page.wait_for_function('('+APP+').wordCount==="24" && ('+APP+').seedQrVisible');settle(h)
@@ -44,7 +44,7 @@ with sync_playwright() as pw:
   test(f'FB-B01 visible same-length wallet action and selector reflow at {w}px',wallet)
  for w in [320,390,1440]:
   def demo(w=w):
-   h=Harness(browser,width=w,height=950);before=snapshot(h);h.page.locator('#try-example').click();settle(h)
+   h=Harness(browser,width=w,height=950);h.workspace('test');before=snapshot(h);h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();settle(h)
    d=h.page.locator('#attack-example');assert d.is_visible();assert d.evaluate('(e)=>e.matches(":modal")');assert 'does not run malicious firmware' in d.inner_text()
    assert 'CHECK COMPLETE' in d.inner_text();assert '2 of 2' in d.inner_text();assert 'None' in d.inner_text();assert snapshot(h)==before
    d.locator('details>summary').click();raw=h.page.locator('#example-raw').input_value();assert len(raw)>600
@@ -76,13 +76,13 @@ with sync_playwright() as pw:
  for w in [390,1440]:
   def archival(w=w):
    h=Harness(browser,width=w,height=1000);guided(h,30);assert h.page.locator('.guided-status').is_visible();end(h)
-   assert h.page.evaluate('document.activeElement.id')=='workspace-session';assert not h.page.locator('.notice:not(.sr-only)').filter(has_text='Session ended').is_visible()
+   assert h.page.evaluate('document.activeElement.id')=='tbw-settings' or h.page.evaluate('document.activeElement.closest("#tbw-settings")!==null');assert not h.page.locator('.notice:not(.sr-only)').filter(has_text='Session ended').is_visible()
    record=h.call('return a.exportSessionReport()');assert record['status']['notCompleted']==30
    h.workspace('session');h.page.locator('.guided-status').wait_for(state='visible');assert '0 / 30 CHECKED' in h.page.locator('.guided-status-heading').inner_text()
    assert h.page.locator('.history-item[data-finding="ended"]').is_visible()
    with h.page.expect_download() as dl:h.page.locator('#save-history').click()
    payload=json.loads(Path(dl.value.path()).read_text());assert payload['guidedSession']==record
-   h.workspace('advanced');assert not h.page.locator('.guided-status').is_visible();assert h.page.locator('.ended-session-next').is_visible()
+   h.workspace('advanced');h.page.locator('.guided-status').wait_for(state='hidden');h.page.locator('.ended-session-next').wait_for(state='visible')
    h.page.get_by_role('button',name='Go to test wallet',exact=True).click();settle(h);assert h.page.locator('#new-test-wallet').is_visible();ask(h)
    h.page.keyboard.press('Escape');assert h.call('return a.exportSessionReport()')==record
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'feedback-ended-test-{w}.png'),full_page=True)
@@ -92,19 +92,27 @@ with sync_playwright() as pw:
   h=Harness(browser,width=390);guided(h);h.call('a.signingPolicy="plain";a.checkGuidedBinding()');settle(h)
   assert h.call('return a.guidedStatus.phase')=='halted';assert h.page.locator('.guided-status').is_visible()
   h.call('a.signingPolicy="compatible"');end(h)
-  assert h.page.locator('#workspace-session .workspace-alert').is_visible();assert h.call('return a.recordedOperationFailureCount')==1
-  h.workspace('session');assert h.page.locator('.history-item[data-finding="incomplete"]').count()>=1
-  assert any(e['type']=='control-error' for e in h.call('return a.exportHistory().events'));clean(h)
+  # Ending deliberately hides the guided panel in Test. The warning belongs to Session.
+  assert h.call('return a.recordedOperationFailureCount')==1
+  assert not h.page.locator('.guided-status').is_visible()
+  h.workspace('session');settle(h)
+  assert h.page.locator('.guided-status').is_visible()
+  reason=h.page.locator('.guided-stop-reason')
+  assert reason.is_visible() and 'differs from the frozen session plan' in reason.inner_text()
+  assert h.page.locator('.history-item[data-finding="incomplete"]').count()>=1
+  assert h.page.locator('#session-view').get_by_text('Operation stopped',exact=True).is_visible()
+  assert any(e['type']=='control-error' and 'differs from the frozen session plan' in e.get('message','') for e in h.call('return a.exportHistory().events'))
+  assert h.call('return a.recordedOperationFailureCount')==1;clean(h)
  test('FB-B06 ended control/capture failure cannot disappear from the Session warning',halted)
  def export_current():
-  h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);report=h.call('return a.report()');h.call('a.goToStep(1)');settle(h);ask(h)
+  h=Harness(browser,width=390);h.workspace('test');d=h.config();h.accept(d['tx']);report=h.call('return a.report()');h.call('a.goToStep(1)');settle(h);ask(h)
   with h.page.expect_download() as dl:h.page.get_by_role('button',name='Save current result',exact=True).click()
   payload=json.loads(Path(dl.value.path()).read_text());assert payload == h.call('return a.exportEvidence()')
   assert h.call('return a.report()')==report;assert h.call('return a.walletChangePending')
   h.page.get_by_role('button',name='Keep this wallet',exact=True).click();settle(h);assert h.call('return a.report()')==report;clean(h)
  test('FB-B07 actual current-evidence download from prompt preserves immutable result and intent',export_current)
  def export_fail():
-  h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);h.call('a.goToStep(1)');settle(h);s=snapshot(h);ask(h)
+  h=Harness(browser,width=390);h.workspace('test');d=h.config();h.accept(d['tx']);h.call('a.goToStep(1)');settle(h);s=snapshot(h);ask(h)
   h.call('a.downloadResult=()=>{a.notice="Download unavailable: injected blocked storage"}')
   h.page.get_by_role('button',name='Save current result',exact=True).click();settle(h)
   assert h.page.locator('#wallet-replacement .notice').is_visible();assert 'blocked storage' in h.page.locator('#wallet-replacement .notice').inner_text();assert snapshot(h)==s
@@ -124,7 +132,7 @@ with sync_playwright() as pw:
   assert snapshot(h)==s;assert 'confirmation is unavailable' in h.call('return a.notice');clean(h)
  test('FB-B11 absent confirmation blocks used-wallet reset rather than silently replacing it',missing)
  def demo_failure():
-  h=Harness(browser);s=snapshot(h);h.call('a.runDemonstration=()=>{a.demonstration.analysis=null;a.demonstration.error="Injected verifier exception"}');h.page.locator('#try-example').click();settle(h)
+  h=Harness(browser);s=snapshot(h);h.call('a.runDemonstration=()=>{a.demonstration.analysis=null;a.demonstration.error="Injected verifier exception"}');h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();settle(h)
   assert 'Injected verifier exception' in h.page.locator('#attack-example').inner_text();assert 'CHECK COMPLETE' not in h.page.locator('#attack-example').inner_text();assert snapshot(h)==s;h.page.keyboard.press('Escape');clean(h)
  test('FB-B12 demo error has a visible failure and never an expected-result success',demo_failure)
  def camera():
@@ -134,10 +142,10 @@ with sync_playwright() as pw:
  for w in [320,390,1440]:
   def large(w=w):
    h=Harness(browser,width=w,height=950);h.page.evaluate('''()=>{const es=[...document.querySelectorAll('body *')].filter(e=>!['STYLE','SCRIPT','TEMPLATE'].includes(e.tagName));const sizes=es.map(e=>parseFloat(getComputedStyle(e).fontSize));es.forEach((e,i)=>e.style.fontSize=(sizes[i]*2)+'px')}''');settle(h);fits(h)
-   used(h);ask(h);fits(h);h.page.keyboard.press('Escape');h.page.locator('#try-example').click();settle(h);fits(h);h.page.keyboard.press('Escape');clean(h)
+   used(h);ask(h);fits(h);h.page.keyboard.press('Escape');h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();settle(h);fits(h);h.page.keyboard.press('Escape');clean(h)
   test(f'FB-B14 doubled text fits wallet controls and both dialogs at {w}px',large)
  def themes():
-  h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active',reduced_motion='reduce');used(h);ask(h);fits(h);h.page.keyboard.press('Escape');h.page.locator('#try-example').click();settle(h);fits(h);h.page.keyboard.press('Escape');clean(h)
+  h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active',reduced_motion='reduce');used(h);ask(h);fits(h);h.page.keyboard.press('Escape');h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();settle(h);fits(h);h.page.keyboard.press('Escape');clean(h)
  test('FB-B15 forced colors/reduced motion preserve discernible dialogs and actions',themes)
  def completed_plan():
   h=Harness(browser);guided(h,1);h.call('a.acknowledged=true;a.acceptArtifact(a.variants[0].txHex)');settle(h);assert h.call('return a.guidedStatus.phase')=='complete'

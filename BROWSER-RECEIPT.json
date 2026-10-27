@@ -1,0 +1,72 @@
+{
+  "mode": "full application HTML in Chromium document context, not native file origin",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1050,
+      "failed_text_nodes": 0
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1107,
+      "failed_text_nodes": 0
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1087,
+      "failed_text_nodes": 0
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1085,
+      "failed_text_nodes": 0
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1087,
+      "failed_text_nodes": 0
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "states": 14,
+      "failed_states": 0,
+      "page_errors": 0,
+      "network_requests": 0,
+      "text_samples": 1087,
+      "failed_text_nodes": 0
+    }
+  ],
+  "total_states": 84,
+  "total_text_samples": 6503,
+  "result": "PASS",
+  "limitations": [
+    "does not cover real signed responses or hardware",
+    "not browser file:// origin"
+  ]
+}

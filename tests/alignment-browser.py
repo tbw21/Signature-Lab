@@ -15,18 +15,23 @@ def trailing(h,selector,container):
     assert abs(child['right']-parent['right'])<2,(selector,child,parent)
 
 def seed_geometry(h):
-    w=box(h,'.seed-grid');c=box(h,'.seed-instructions');qr=box(h,'#seed-qr-display')
-    assert abs(w['left']-c['left'])<1,(w,c)
-    assert c['top']>=w['bottom']+14,(w,c)
-    assert h.page.locator('#seed-scan-title').count()==1
-    assert h.page.locator('.seed-instructions').evaluate('(e)=>getComputedStyle(e).textAlign')=='left'
-    # W01-W03: the enlargement action now shares the confirmation card, not the QR edge.
-    action,card=box(h,'.seed-qr-actions>button'),box(h,'#wallet-load-card')
-    assert action['left']>=card['left'] and action['right']<=card['right'],(action,card)
-    assert action['top']>=card['top'] and action['bottom']<=card['bottom'],(action,card)
-    trailing(h,'.seed-scan','.seed-layout')
+    # RC32 approved two-column wallet: words, SeedQR, and a separate fingerprint card.
+    # Preserve full-word visibility and the SeedQR quiet zone in both enlargement states.
+    words=box(h,'.seed-grid');word_card=box(h,'.premium-words-card')
+    assert words['left']>=word_card['left']-1 and words['right']<=word_card['right']+1
+    assert h.page.locator('.seed-grid li:visible').count()==int(h.call('return a.wordCount'))
+    assert h.page.locator('.premium-words-card h3').is_visible()
+    assert h.page.locator('#wallet-fingerprint-value').is_visible()
+    note=h.page.locator('#wallet-compare-hint')
+    assert 'Compare this fingerprint' in note.inner_text()
+    assert note.locator('xpath=ancestor::section[@id="wallet-load-card"]').count()==1
+    action=box(h,'.seed-qr-actions>button');qr=box(h,'#seed-qr-display')
+    assert h.page.locator('.seed-qr-actions>button').count()==1
+    assert h.page.locator('[x-ref="seedQrCanvas"]').count()==1
+    assert action['top']>=qr['bottom']-1,(action,qr)
     assert qr['width']>180,qr
-    assert h.page.locator('.seed-qr-actions>button').evaluate('(e)=>!e.closest(".qr-frame")')
+    assert not h.page.locator('.seed-qr-actions>button').evaluate('(e)=>!!e.closest(".qr-frame")')
+    assert h.page.locator('#wallet-loaded').is_visible()
     layout(h)
 
 with sync_playwright() as pw:
@@ -36,18 +41,21 @@ with sync_playwright() as pw:
         def nav(w=width):
             h=Harness(browser,width=w,height=950);before=state(h)
             for view in ['test','advanced','session','test']:
-                h.workspace(view);trailing(h,'.workspace-nav','.workspace-heading')
-                bs=h.page.locator('.workspace-nav>button').evaluate_all('(es)=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height}))')
-                assert max(x['w'] for x in bs)-min(x['w'] for x in bs)<2,bs
-                assert all(x['h']>=44 for x in bs),bs
-                if view!='test':trailing(h,'#'+view+'-view .aux-heading>.button','#'+view+'-view .aux-heading')
+                h.workspace(view)
+                assert h.page.locator('nav.workspace-nav,#workspace-test,#workspace-advanced,#workspace-session').count()==0
+                settings=box(h,'#tbw-settings > summary')
+                assert settings['width']>=44 and settings['height']>=44,settings
+                if view!='test':
+                    back=h.page.locator('#'+view+'-view').get_by_role('button',name='Back to test').first
+                    back.wait_for(state='visible')
+                    assert back.is_visible() and back.bounding_box()['height']>=44
                 layout(h);assert state(h)==before
             close(h)
         test(f'Alignment workspace and Back actions remain at right edge in every view at {width}px',nav)
     for width in [320,390,768,1440]:
         for words in [12,24]:
             def seed(w=width,n=words):
-                h=Harness(browser,width=w,height=1100)
+                h=Harness(browser,width=w,height=1100);h.workspace('test')
                 if n==24:h.page.get_by_role('button',name='24 words',exact=True).click()
                 h.page.wait_for_function('('+APP+').seedQrVisible && !!('+APP+').walletFingerprint')
                 before=state(h);image=h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(c)=>c.toDataURL()')
@@ -65,22 +73,24 @@ with sync_playwright() as pw:
             test(f'Alignment {words} words, instructions, QR pixels and enlarged/reduced state at {width}px',seed)
     for width in [320,768,1440]:
         def text(w=width):
-            h=Harness(browser,width=w,height=1000);h.page.evaluate(ENLARGE)
+            h=Harness(browser,width=w,height=1000);h.workspace('test');h.page.evaluate(ENLARGE)
             for n in [12,24]:
                 if n==24:h.page.get_by_role('button',name='24 words',exact=True).click()
                 for expanded in [False,True]:
                     h.call('a.seedQrExpanded=arg',expanded);h.page.wait_for_timeout(50);seed_geometry(h)
-            for view in ['advanced','session','test']:h.workspace(view);layout(h);trailing(h,'.workspace-nav','.workspace-heading')
+                h.call('a.seedQrExpanded=false')
+            for view in ['advanced','session','test']:
+                h.workspace(view);layout(h);assert box(h,'#tbw-settings > summary')['height']>=44
             close(h)
         test(f'Alignment reflows at doubled text size, 12/24 words and both QR sizes at {width}px',text)
     def spacing():
-        h=Harness(browser,width=390,height=1000);h.page.add_style_tag(content=TEXT_SPACE)
+        h=Harness(browser,width=390,height=1000);h.workspace('test');h.page.add_style_tag(content=TEXT_SPACE)
         seed_geometry(h);h.page.get_by_role('button',name='Enlarge QR',exact=True).click();h.page.wait_for_timeout(40);seed_geometry(h);close(h)
     test('Alignment increased text spacing preserves instructions and trailing control',spacing)
     for width in [390,1440]:
         def actions(w=width):
-            h=Harness(browser,width=w,height=1000);h.page.locator('#wallet-loaded').click()
-            for group in ['.return-actions>.button-group','.psbt-actions']:
+            h=Harness(browser,width=w,height=1000);h.workspace('test');h.page.locator('#wallet-loaded').click()
+            for group in ['.psbt-actions']:
                 assert h.page.locator(group).evaluate('(e)=>getComputedStyle(e).justifyContent')=='flex-end'
                 children=h.page.locator(group+' > :is(button,label)')
                 children.last.wait_for(state='visible');right=children.last.evaluate('(e)=>e.getBoundingClientRect().right')
@@ -95,8 +105,10 @@ with sync_playwright() as pw:
             assert before==state(h);layout(h);close(h)
         test(f'Alignment transaction/import/export action rows end at the right edge at {width}px',actions)
     def keyboard():
-        h=Harness(browser,width=390);before=state(h)
+        h=Harness(browser,width=390);h.workspace('test');before=state(h)
         button=h.page.get_by_role('button',name='Enlarge QR',exact=True);button.focus()
+        h.page.keyboard.press('Shift+Tab');h.page.keyboard.press('Tab')
+        assert h.page.evaluate('document.activeElement===document.querySelector("[x-ref=seedQrToggle]")')
         assert button.evaluate('(e)=>getComputedStyle(e).outlineStyle')!='none'
         h.page.keyboard.press('Enter');h.page.wait_for_timeout(40)
         assert h.page.get_by_role('button',name='Reduce QR',exact=True).get_attribute('aria-expanded')=='true'

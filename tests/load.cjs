@@ -6,7 +6,7 @@ function load(file=process.env.TBW_HTML, overrides={}){
  const code=require('./html.cjs').moduleCode(exact);
  const no=()=>{};
  class Target {constructor(){this.events={};}addEventListener(k,f){(this.events[k]??=new Set).add(f)}removeEventListener(k,f){this.events[k]?.delete(f)}emit(k){for(const f of [...(this.events[k]??[])])f({type:k})}}
- const document=Object.assign(new Target,{createElement:()=>({relList:{supports:()=>true},getContext:()=>null}),querySelectorAll:()=>[],visibilityState:'visible'});
+ const document=Object.assign(new Target,{createElement:()=>({relList:{supports:()=>true},getContext:()=>null}),querySelector:()=>null,querySelectorAll:()=>[],visibilityState:'visible'});
  class Element{};class MutationObserver{observe(){} disconnect(){} takeRecords(){return []}}
  const context={console,Uint8Array,ArrayBuffer,DataView,Buffer,TextEncoder,TextDecoder,crypto:crypto.webcrypto,performance,document,Element,MutationObserver,navigator:{},setTimeout,clearTimeout,setInterval,clearInterval,queueMicrotask,URL,Blob,AbortController,DOMException,requestAnimationFrame:f=>setTimeout(f,16),cancelAnimationFrame:clearTimeout,...overrides};
  context.window=context;context.addEventListener=no;context.removeEventListener=no;

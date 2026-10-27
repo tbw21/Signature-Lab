@@ -1,0 +1,5 @@
+# RC24 validation summary
+
+8/8 scoped expanded-signing and Advanced alignments passed at widths 320/390/768/1440 in both light and dark. Three expanded transaction editor containment checks passed (390 dark/light, 1440 light). Four light/dark contrast checks passed at widths 390 and 1440; light Input/Output editor row text measured 15.38:1. The 30 application/vendor JS files are identical to RC23 and syntax-valid; CSS parses; source-lock tampering and duplicate-output writes are rejected. Five BBQr subset tests and ten session subset tests passed. One earlier session-test invocation lacked the required output path and exited with an `ERR_INVALID_ARG_TYPE` after executing ten checks; rerunning with that required argument passed ten checks. Do not count the first invocation as a clean pass.
+
+Tests in this scope do not constitute full historical release, native-file, signed-result, power failure, camera, recovery, accessibility or physical-device acceptance. **Grade: development UI preview; public release blocked.** See `RC24-QUALIFICATION-RECEIPT.json` and included portable browser tests.

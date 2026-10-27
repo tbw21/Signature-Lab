@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "source": "actual RC21 standalone HTML executed in Chromium set_content document context (not file://)",
+  "responsive_widths": [
+    390,
+    768,
+    1440
+  ],
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "state_checks": 84,
+  "text_samples": 6578,
+  "contrast_failures": 0,
+  "horizontal_overflow_states": 0,
+  "control_overflow_states": 0,
+  "audited_states": [
+    "advanced-closed",
+    "advanced-expanded",
+    "help-closed",
+    "help-expanded",
+    "landing",
+    "response-method-selector",
+    "session-closed",
+    "session-expanded",
+    "settings-open",
+    "sign-bbqr",
+    "sign-closed",
+    "sign-open",
+    "wallet-12",
+    "wallet-24"
+  ],
+  "notes": [
+    "CSS foreground and computed ancestor background contrast (approximate when layered gradients)",
+    "Native file-origin browser opening blocked by administrator policy",
+    "Verification-success and physical signer/camera conditions not simulated"
+  ]
+}

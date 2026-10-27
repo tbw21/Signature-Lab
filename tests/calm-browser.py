@@ -4,22 +4,31 @@ from pathlib import Path
 exec((Path(__file__).parent/'ux-browser.py').read_text().split('\nwith sync_playwright() as pw:')[0],globals())
 
 def nav(h,view):
-    h.page.locator('#workspace-'+view).click();h.page.wait_for_timeout(50)
+    h.workspace(view);h.page.wait_for_timeout(50)
 
 def same(h):
     return h.call('return JSON.stringify([a.stateSignature,a.psbtBase64,a.variants,a.walletSession,a.preparedRevision,a.sessionChecks,a.resultState,a.isTestComplete,a.signingPolicy])')
 
 def navigation(h):
-    bs=h.page.locator('.workspace-nav>button');assert bs.count()==3
-    boxes=bs.evaluate_all('(es)=>es.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height}})')
-    assert max(x['w'] for x in boxes)-min(x['w'] for x in boxes)<2,boxes
-    assert all(x['h']>=44 for x in boxes),boxes
-    assert h.page.locator('.workspace-nav>button[aria-pressed="true"]').count()==1
-    assert all(bs.nth(i).is_visible() for i in range(3))
+    # Current authoritative Settings drawer, not retired three-button navigation.
+    assert h.page.locator('nav.workspace-nav,#workspace-test,#workspace-advanced,#workspace-session').count()==0
+    summary=h.page.locator('#tbw-settings > summary');assert summary.is_visible()
+    box=summary.bounding_box();assert box and box['width']>=44 and box['height']>=44,box
+    if h.call('return a.workspaceView') in ('advanced','session'):
+        view=h.call('return a.workspaceView')
+        back=h.page.locator('#'+view+'-view').get_by_role('button',name='Back to test').first
+        assert back.is_visible() and back.bounding_box()['height']>=44
+
+def present_sign_step(h):
+    """Enter the visible transaction-review step after synthetic state setup."""
+    h.workspace('test')
+    h.page.locator('.stepper button').nth(1).click()
+    assert h.call('return a.step') == 2
 
 def tx20(h):
     h.config()
     h.call('''a.invalidate();a.outputs=Array.from({length:20},(_,i)=>({id:30000+i,amount:{value:String(600+i),error:null},dest:{value:'m/84h/0h/0h/'+(i%2)+'/'+(50+i),error:null}}));a.recompute();a.goToStep(2)''')
+    present_sign_step(h)
     h.page.wait_for_timeout(40)
     assert h.call('return a.outputReview.outputs.length')==20
 
@@ -32,15 +41,31 @@ with sync_playwright() as pw:
             for view in ['advanced','session','test']:
                 nav(h,view);assert same(h)==before;navigation(h);layout(h)
                 if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'calm-{view}-{w}.png'),full_page=True)
-            h.page.locator('#wallet-loaded').click();layout(h)
+            h.workspace('test');h.page.locator('#wallet-loaded').click();layout(h)
             if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'calm-transaction-{w}.png'),full_page=True)
             close(h)
         test(f'Calm equally sized workspace controls and all views at {width}px',views)
     def keyboard_nav():
         h=Harness(browser,width=390);before=same(h)
         for view,key in [('advanced','Enter'),('session','Space'),('test','Enter')]:
-            control=h.page.locator('#workspace-'+view);control.focus();assert control.evaluate('(e)=>getComputedStyle(e).outlineStyle')!='none'
-            h.page.keyboard.press(key);h.page.wait_for_timeout(70);assert h.call('return a.workspaceView')==view;assert same(h)==before
+            if view=='test':control=h.page.locator('#session-view').get_by_role('button',name='Back to test').first
+            else:
+                drawer=h.page.locator('#tbw-settings')
+                if not drawer.evaluate('(e)=>e.open'):
+                    toggle=drawer.locator(':scope > summary');toggle.focus();h.page.keyboard.press('Enter')
+                    assert drawer.evaluate('(e)=>e.open')
+                name='Advanced testing' if view=='advanced' else 'Session history'
+                control=drawer.locator('.tbw-drawer-workspace').get_by_role('button',name=name)
+            control.wait_for(state='visible',timeout=3000);assert control.is_visible();control.focus();assert control.evaluate('(e)=>document.activeElement===e')
+            h.page.keyboard.press(key);h.page.wait_for_function('(v)=>('+APP+').workspaceView===v',arg=view)
+            assert same(h)==before
+            if view=='advanced':
+                # Settings is on the test workspace: return visibly with keyboard
+                # before opening Session; never click a control hidden behind a view.
+                back=h.page.locator('#advanced-view').get_by_role('button',name='Back to test').first
+                assert back.is_visible();back.focus();h.page.keyboard.press('Enter')
+                h.page.wait_for_function('('+APP+').workspaceView==="test"')
+                assert same(h)==before
         close(h)
     test('Calm native keyboard workspace activation preserves authoritative state',keyboard_nav)
     for width in [320,438,1440]:
@@ -57,7 +82,7 @@ with sync_playwright() as pw:
     test('Calm increased text spacing preserves all workspace controls',spacing_nav)
     def force_colors():
         h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active');navigation(h)
-        assert h.page.locator('#workspace-test').evaluate('(e)=>parseFloat(getComputedStyle(e).borderTopWidth)')>=2
+        assert h.page.locator('#tbw-settings > summary').evaluate('(e)=>parseFloat(getComputedStyle(e).borderTopWidth)')>=1
         nav(h,'advanced');layout(h);close(h)
     test('Calm forced colors retain explicit selected-state border',force_colors)
     def outputs():
@@ -80,58 +105,58 @@ with sync_playwright() as pw:
         assert not h.page.locator('.sign-layout').is_visible();assert h.page.locator('[x-text="buildProblem"]:visible').count();close(h)
     test('Calm invalid edited state hides the old QR and output addresses',stale_output)
     def helper_failure():
-        h=Harness(browser);h.config();h.call("Object.defineProperty(a,'outputReview',{get(){return {ok:false,outputs:[],problem:'Output details are unavailable. Do not sign until the full destination list can be reviewed.'}}});a.preparedRevision++")
+        h=Harness(browser);h.config();present_sign_step(h);h.call("Object.defineProperty(a,'outputReview',{get(){return {ok:false,outputs:[],problem:'Output details are unavailable. Do not sign until the full destination list can be reviewed.'}}});a.preparedRevision++")
         h.page.wait_for_timeout(50);assert not h.page.locator('.sign-layout').is_visible();assert h.page.locator('[x-text="outputReview.problem"]').is_visible();close(h)
     test('Calm failed read-only projection has a visible stop-review explanation',helper_failure)
     def clean_result():
-        h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);assert h.call('return a.resultState')=='match'
+        h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);present_result(h);assert h.call('return a.resultState')=='match'
         assert not h.page.locator('.metadata-assessment').is_visible();assert h.page.locator('.result-limit:visible').count()==1
         assert h.page.get_by_role('button',name='Save result',exact=True).is_visible();h.file_details();assert h.page.locator('.metadata-assessment').is_visible();layout(h);close(h)
     test('Calm normal result is compact while original technical details remain accessible',clean_result)
     def amber():
-        h=Harness(browser,width=390);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex())
+        h=Harness(browser,width=390);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());present_result(h)
         assert h.call('return a.resultDisplayState')=='review';assert h.page.locator('.file-review-action').is_visible()
         assert h.page.locator('.result').get_attribute('data-result-state')=='review';h.page.get_by_role('button',name='Inspect file changes',exact=True).click()
         assert h.page.locator('.metadata-assessment').is_visible();assert h.page.locator('#returned-file-details').evaluate('(e)=>e.open');layout(h)
         h.page.screenshot(path=str(SHOTS/'calm-review-390.png'),full_page=True);close(h)
     test('Calm unresolved file changes stay amber and open directly from the main result',amber)
     def earlier_issue():
-        h=Harness(browser,width=390);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());h.page.locator('#next-transaction').click()
-        h.accept(h.call('return a.variants[0].txHex'));assert h.call('return a.resultDisplayState')=='match';assert h.page.locator('.workspace-alert').is_visible()
+        h=Harness(browser,width=390);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());present_result(h);h.page.locator('#next-transaction').click()
+        h.accept(h.call('return a.variants[0].txHex'));present_result(h);assert h.call('return a.resultDisplayState')=='match';assert h.call('return a.sessionSummary.review')==1;assert h.page.locator('.tracker-status-readonly').is_visible();assert '1 file review' in h.page.locator('.tracker-status-readonly').inner_text()
         nav(h,'session');assert h.page.locator('.history-item[data-finding="review"]').count()==1
-        nav(h,'advanced');assert h.page.locator('.workspace-alert').is_visible();close(h)
+        nav(h,'advanced');assert h.page.locator('.tracker-status-readonly').is_visible();assert '1 file review' in h.page.locator('.tracker-status-readonly').inner_text();close(h)
     test('Calm a later match cannot conceal the session previous unresolved file finding',earlier_issue)
     def download_result():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);expected=h.call('return a.exportEvidence()')
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);expected=h.call('return a.exportEvidence()')
         with h.page.expect_download() as event:h.page.get_by_role('button',name='Save result',exact=True).click()
         download=event.value;raw=Path(download.path()).read_bytes();got=json.loads(raw)
         assert got==expected;assert re.fullmatch(r'detail-[0-9a-f]{12}\.json',download.suggested_filename)
         assert download.suggested_filename=='detail-'+hashlib.sha256(raw).hexdigest()[:12]+'.json';assert d['seed'] not in raw.decode();close(h)
     test('Calm primary Save result downloads exact evidence with short content-derived filename',download_result)
     def summary_result():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);expected=h.call('return a.report()')
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);expected=h.call('return a.report()')
         with h.page.expect_download() as event:h.summary_download().click()
         download=event.value;got=json.loads(Path(download.path()).read_text());assert got==expected;assert download.suggested_filename.startswith('record-');close(h)
     test('Calm summary-only export remains an explicit secondary choice',summary_result)
     def incomplete():
-        h=Harness(browser,width=320);h.config();h.accept('bad');assert h.call('return a.resultState')=='incomplete';assert h.page.locator('.result h3').inner_text()=='Could not complete the check'
+        h=Harness(browser,width=320);h.config();h.accept('bad');present_result(h);assert h.call('return a.resultState')=='incomplete';assert h.page.locator('.result h3').inner_text()=='Could not complete the check'
         with h.page.expect_download() as event:h.page.get_by_role('button',name='Save result',exact=True).click()
         data=json.loads(Path(event.value.path()).read_text());assert data['schema']=='tbw-signature-result-v2' and data['result']=='incomplete';close(h)
     test('Calm incomplete unparseable results stay visible and export summary not success',incomplete)
     def inert_notes():
         h=Harness(browser);h.open_tools();h.page.locator('#device-notes>summary').click();text='<img src=x onerror="window.attack=true">'
-        h.page.locator('#firmware').fill(text);nav(h,'test');h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
+        h.page.locator('#firmware').fill(text);nav(h,'test');h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
         assert h.call('return a.report().firmware')==text;nav(h,'session');assert h.page.evaluate('window.attack===true') is False;close(h)
     test('Calm operator labels cannot inject markup or change device attestation',inert_notes)
     def capture_nav():
         h=Harness(browser,media=True,width=390);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"')
         before=h.page.evaluate('window.mediaCalls')
-        for view in ['test','advanced','session']:assert h.page.locator('#workspace-'+view).is_disabled()
+        assert h.page.locator('nav.workspace-nav,#workspace-test,#workspace-advanced,#workspace-session').count()==0
         h.call('a.openWorkspace("advanced")');assert h.call('return a.workspaceView')=='test';assert h.page.evaluate('window.mediaCalls')==before
         h.call('a.stopScan()');nav(h,'advanced');assert h.page.evaluate('window.mediaCalls')==before;close(h)
     test('Calm workspace navigation never reacquires camera or hides live capture',capture_nav)
     def halted_advanced():
-        h=planned(browser);h.page.locator('#wallet-loaded').click();h.accept('bad');assert h.call('return a.guidedStatus.phase')=='halted';nav(h,'advanced')
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept('bad');assert h.call('return a.guidedStatus.phase')=='halted';nav(h,'advanced')
         assert h.page.locator('.guided-status').is_visible();assert h.page.locator('.guided-stop-reason').is_visible();assert h.page.locator('#start-guided-session').is_disabled() or not h.page.locator('#start-guided-session').is_visible();close(h)
     test('Calm guided failure remains visible even in the advanced workspace',halted_advanced)
     def late_focus():
@@ -139,7 +164,7 @@ with sync_playwright() as pw:
         assert h.call('return a.workspaceView')=='test';assert h.page.evaluate('!document.activeElement.closest("#advanced-view,#session-view")');close(h)
     test('Calm fast repeated navigation cannot leave keyboard focus in a hidden view',late_focus)
     def controls_single():
-        h=Harness(browser,width=390);h.page.locator('#wallet-loaded').click();assert h.page.locator('.return-actions [aria-label="Paste signed transaction"]').inner_text().strip()=='Paste'
+        h=Harness(browser,width=390);h.workspace('test');h.page.locator('#wallet-loaded').click();assert h.page.locator('.import-actions [aria-label="Paste signed transaction"]').inner_text().strip()=='Paste'
         qr=h.page.locator('#qr-format button').first.evaluate('(e)=>{const s=getComputedStyle(e);return [s.fontSize,s.padding,s.minHeight]}')
         h.call('a.goToStep(1)');seed=h.page.locator('#word-count button').first.evaluate('(e)=>{const s=getComputedStyle(e);return [s.fontSize,s.padding,s.minHeight]}');assert seed==qr,(seed,qr);close(h)
     test('Calm paste label appears once and QR/seed segmented controls share sizing',controls_single)
@@ -152,7 +177,7 @@ with sync_playwright() as pw:
         assert h.page.locator('.output-address:visible').count()==20;close(h)
     test('Calm all 20 full addresses reflow at 320px with doubled text',outputs_text)
     def failed_download():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);before=same(h);h.page.evaluate('() => {URL.createObjectURL=()=>{throw Error("injected unavailable download") }}')
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);before=same(h);h.page.evaluate('() => {URL.createObjectURL=()=>{throw Error("injected unavailable download") }}')
         h.page.get_by_role('button',name='Save result',exact=True).click();assert 'unavailable' in h.page.locator('.notice:visible').first.inner_text();assert same(h)==before;close(h)
     test('Calm failed evidence download is visible and leaves verified state unchanged',failed_download)
     def help_return():

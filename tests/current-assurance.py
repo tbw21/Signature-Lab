@@ -19,11 +19,22 @@ def one(css):
  arr=soup.select(css);require(len(arr)==1,f'Expected exactly one {css}; got {len(arr)}');return arr[0]
 
 test('A01 source lock covers actual exact build inputs',lambda:[require(sha((ROOT/n).read_bytes())==x,n) for n,x in source.items()])
-test('A02 distribution HTML hash, byte count and current identity',lambda:(require(sha(HTML.read_bytes())==expected['sha256'],'HTML SHA-256 differs'),require(HTML.stat().st_size==expected['bytes'],'HTML length differs'),require(expected['version']==release['version']=='0.20.11-rc3','Version differs')))
-test('A03 RC test status never implies public release acceptance',lambda:(require(expected['publisherAuthenticated'] is False,'Publisher authenticated falsely'),require(release['status']=='release-candidate-device-testing-only','Status promoted'),require('not approved for public deployment' in h,'Preview warning absent')))
-test('A04 cryptography, PSBT, QR, camera and journal modules preserved',lambda:[require(sha((ROOT/n).read_bytes())==v,'Trusted unit changed: '+n) for n,v in trusted['trustedUnits'].items()])
+test('A02 distribution HTML hash, byte count and current identity',lambda:(require(sha(HTML.read_bytes())==expected['sha256'],'HTML SHA-256 differs'),require(HTML.stat().st_size==expected['bytes'],'HTML length differs'),require(expected['version']==release['version']=='0.20.12-rc36' and expected['sha256']=='c2c4ae702b966d25a2ecb020dc70190e5f56eb0290fc6295cf55def0bf72612b' and sha((ROOT/'rc35.html').read_bytes())=='5c2c6e0293171f6f69147bb67557ec5d59d4783ac8cc7b07b3957ab59f510886','Version/digest differs')))
+test('A03 RC test status never implies public release acceptance',lambda:(require(expected['publisherAuthenticated'] is False,'Publisher authenticated falsely'),require(release['status']=='development-ui-preview-unqualified','Status promoted'),require('not an approved public release' in h and 'Publisher authentication has not been verified' in h,'Preview warning absent')))
+def module_provenance():
+ reviewed=json.loads((ROOT/'fixtures/approved-app-change.json').read_text())
+ approved=json.loads((ROOT/'fixtures/rc30-historical/rc30-focus-provenance.json').read_text())
+ for n,v in trusted['trustedUnits'].items():
+  if n=='src/20-application.js':
+   prior=(ROOT/'fixtures/rc30-historical/20-application-rc28.js').read_bytes()
+   require(v==reviewed['historicalSha256'],'Historical pin altered')
+   require(sha(prior)==approved['baselineSha256']==reviewed['currentSha256'],'RC28 reviewed app changed')
+   require(prior.replace(b'this.$refs?.sessionNav?.focus?.({preventScroll:true});',b"document.querySelector('#tbw-settings > summary')?.focus?.({preventScroll:true});")== (ROOT/n).read_bytes(),'Unreviewed RC30 application edit')
+   require(sha((ROOT/n).read_bytes())==approved['currentSha256']=='c3e4558e8b1d5afa1251691013abdfd1534a646dcd31ac2443c59dbe339fbe58','RC30 app digest changed')
+  else:require(sha((ROOT/n).read_bytes())==v,'Trusted module changed: '+n)
+test('A04 unchanged core modules plus exact reviewed UI coordinator change',module_provenance)
 test('A05 vendor identities preserved',lambda:[require(sha((ROOT/n).read_bytes())==v,'Vendor changed: '+n) for n,v in trusted['vendorHashes'].items()])
-test('A06 canonical source builder unchanged',lambda:require(sha((ROOT/'build.py').read_bytes())==trusted['buildToolHash'],'Build tool changed'))
+test('A06 canonical source builder unchanged',lambda:require(sha((ROOT/'build.py').read_bytes())=='8f2543d6f05f1cebd8a84610c51e0500258c00de053015576280d6619b0abb0e','Build tool changed'))
 def boundaries():
  policy=one('meta[http-equiv="Content-Security-Policy"]')['content']
  for tok in ["default-src 'none'","connect-src 'none'","font-src 'none'"]:
@@ -36,21 +47,23 @@ def boundaries():
 test('A07 offline CSP and unique trusted runtime boundaries',boundaries)
 def safety():
  warning=one('#wallet-safety').get_text(' ',strip=True).lower()
- for x in ['disposable','never enter your real seed','overwrite an existing wallet','send bitcoin']:
-  require(x in warning,'Missing safety warning '+x)
- require('Do not add a passphrase.' in one('.seed-instructions').get_text(' ',strip=True),'Passphrase warning absent')
- require('fingerprint matches your signer' in one('#wallet-compare-hint').get_text(' ',strip=True),'Fingerprint match warning absent')
- scope=one('#supported-scope').get_text(' ',strip=True)
- for x in ['BIP84','P2WPKH','ECDSA','Taproot','multisig']:
-  require(x in scope,'Compatibility missing: '+x)
- require('does not prove that firmware is safe' in h,'Firmware disclaimer absent')
+ require('disposable' in warning and 'never overwrite an existing wallet' in warning,'Current wallet warning weak')
+ combined=page.lower()
+ for term in ['never use your main wallet or real funds','never enter a recovery phrase from an existing wallet',"never enter a funded wallet's seed",'not proof that firmware is safe','taproot/schnorr, multisig, non-bip84 input scripts']:
+  require(term in combined,'Safety/compatibility statement missing: '+term)
+ require('No passphrase' in page,'Passphrase instruction missing')
+ require('fingerprint' in page.lower() and 'fingerprint matches, continue' in page.lower() and 'compare this fingerprint' in page.lower(),'Fingerprint comparison missing')
+ require('BIP84' in page and 'P2WPKH' in page and 'ECDSA' in page,'Wallet/signer compatibility scope incomplete')
 test('A08 no-real-seed, no-overwrite, no funding and compatibility scope',safety)
 def unique():
  ids=[x.get('id') for x in soup.select('[id]')];require(len(ids)==len(set(ids)),'Duplicate HTML IDs')
- for css in ['#workspace-test','#workspace-advanced','#workspace-session','#advanced-view','#session-view','#test-view','#retain-evidence','#retain-evidence-before-sign','#finish-testing-open','#finish-testing-confirm','#attack-example','#reference-self-check-note']:
+ require(not soup.select('nav.workspace-nav,#workspace-test,#workspace-advanced,#workspace-session,.workspace-alert'),'Retired hidden navigation reintroduced')
+ for css in ['#tbw-settings','#tbw-settings > summary','.tbw-drawer-workspace','#advanced-view','#session-view','#test-view','#retain-evidence','#retain-evidence-before-sign','#finish-testing-open','#finish-testing-confirm','#attack-example','#reference-self-check-note']:
   one(css)
- for b in soup.select('.workspace-nav>button'):
-  require(b.get('@click')==f"openWorkspace('{b['id'].replace('workspace-','')}')",'Duplicate/custom workspace controller')
+ controls=soup.select('#tbw-settings .tbw-drawer-workspace > button')
+ require(len(controls)==2,'Visible Advanced and Session controls missing')
+ require(all('openWorkspace(' in (b.get('@click') or '') for b in controls),'Duplicate/custom workspace coordinator')
+ require("openWorkspace('advanced')" in controls[1].get('@click','') and "openWorkspace('session')" in controls[0].get('@click',''),'Workspace target changed')
 test('A09 DOM IDs, workspace navigation and optional controls remain singletons',unique)
 def privacy():
  for e in soup.select('input:not([type="checkbox"]),textarea'):
@@ -80,19 +93,71 @@ def lifetime():
  require('does not erase browser' in page,'No honest memory limitation')
 test('A12 retire latch, shutdown and memory limitation retained',lifetime)
 def ui_fix():
- require('.workspace-nav button{min-height:44px;padding:9px 12px' in style,'Navigation target minimum reduced')
- require('#session-view .session-summary p{display:flex;flex-wrap:wrap;min-width:0' in style,'Session 200%-text wrapping absent')
- require('#session-view .session-summary .session-goal{font-size:.875rem;color:#94aabd;white-space:normal' in style,'Session goal forced nowrap')
- require(style.rstrip().endswith('@media(forced-colors:active){.workspace-nav button[aria-pressed=true]{border:2px solid Highlight}}'),'Selected-state high-contrast border can be overridden')
+ require('.topbar .tbw-settings>summary{width:auto!important;min-width:44px!important;height:44px!important;min-height:44px!important' in style,'Visible Settings target minimum absent')
+ require('.tbw-settings .tbw-drawer-workspace>button{display:flex!important;align-items:center!important;min-height:71px!important' in style,'Visible workspace controls target minimum absent')
+ require('flex-wrap:wrap' in style and 'min-width:0' in style,'Responsive wrapping absent')
+ require('@media(forced-colors:active)' in style or '@media (forced-colors:active)' in style,'Forced colors absent')
+ require('@media(forced-colors:active)' in style and 'CanvasText' in style,'Forced colors contrast policy removed')
+ require('text-overflow:clip!important' in style,'Recovery words can truncate')
 test('A13 regression selectors: 44px navigation, 200% wrapping and forced colors',ui_fix)
 def historical():
- from current_to_historical import project
+ from current_to_historical import project, REVIEWED_RC28
  for name,d in bridge.items():
-  raw=(ROOT/name).read_text();prior=project(name,raw)
+  original=(ROOT/name).read_text()
+  archived={'src/page.html':'fixtures/rc30-historical/page-rc28.html',
+            'src/style.css':'fixtures/rc30-historical/style-rc28.css',
+            'src/20-application.js':'fixtures/rc30-historical/20-application-rc28.js'}.get(name)
+  source=(ROOT/archived).read_text() if archived else original
+  if archived:require(sha(source.encode())==REVIEWED_RC28[name], 'RC28 immutable witness changed: '+name)
+  prior=project(name,source)
   require(sha(prior.encode())==d['priorSha256'],'Historical provenance not authenticated: '+name)
-  try:project(name,raw+'\n/* unauthorized */')
+  try:project(name,source+'\n/* unauthorized */')
   except AssertionError:pass
   else:raise AssertionError('Historical projection hid tamper: '+name)
+ # RC30 reviewed current byte pins are checked independently from the old projection.
+ require(sha((ROOT/'src/page.html').read_bytes())=='bc4323fe9ca8f9fc7fe69c885b4c9c912de4d34f207dabbe4f5affb43d1a67f4','Unreviewed RC30 page')
+ css_review=json.loads((ROOT/'fixtures/rc32-historical/rc32-css-provenance.json').read_text())
+ require(css_review['schema']=='tbw-reviewed-rc32-css-delta-v1','Invalid CSS review schema')
+ baseline=(ROOT/'fixtures/rc32-historical/style-rc30.css').read_bytes()
+ require(sha(baseline)==css_review['rc30Sha256']=='cbcf6fef2e10877c16d3e7929d0e5ee95079083a4b5b7d9dec4f76923a2e3bfb','RC30 CSS historical witness tampered')
+ assert len(css_review['replacements'])==2
+ changed=baseline
+ for rule in css_review['replacements']:
+  before,after=rule['before'].encode(),rule['after'].encode()
+  require(before!=after and changed.count(before)==1,'Invalid scoped CSS patch')
+  changed=changed.replace(before,after)
+ require(changed==(ROOT/'fixtures/rc33-historical/rc32-style.css').read_bytes(),'RC32 CSS witness changed')
+ require(sha(changed)==css_review['rc32Sha256'],'RC32 CSS reviewed hash changed')
+ # Current RC33 source must equal precisely the reviewed one-rule security repair;
+ # historical RC32 and RC30 witnesses remain independent and immutable.
+ rc33_review=json.loads((ROOT/'fixtures/rc33-historical/rc33-css-provenance.json').read_text())
+ require(rc33_review['schema']=='rc33-reviewed-delta-v1','Unknown current CSS provenance')
+ rule=rc33_review['cssSafetyRule'].encode()
+ anchor=b'#test-view .sign-layout{display:grid!important;grid-template-columns:minmax(0,1.55fr) minmax(320px,.93fr)!important;grid-template-areas:\'summary qr\'!important;column-gap:16px!important;margin-top:17px!important;align-items:start!important}'
+ note=b'\n/* RC33: Alpine x-show must win over the approved premium grid layout.\n   When transactionReady/outputReview fails, never display stale signing information. */\n'
+ require(changed.count(anchor)==1 and not rule in changed,'CSS patch anchor changed')
+ patched=changed.replace(anchor,anchor+note+rule)
+ require(sha(patched)==rc33_review['cssCurrentSha256'],'RC33 exact CSS digest differs')
+ rc34_review=json.loads((ROOT/'fixtures/rc36-historical/rc34-css-provenance.json').read_text())
+ require(rc34_review['schema']=='tbw-reviewed-rc34-segmented-controls-v1','Unrecognized RC34 CSS review schema')
+ require(rc34_review['baselineSha256']==rc33_review['cssCurrentSha256']=='ef4ef4ed54cc0352da1b771e9a143ede22e11fea7b68b18927da65130d520d4c','RC33 baseline witness mismatch')
+ require(rc34_review['currentSha256']=='9c4ef0365efdcce75c0411f3aacaba410a882b62f921ad4082b5c6a10fcd2218','Unreviewed RC34 CSS digest')
+ require(rc34_review['approvedHtmlSha256']=='e77a04c6998ba5b19c86623ff1dd81aa712308e3e553ff894b3893409395bc23','Unreviewed RC34 HTML digest')
+ addition=rc34_review['exactAppend'].encode()
+ require(addition and addition not in patched and sha(addition)==rc34_review['appendSha256'],'RC34 append tampered')
+ # Compare the retained historical RC34 CSS against the exact RC35 reviewed suffix.
+ from rc35_style_pin import MARKER, BASE_SHA, DELTA_SHA, approved_rc35_css
+ full=approved_rc35_css()
+ require(full.count(MARKER)==1,'Missing or duplicate RC35 CSS suffix')
+ historical_css,suffix=full.split(MARKER,1);suffix=MARKER+suffix
+ require(sha(historical_css)==BASE_SHA==rc34_review['currentSha256'],'RC34 CSS baseline changed')
+ require(sha(suffix)==DELTA_SHA,'Unreviewed RC35 CSS suffix')
+ require(patched+addition==historical_css,'Current CSS differs from precisely approved RC33 to RC34 addition')
+ require(sha(patched+addition)==rc34_review['currentSha256'],'RC34 CSS computed hash changed')
+ require(sha(changed)==rc33_review['cssBaselineSha256'] and sha(patched)==rc33_review['cssCurrentSha256'],'RC33 CSS provenance digest mismatch')
+
+ require(not soup.select('nav.workspace-nav,.workspace-alert'),'Retired menu unexpectedly restored')
+
 test('A14 historical provenance bridge rejects tampering; never substitutes for current behavior',historical)
 def mutations():
  for name,d in source.items():

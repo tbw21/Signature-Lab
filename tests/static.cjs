@@ -24,8 +24,17 @@ test('compression vendor bytes embedded verbatim with original MIT and zlib noti
 test('source lock covers every authoritative assembly input',()=>{const r=cp.spawnSync('python',['-c','import build; build.locked(); print("verified")'],{cwd:ROOT,encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});assert.equal(r.status,0,r.stderr)});
 test('build no longer reads a previous HTML or downloads dependencies',()=>{const s=source('build.py');assert(!s.includes("read_text('baseline"));assert(!s.includes('urllib')&&!s.includes('requests.'));assert(s.includes('os.link(name,path)'))});
 test('artifact matches deterministic source assembly exactly',()=>{const r=cp.spawnSync('python',['-c','import build,hashlib; print(hashlib.sha256(build.assemble()[0]).hexdigest())'],{cwd:ROOT,encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});assert.equal(r.status,0,r.stderr);assert.equal(r.stdout.trim(),sha(html))});
-test('runtime has no persistence or broadcast operations',()=>{assert(!/localStorage|sessionStorage|indexedDB/.test(code));assert(!/sendrawtransaction/.test(code));assert(!/Math\.random\(/.test(source('src/reliability-common.js')))});
-test('release identifier and embedded source build identity agree',()=>{const release=JSON.parse(source('release.json'));assert(code.includes('"version":"'+release.version+'"'));assert(html.includes('Signature Lab v'+release.version));assert(code.includes('publisherAuthenticated":false'))});
+test('runtime has only theme-preference persistence and no broadcast operations',()=>{
+ const app=fs.readFileSync(path.join(ROOT,'src/20-application.js'),'utf8');
+ assert(!/sessionStorage|indexedDB/.test(code));
+ for(const name of ['getItem','setItem','removeItem'])assert(app.includes('localStorage.'+name+"('tbw-signature-lab-theme'"));
+ assert.equal((code.match(/\blocalStorage\b/g)||[]).length,4,'Unexpected browser storage access');
+ assert.equal((app.match(/\blocalStorage\b/g)||[]).length,4,'Application has an unreviewed storage API');
+ assert.equal((app.match(/tbw-signature-lab-theme/g)||[]).length,4,'Unexpected storage key');
+ assert(!/localStorage|sessionStorage|indexedDB/.test(code.replace(app,'')),'Other module accesses storage');
+ assert(!/sendrawtransaction/.test(code));assert(!/Math\.random\(/.test(source('src/reliability-common.js')));
+});
+test('release identifier and embedded source build identity agree',()=>{const release=JSON.parse(source('release.json'));assert(code.includes('"version":"'+release.version+'"'));assert(html.includes('v'+release.version+' · Preview'));assert(html.includes('Publisher authentication has not been verified.'));assert(code.includes('publisherAuthenticated":false'))});
 test('consolidated fingerprint uses the existing cached root with unavailable/zero guards',()=>{const app=source('src/20-application.js');assert(app.includes('get walletFingerprint()'));assert(app.includes("fingerprint.toString(16).padStart(8,'0').toUpperCase()"));assert(app.includes('seedRenderRequest'));assert(html.includes('wallet-fingerprint-value'));});
 test('historical checks have one read-only journal projection, not a writable UI ledger',()=>{const app=source('src/20-application.js');assert(app.includes('get sessionChecks()'));assert(!/this\.sessionChecks\s*=|app\.sessionChecks\s*=/.test(app));assert.equal((app.match(/journal = new TbwSessionJournal/g)||[]).length,2);});
 test('guided plan is optional, bounded and separate from the signing implementation',()=>{const s=source('src/guided-plan.js');assert(s.includes('> 200'));assert(!/\b(Np|Mp|Op|zp|up|signIdx)\(/.test(s));assert(html.includes('Start guided session'));assert(html.includes('not a safety guarantee'));});
@@ -57,8 +66,8 @@ test('UX: disclosures exist once, are closed initially and leave required status
  assert.equal((html.match(/id="advanced-tools"/g)||[]).length,1);
  assert(!/<details[^>]*id="advanced-tools"[^>]*\sopen(?:[\s>])/.test(html));
  assert(html.includes('class="guided-status"') && html.includes('guidedStatus.phase'));
- assert(html.includes('id="workspace-advanced"'));assert(html.includes('id="result-tools"'));assert(html.includes('Custom settings in use'));
- assert(html.toLowerCase().includes('hardware acceptance pending'));assert(html.includes('The release is unsigned'));
+ assert(html.includes('id="tbw-settings"')&&html.includes('id="advanced-view"'));assert(html.includes('id="result-tools"'));assert(html.includes('Custom settings in use'));
+ assert(html.includes('not an approved public release') && html.includes('Publisher authentication has not been verified.'));assert(html.includes('The release is unsigned'));
 });
 test('UX: required disclosure and source identity bindings are native, local and readonly',()=>{
  assert(html.includes('x-ref="advancedTools"'));assert(html.includes('releaseSourceHash'));
@@ -104,8 +113,11 @@ test('calm: output review and JSON filename helpers are single-purpose projectio
  assert.equal((code.match(/function tbwSaveJson\(/g)||[]).length,1);
 });
 test('calm: three explicit workspace buttons and visible unresolved finding bindings',()=>{
- for(const id of ['workspace-test','workspace-advanced','workspace-session'])assert(html.includes('id="'+id+'"'));
- assert(html.includes('Recorded findings need review'));assert(html.includes('Inspect file changes'));
+ // Retired hidden buttons must remain absent; Settings is the one visible workspace route.
+ for(const id of ['workspace-test','workspace-advanced','workspace-session'])assert(!html.includes('id="'+id+'"'));
+ for(const id of ['tbw-settings','advanced-view','session-view'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1);
+ for(const label of ['Advanced testing','Session history','Inspect file changes','Operation stopped'])assert(html.includes(label),label);
+ assert(html.includes('recordedReviewCount')&&html.includes('recordedIncompleteCount'));
  assert(html.includes('@click="downloadResult()"'));assert(html.includes('Save summary only'));
 });
 test('calm: full read-only output review has no editing or shortened-address substitution',()=>{

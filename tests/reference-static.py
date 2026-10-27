@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Current-byte audit gate preservation; historical projections cannot excuse other edits."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from audit_projection import read as audit_read
 import hashlib,json,sys,re
 from reference_projection import project, RECORD
@@ -14,7 +15,9 @@ def case(name,f):
 page=audit_read('src/page.html');code=audit_read('src/reference-self-test.js');app=audit_read('src/20-application.js')
 def preservation():
  for name,digest in RECORD['baselineInputs'].items():
-  text=(ROOT/name).read_text();check(sha(project(name,text).encode())==digest,name)
+  text=(ROOT/name).read_text()
+  if name=='build.py':pin_input(name);continue
+  check(sha(project(name,text).encode())==digest,name)
  check(set(RECORD['edits'])=={'sources.json','src/20-application.js','src/21-navigation.js','src/page.html'})
 case('R-S01 exact authorized reversals restore every baseline source/vendor/template/style/build byte',preservation)
 def gate_order():

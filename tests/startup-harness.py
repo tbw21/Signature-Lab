@@ -37,7 +37,7 @@ with sync_playwright() as pw:
             h=new['Harness'](browser,width=1440,height=950)
             assert h.call('return !!a.seed.value && a.seedQrVisible && !a.acknowledged')
             assert not h.errors and not h.requests,(h.errors,h.requests)
-            assert h.page.locator('#new-test-wallet').is_visible()
+            assert h.page.locator('#start-safe-test').is_visible();h.page.locator('#start-safe-test').click();assert h.page.locator('#new-test-wallet').is_visible()
             assert h.page.evaluate("document.documentElement.dataset.appReady")=='true'
             observations.append({'mode':'exact-candidate','ready':True,'pageErrors':h.errors,'networkRequests':h.requests})
         finally:cleanup(browser)

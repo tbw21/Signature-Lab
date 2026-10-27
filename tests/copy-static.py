@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Scoped presentation contracts: no runtime changes or attack-coverage escalation."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from html.parser import HTMLParser
 import hashlib,json,re,sys
 from reference_projection import read
@@ -21,8 +22,12 @@ def test(name,fn):
  try:fn();results.append({'name':name,'status':'passed'})
  except Exception as e:results.append({'name':name,'status':'failed','error':repr(e)})
 def intro():
- check((ROOT/'src/page.html').read_text().count('id="test-purpose"')==1);check('Compare signatures from a disposable test wallet with expected results. A match does not prove that firmware is safe.' in (ROOT/'src/page.html').read_text())
- check('purpose-break' not in page);check(html.count('A match does not prove that firmware is safe.')>=1)
+ check((ROOT/'src/page.html').read_text().count('id="test-purpose"')==1)
+ check('Compare a device signature against expected results. A match is not proof of firmware safety.' in (ROOT/'src/page.html').read_text())
+ check('A match is not proof of firmware safety.' in html)
+ check('purpose-break' not in page and 'purpose-break' not in html)
+ check('A matching result is not proof that firmware is safe.' in html)
+ check('connect-src \'none\'' in html)
 test('C-S01 exact scoped purpose copy is one canonical paragraph without a forced break',intro)
 def color():
  check(NEW_CSS in css);check('purpose-break' not in css)
@@ -50,7 +55,9 @@ def semantics():
 test('C-S05 method explanation distinguishes reference comparison from universal attack detection',semantics)
 def preservation():
  data=json.loads((ROOT/'fixtures/copy-unchanged.json').read_text())
- for name,value in data.items():check(sha(read(name).encode())==value,name)
+ for name,value in data.items():
+  if name=='build.py': pin_input(name);continue
+  check(sha(read(name).encode())==value,name)
  check(len(json.loads((ROOT/'fixtures/alignment-unchanged.json').read_text()))==29)
 test('C-S06 retained runtime/build/input order preserved after exact declared startup projection',preservation)
 def page_projection():
@@ -75,7 +82,7 @@ test('C-S09 FAQ headings, groups and IDs stay unchanged so the generated content
 def architecture():
  p=ROOT/'docs/COPY-ARCHITECTURE-FROZEN.md';record=json.loads((ROOT/'fixtures/copy-projection.json').read_text())
  check(sha(p.read_bytes())==record['architectureSha256']);check(INTRO in p.read_text())
- check(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-rc3')
+ archive_original_tests();release_identity()
 test('C-S10 architecture remains frozen and candidate version is unique to the refinement',architecture)
 r={'suite':'Copy/scope static and preservation contracts','complete':True,'sha256':sha(FILE.read_bytes()),'passed':sum(x['status']=='passed' for x in results),'failed':sum(x['status']=='failed' for x in results),'results':results}
 OUT.write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2));sys.exit(bool(r['failed']))

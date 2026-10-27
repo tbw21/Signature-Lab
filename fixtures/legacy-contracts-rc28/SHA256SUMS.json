@@ -1,0 +1,10 @@
+{
+  "audit-static.py": "0343e9495a024b38af6f9733d37e8f0165f8d9b3eb8d1796a9976ead2d6200c3",
+  "copy-static.py": "3f688a91daa5056fd692a225b95c2fa81cafac72c2685328eba65312523e2e84",
+  "delivery-static.py": "bb4938cf6c4e11f94f664a237fec9a640a3bff783be74a6b00eaeeb55ae6e131",
+  "evidence-static.py": "22f2ad4dda7f9e5f53eea655391edb33e6b133599b178a0fe32ef2c5867a3b92",
+  "feedback-static.py": "6a9ad8ab4dd758e61fd8bdc52cf5856faa66bd0d9d89823f738631061f3bf108",
+  "polish-static.py": "5ff641c0f99b5dac6166eda2a080c9f0ca59a7b0fab7b9cd5cd4052f94a1a957",
+  "reference-static.py": "c0cee2693c2d36286817a498176a1d1bc8303f105f93120093d700429c8399dc",
+  "wallet-card-static.py": "7fc1e8f69e02f6910e724a12f9bb926dedd3370d14252bc2c5461a3da60aad79"
+}

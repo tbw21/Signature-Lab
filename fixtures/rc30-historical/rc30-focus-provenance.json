@@ -1,0 +1,10 @@
+{
+  "schema": "tbw-scoped-development-focus-delta-v1",
+  "baseline": "0.20.12-rc28",
+  "target": "0.20.12-rc30",
+  "baselineSha256": "4ded7810831f8f841fdde9c9c3f3e94c808eb25605de995c53297c6ab8fcb26d",
+  "currentSha256": "c3e4558e8b1d5afa1251691013abdfd1534a646dcd31ac2443c59dbe339fbe58",
+  "patchSha256": "fd2aa6a86ee293b1dadb2208beb4a05e5be00c156ee5830fb799aa9f281a2750",
+  "scope": "one line only; replace focus target from invisible removed sessionNav button to visible Settings drawer summary; session transaction evidence and journal untouched",
+  "acceptance": "not qualified"
+}

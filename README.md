@@ -1,44 +1,43 @@
-# The Bitcoin Way — Signature Lab v0.20.11-rc3
+# Signature Lab v0.20.12-rc36 — DEVELOPMENT / NO-GO
 
-**Release candidate for operator disposable-wallet testing only. Not approved for public release. The 19 October 2026 independent audit reports a valid The Bitcoin Way signature on the exact RC3 HTML (SHA-256: `11eaae7d38dcdee21b5053fd359543bb170c131c706584edb9df8278e508d178`). This source archive does not itself re-verify the publisher key or include a detached signature; checksum verification alone is not publisher authentication.**
+**Current status:** unsigned development build. The complete 139-job frozen-candidate campaign, native browser-origin checks, optical/hardware signing and publisher verification have **not** been completed. Never use an actual wallet seed, real bitcoin or production signing device for unapproved experiments. A successful match does not certify firmware.
 
-Signature Lab is a self-contained offline HTML application for preparing disposable Bitcoin test wallets, checking returned ECDSA signatures, and reviewing supported PSBT/transaction metadata. A matching result is not a firmware-safety certificate. Never import real seed words, overwrite an existing wallet, or fund this disposable wallet.
+**Authoritative current state:** `release.json`, `source-lock.json` and `EXPECTED-OUTPUT.json`. The existing Bitcoin/signature/QR/camera/session runtime is unchanged from the independently reviewed RC30 cleanup except for the approved focus-reference change documented in its historical provenance. RC32 corrected two mobile control heights; RC33 corrected stale signing-layout visibility on invalid transactions; RC34 aligned 12/24-word and QR-format control sizing. These scoped presentation changes are independently pinned in `fixtures/rc32-historical/`, `fixtures/rc33-historical/` and `fixtures/rc36-historical/`. Rebuild with `python build.py NEW_OUTPUT.html` and verify with `python tools/verify_output.py NEW_OUTPUT.html`. A passing rebuild is consistency evidence, not publisher authentication.
 
-## Getting started
+**Current testing:** RC36 is the approved CSS-optimized presentation with a unique version and SHA-256 identity. The 29 application runtime modules, template, and vendor code remain unchanged. The full qualification suite is included only in the Full Source and Tests archive; focused static checks pass, but an uninterrupted 139-job RC36 acceptance receipt has not been obtained. Prior RC35 acceptance is historical and does not qualify these RC36 bytes. Publisher signing, physical optical/hardware validation and unavailable normal-origin browsers are separate requirements.
 
-- **WHATS-NEW.md:** one cumulative, change-only record since v0.20.3-rc1.
-- **docs/CURRENT-QUALIFICATION-REPAIR-ARCHITECTURE.md:** precise qualification-harness scope and acceptance criteria.
-- **docs/ACCEPTANCE-PLAN.md:** test categories and frozen release-candidate rules.
-- **docs/OPEN-GATES.md:** remaining external trust and hardware acceptance.
-- **docs/FEEDBACK-ARCHITECTURE-FROZEN.md:** historical source and evidence lineage (not current qualification).
+## Historical source history, not current qualification
 
-Never choose an older release as an automatic rollback or downgrade. Retired historical source projections support provenance only; they cannot qualify current UI or behavior. The v0.20.3-rc1 and later released development archives are separate artifacts with their own hashes. Tests against one version cannot be carried over silently to another.
+The following archived notes document earlier development revisions. Their release names and test claims do **not** describe the current RC34 application or RC38 development-overlay acceptance.
 
-## Reproducible build
+### RC30 retired-navigation cleanup (historical)
 
-From an extracted source archive, using preinstalled dependencies:
+The hidden old three-tab Test/Advanced/Session navigation and its CSS were removed. Current Settings drawer, visible Back to test controls and existing application coordinator remain authoritative. One focus fallback in `src/20-application.js` now targets the visible Settings summary. See `docs/RC30-RETIREMENT-ARCHITECTURE.md` and `RC30-QUALIFICATION-STATUS.md`.
 
-```bash
-python3 build.py /absolute/path/to/NEW-BUILD.html
-python3 tools/verify_output.py /absolute/path/to/NEW-BUILD.html
-```
+**Historical records below are archival references, not current release claims.**
 
-The builder checks `source-lock.json`, never overwrites existing output and requires no network. `EXPECTED-OUTPUT.json` records the expected exact HTML hash and size. Source lock and reproducible output establish consistency, not publisher authenticity.
+---
 
-The one authorized source archiver is:
+# Signature Lab v0.20.12-rc28 — BLOCKED development preflight
 
-```bash
-python3 archive.py /absolute/path/to/this/source /absolute/path/to/NEW-SOURCE.zip
-```
+**Authoritative release state:** see `release.json`, `EXPECTED-OUTPUT.json`, `source-lock.json` and `QUALIFICATION-STATUS.md`. These RC28 files are a **development UI preview**, unsigned and not approved for public release, hardware acceptance or deployment. Original RC28 application and vendor modules are unchanged in the RC29 static-test migration. Do not treat isolated preflight passes as a qualified 139-job run.
 
-## Architecture and qualification
+**Current migration:** the test-only RC29 development work ports retired navigation, historic version-string and obsolete copy/layout assertions without relaxing the underlying offline/privacy, fingerprint, no-passphrase, recovery-word, signing-verification, evidence and terminal-failure safeguards. Historic unmodified tests are under `fixtures/legacy-contracts-rc28/`; their SHA-256 entries are in `SHA256SUMS.json`. This migration is not an RC29 release candidate, has no publisher signature, and does not change the trusted runtime. See `docs/RC29-STATIC-MIGRATION.md` for what changed and which tests actually ran.
 
-One authoritative application coordinator, signature-verification path, journal and offline HTML artifact. Cryptography, signer/PSBT code, QR and camera modules, and trusted vendor code remain at their recorded baseline hashes. No automatic upload, analytics or external fonts.
+**Architecture history:** `docs/FEEDBACK-ARCHITECTURE-FROZEN.md` and other frozen architecture records remain historical, not a replacement for the current source lock. Never choose an older release as an automatic rollback or downgrade; use only an explicitly approved, hash-verified candidate.
 
-Current hardware/optical camera acceptance, genuine mobile browser and offline file/HTTPS origins, authenticated publisher identity, upstream dependency authenticity and independent security review are not fully qualified by synthetic software tests. A final release requires one clean, uninterrupted canonical campaign against frozen bytes followed by physical acceptance and explicit operator approval.
+**Historical source history, not current qualification:** Prior release notes are preserved below for reference. Names and qualification claims in the sections below refer to their own historic candidates only.
 
-The historical hardware checklists are checklists, not records of completed device testing. Development diagnostics and failure records must be retained separately.
+---
 
-## Release-candidate naming and acceptance
+# Signature Lab v0.20.12-rc26 — BLOCKED development preflight
 
-Current candidate naming is `vMAJOR.MINOR.PATCH-rcN` (e.g. `v0.20.11-rc3`); later changes to frozen RC bytes require a new candidate number, fresh SHA-256, and a complete new qualification campaign. A release candidate is not a public release. The exact RC3 bytes require operator physical acceptance and independent publisher authentication/security approval before public distribution.
+This source is not a qualified release. See `RC26-PREFLIGHT-STOP.md` and `RC26-MIGRATION-NOTES.md`. Its original historical security fixtures are retained; original RC25 versions of modified tests are under `fixtures/legacy-contracts-rc25/`.
+
+# TBW Signature Lab v0.20.12-rc24
+
+**Development UI preview; not a public release.** Based on frozen RC23; presentation-only correction of Advanced card spacing, expanded technical transaction content, and light-mode Input/Output row contrast. No functional modules changed.
+
+Build from locked source with `python build.py /new/output.html` (must not already exist). Run `python tests/rc24-layout-browser.py /new/output.html 320 390 768 1440` and `python tests/rc24-contrast-browser.py /new/output.html` with Playwright/Chromium installed. See `docs/RC24-ARCHITECTURE-FROZEN.md` and `docs/RC24-QUALIFICATION.md`.
+
+Only use a disposable wallet and no real bitcoin. A signature match cannot certify firmware safety.

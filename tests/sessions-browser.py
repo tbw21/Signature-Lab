@@ -154,7 +154,7 @@ with sync_playwright() as pw:
             assert h.page.locator('.guided-stop-reason').is_visible();close(h)
         test(f'C8 stopped-session labels and controls fit {width}px',layout)
     def fingerprint_layout():
-        h=Harness(browser,width=360,height=1000);h.page.screenshot(path=str(SHOTS/'fingerprint-consolidated-360.png'),full_page=True)
+        h=Harness(browser,width=360,height=1000);h.workspace('test');h.page.screenshot(path=str(SHOTS/'fingerprint-consolidated-360.png'),full_page=True)
         assert h.page.evaluate('document.documentElement.scrollWidth<=innerWidth+1');qr=h.page.locator('#seed-qr-display').bounding_box();fp=h.page.locator('.wallet-fingerprint').bounding_box();assert fp['y']>=qr['y']+qr['height'];close(h)
     test('C1/C8 fingerprint remains outside the QR quiet zone on a narrow screen',fingerprint_layout)
     def ended_reset():

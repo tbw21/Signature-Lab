@@ -37,11 +37,22 @@ def clean(h):
 def fit(h):
  assert h.page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
 def snapshot(h):return h.call('return JSON.stringify([a.stateSignature,a.walletSession,a.signingPolicy,a.sessionHistory,a.resultState])')
+def present_result(h):
+ """Navigate visibly to the result after ingesting synthetic evidence.
+ This is a UI visibility assertion, not a mutation of signing result state.
+ """
+ h.workspace('test')
+ if h.page.locator('#wallet-loaded').is_visible():
+  h.page.locator('#wallet-loaded').click()
+ h.page.locator('.stepper button').nth(2).click()
+ h.page.locator('.result').wait_for(state='visible')
+ assert h.call('return a.resultDisplayState') in ('match','review','incomplete')
+
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
  for version in [0,2]:
   def reduced(version=version):
-   h=Harness(browser,width=390);b=response(h,'reduced-sighash',version);h.accept(b.hex())
+   h=Harness(browser,width=390);b=response(h,'reduced-sighash',version);h.accept(b.hex());present_result(h)
    h.page.locator('.result[data-result-state="match"]').wait_for(state='visible')
    assert h.call('return a.metadataSummary.reducedResponse && a.metadataSummary.unexpected===0')
    assert h.call('return a.report().session.matched===1 && a.report().session.review===0')
@@ -49,7 +60,7 @@ with sync_playwright() as pw:
   test(f'SA-B01 reduced plus ALL visibly matches and exports consistent counts v{version}',reduced)
  for width in [390,1440]:
   def order(width=width):
-   h=Harness(browser,width=width);b=response(h,'reordered');h.accept(b.hex());assert h.call('return a.resultDisplayState')=='match'
+   h=Harness(browser,width=width);b=response(h,'reordered');h.accept(b.hex());present_result(h);assert h.call('return a.resultDisplayState')=='match'
    h.file_details();note=h.page.locator('.metadata-order-note');note.wait_for(state='visible');assert 'changed order' in note.inner_text();assert 'not proof' in note.inner_text()
    before=snapshot(h)
    with h.page.expect_download() as info:h.page.get_by_role('button',name='Save result',exact=True).click()
@@ -58,9 +69,10 @@ with sync_playwright() as pw:
   test(f'SA-B02 ordering is informational, complete positions exported at {width}px',order)
  for width in [320,390,1440]:
   def review(width=width):
-   h=Harness(browser,width=width);b=response(h,'review');h.accept(b.hex());h.page.locator('.result[data-result-state="review"]').wait_for(state='visible')
+   h=Harness(browser,width=width);b=response(h,'review');h.accept(b.hex());present_result(h);h.page.locator('.result[data-result-state="review"]').wait_for(state='visible')
    h.workspace('session');h.page.locator('#session-view').wait_for(state='visible')
-   text=h.page.locator('.session-outcomes').inner_text();assert '0 matched' in text and '1 needs review' in text and '0 differed' in text,text
+   outcomes=h.page.locator('.session-outcomes').evaluate('''e=>Object.fromEntries([...e.querySelectorAll('.session-metric')].map(el=>[el.querySelector('small').textContent.trim().toLowerCase(),Number(el.querySelector('strong').textContent.trim())]))''')
+   assert outcomes=={'matched':0,'need review':1,'differed':0},outcomes
    with h.page.expect_download() as info:h.page.locator('#save-history').click()
    record=json.loads(Path(info.value.path()).read_text());assert record['summary']['review']==1 and record['summary']['matched']==0
    assert record['events'][0]['metadataStatus']=='unexpected';fit(h)
@@ -69,7 +81,7 @@ with sync_playwright() as pw:
   test(f'SA-B03 metadata review is not counted as clean match in UI/download at {width}px',review)
  for width in [320,390,1440]:
   def capped(width=width):
-   h=Harness(browser,width=width);b=response(h,'many-fields');h.accept(b.hex())
+   h=Harness(browser,width=width);b=response(h,'many-fields');h.accept(b.hex());present_result(h)
    assert h.call('return a.resultDisplayState')=='review';h.file_details();h.page.get_by_text('Inspect unexpected changes',exact=True).click()
    h.page.locator('.metadata-fields>p').first.wait_for(state='visible')
    assert h.page.locator('.metadata-fields>p').count()==32
@@ -80,7 +92,7 @@ with sync_playwright() as pw:
    clean(h)
   test(f'SA-B04 four thousand hostile fields assess fully but render only 32 rows at {width}px',capped)
  def long_key():
-  h=Harness(browser,width=390);b=response(h,'long-key');assert len(b)<512*1024;h.accept(b.hex());assert h.call('return a.resultDisplayState')=='review'
+  h=Harness(browser,width=390);b=response(h,'long-key');assert len(b)<512*1024;h.accept(b.hex());present_result(h);assert h.call('return a.resultDisplayState')=='review'
   h.file_details();h.page.get_by_text('Inspect unexpected changes',exact=True).click();h.page.locator('.metadata-fields>p').first.wait_for(state='visible')
   t=h.page.locator('.metadata-fields').inner_text();assert len(t)<500 and '…' in t
   with h.page.expect_download() as info:h.page.get_by_role('button',name='Save result',exact=True).click()
@@ -88,7 +100,7 @@ with sync_playwright() as pw:
   fit(h);clean(h)
  test('SA-B05 large attacker key remains complete in evidence but bounded in rendered text',long_key)
  def hostile_text():
-  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());before=snapshot(h)
+  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());present_result(h);before=snapshot(h)
   h.call("Object.defineProperty(a,'metadataSummary',{get:()=>({status:'unexpected',fields:[{scope:'global',index:null,field:'<img src=x onerror=alert(1)>',key:'aa',classification:'unexpected',change:'added',reason:'<script>window.bad=true</script>'}]})})")
   h.file_details();h.page.get_by_text('Inspect unexpected changes',exact=True).click()
   assert h.page.locator('.metadata-fields img,.metadata-fields script').count()==0
@@ -101,7 +113,7 @@ with sync_playwright() as pw:
    h=Harness(browser,html=fixture,width=390);assert h.page.evaluate('agentReads===0 && agentCalls===0');assert h.call('return !!a.seed.value');clean(h)
   test('SA-B07 no automatic browser-agent access even when API is '+mode,agent)
  def delayed_box():
-  h=Harness(browser,width=390);h.page.locator('#wallet-loaded').click();h.page.locator('.sign-layout>.qr-column .qr-frame').wait_for(state='visible')
+  h=Harness(browser,width=390);h.workspace('test');h.page.locator('#wallet-loaded').click();h.page.locator('.sign-layout>.qr-column .qr-frame').wait_for(state='visible')
   h.page.evaluate("()=>{const e=document.querySelector('.sign-layout>.qr-column .qr-frame');e.style.setProperty('display','none','important');window.fixtureReady=true;setTimeout(()=>e.style.removeProperty('display'),200)}")
   h.page.wait_for_function('fixtureReady');old=h.page.locator('.sign-layout>.qr-column .qr-frame').evaluate('(e)=>e.getBoundingClientRect().width');assert old==0
   # The actual corrected helper is loaded, not a copied replacement.
@@ -109,7 +121,8 @@ with sync_playwright() as pw:
   box=namespace['box'](h,'.sign-layout>.qr-column .qr-frame');assert box['width']>100;clean(h)
  test('SA-B08 reactive-ready zero box reproduced, corrected geometry helper waits for actual visibility',delayed_box)
  def never_visible():
-  h=Harness(browser,width=390);h.page.set_default_timeout(200)
+  h=Harness(browser,width=390);h.workspace('test');h.page.locator('#wallet-loaded').click();h.page.set_default_timeout(200)
+  h.page.locator('.sign-layout>.qr-column .qr-frame').evaluate('(e)=>e.style.setProperty("display","none","important")')
   namespace=dict(globals());txt=(Path(__file__).parent/'polish-browser.py').read_text();exec(txt[txt.index('def box(h,s):'):txt.index('def same_edges')],namespace)
   caught=None
   try:namespace['box'](h,'.sign-layout>.qr-column .qr-frame')
@@ -117,31 +130,31 @@ with sync_playwright() as pw:
   assert caught and 'visible' in caught;clean(h)
  test('SA-B09 never-visible geometry is a bounded failure, not accepted as zero size',never_visible)
  def intact():
-  h=Harness(browser,width=390,media=True);b=response(h,'normal');h.accept(b.hex());before=snapshot(h)
+  h=Harness(browser,width=390,media=True);b=response(h,'normal');h.accept(b.hex());present_result(h);before=snapshot(h)
   h.workspace('advanced');h.workspace('session');h.workspace('test');h.open_evidence()
   assert snapshot(h)==before;assert h.page.evaluate('mediaCalls')==0
-  h.page.locator('#workspace-test').click();h.page.locator('.stepper button').first.click();h.page.locator('#try-example').click()
+  h.workspace('test');h.page.locator('.stepper button').first.click();h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click()
   h.page.locator('#attack-example').wait_for(state='visible');assert snapshot(h)==before
   assert 'CHECK COMPLETE' in h.page.locator('#attack-example').inner_text();h.page.keyboard.press('Escape');clean(h)
  test('SA-B10 navigation and recorded example preserve current evidence with no camera acquisition',intact)
  def unknown():
-  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());assert h.call('return a.sessionSummary.matched')==0
+  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());present_result(h);assert h.call('return a.sessionSummary.matched')==0
   h.workspace('session');h.page.evaluate("document.querySelector('.session-outcomes').style.fontSize='26px'");fit(h);clean(h)
  test('SA-B11 enlarged outcome labels reflow without hiding review count',unknown)
  def normal():
-  h=Harness(browser,width=1440);b=response(h,'normal');h.accept(b.hex());assert h.call('return a.sessionSummary.matched===1 && a.sessionSummary.review===0');h.file_details()
+  h=Harness(browser,width=1440);b=response(h,'normal');h.accept(b.hex());present_result(h);assert h.call('return a.sessionSummary.matched===1 && a.sessionSummary.review===0');h.file_details()
   assert h.call('return a.metadataSummary.fieldOrderChanged')==0
   assert h.page.locator('.metadata-display-limit').is_visible() is False;clean(h)
  test('SA-B12 ordinary result has no added warning or truncation notice',normal)
  def preserved():
-  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());original=h.call('return JSON.stringify(a.exportEvidence())');before=snapshot(h)
+  h=Harness(browser,width=390);b=response(h,'review');h.accept(b.hex());present_result(h);original=h.call('return JSON.stringify(a.exportEvidence())');before=snapshot(h)
   h.workspace('session')
   with h.page.expect_download() as info:h.page.locator('#save-history').click()
   text=Path(info.value.path()).read_text();assert 'distinct-transaction-worst-observed-v2' in text
   assert original==h.call('return JSON.stringify(a.exportEvidence())');assert before==snapshot(h);clean(h)
  test('SA-B13 current result is immutable after session export with changed counting semantics',preserved)
  def ui():
-  h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active',reduced_motion='reduce');b=response(h,'many-fields');h.accept(b.hex());h.file_details();h.page.get_by_text('Inspect unexpected changes',exact=True).click();fit(h)
+  h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active',reduced_motion='reduce');b=response(h,'many-fields');h.accept(b.hex());present_result(h);h.file_details();h.page.get_by_text('Inspect unexpected changes',exact=True).click();fit(h)
   assert h.page.locator('.metadata-fields>p').count()==32;assert h.call('return a.report().metadata.unexpected')==4000;clean(h)
  test('SA-B14 high-contrast result retains warning and capped full-count explanation',ui)
  browser.close()

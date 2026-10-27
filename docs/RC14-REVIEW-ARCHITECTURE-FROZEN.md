@@ -1,0 +1,15 @@
+# RC14 UI review remediation: qualification-driven scope
+
+Frozen requirements: resolve the 15 findings in the supplied 2026-10-20 RC13 review. Block light-theme result/transaction text below 4.5:1, distinguish positive from caution/negative results, remove redundant setup elements and copy, restore Help accuracy and official website link, make navigation discoverable, fix cramped labels and mobile wrapping, and surface actual build status. Do not weaken seed/fingerprint safety or silently skip scenario/camera/signature checks.
+
+Source boundary: retained signature/camera/session/trust modules and all vendor units from RC13 stay byte-identical. `src/page.html` is the sole semantic copy/navigation source and `src/style.css` the presentation authority. `release.json` is the sole version, build status and publisher-authentication declaration. The `build.py` projection embeds this status string into static HTML; no new runtime state controller or release-status network lookup. Test harness additions are optional to use and do not participate in private key generation, verification or interaction.
+
+Trust/privilege: offline-only, same CSP, no service worker, no server, no user privilege, no signing capability. The application still only prepares synthetic test wallets and checks submitted signer responses. Appearance preference in `src/20-application.js` already uses limited localStorage (theme `light`/`dark`), introduced before RC13; it does not persist a seed or session. The existing scan/paste/file-import transitions to step 2 remain unchanged in RC14.
+
+Owned state: the existing single Alpine coordinator (`Fv`), camera lifecycle, session journal, signing verifier, planned scenario and theme preference are authoritative. No duplicate controller, retry mechanism, wallet ledger or release pointer. The displayed warning is bound to current scenario and hidden otherwise.
+
+Lifecycle: the app has no installer, elevated actions, storage migration, boot or upgrade controller. Reload creates a new disposable wallet; theme preference may survive; tests do not resume an unfinished wallet. Operator rollback means reopen the immutable RC13 handoff. No auto retry on failed verification, cancelled camera, failed build or qualification check.
+
+Disposition: legacy `qualify.py` historical jobs remain in the source because they guard earlier release identities and project historical layouts. They are not silently retired or marked passed. Their pre-RC12 selectors and hardcoded v0.20.11 provenance checks require deliberate migration preserving coverage. Until the canonical campaign is version-aware, RC14 remains a **development preview with public release blocked**. Native file-origin/hardware acceptance, publisher authenticity and complete historical test compatibility are independent open gates.
+
+Frozen-candidate rule: build and test draft outputs only before archival. Freeze one SHA-256 for the final preview ZIP, test extracted bytes and reproducibility, never patch that archive afterwards. A blocker means generate a separate new candidate and restart full acceptance; this preview does not claim full release acceptance.

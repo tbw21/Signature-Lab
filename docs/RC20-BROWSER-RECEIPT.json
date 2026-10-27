@@ -1,0 +1,199 @@
+{
+  "fixture": "source CSS and structural DOM fixture; not full app",
+  "cases": [
+    {
+      "viewport": 390,
+      "theme": "light",
+      "contrast": {
+        "limits": {
+          "ratio": 6.93,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(247, 247, 245)"
+        },
+        "evidence": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        },
+        "status": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "count": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "journey": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        }
+      },
+      "containment": "pass"
+    },
+    {
+      "viewport": 390,
+      "theme": "dark",
+      "contrast": {
+        "limits": {
+          "ratio": null,
+          "fg": "rgb(229, 182, 125)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "evidence": {
+          "ratio": null,
+          "fg": "rgb(242, 178, 108)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "status": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "count": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "journey": {
+          "ratio": null,
+          "fg": "rgb(235, 132, 4)",
+          "bg": "rgb(10, 35, 52)"
+        }
+      },
+      "containment": "pass"
+    },
+    {
+      "viewport": 768,
+      "theme": "light",
+      "contrast": {
+        "limits": {
+          "ratio": 6.93,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(247, 247, 245)"
+        },
+        "evidence": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        },
+        "status": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "count": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "journey": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        }
+      },
+      "containment": "pass"
+    },
+    {
+      "viewport": 768,
+      "theme": "dark",
+      "contrast": {
+        "limits": {
+          "ratio": null,
+          "fg": "rgb(229, 182, 125)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "evidence": {
+          "ratio": null,
+          "fg": "rgb(242, 178, 108)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "status": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "count": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "journey": {
+          "ratio": null,
+          "fg": "rgb(235, 132, 4)",
+          "bg": "rgb(10, 35, 52)"
+        }
+      },
+      "containment": "pass"
+    },
+    {
+      "viewport": 1440,
+      "theme": "light",
+      "contrast": {
+        "limits": {
+          "ratio": 6.93,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(247, 247, 245)"
+        },
+        "evidence": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        },
+        "status": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "count": {
+          "ratio": 6.85,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 244, 231)"
+        },
+        "journey": {
+          "ratio": 7.43,
+          "fg": "rgb(130, 70, 0)",
+          "bg": "rgb(255, 255, 255)"
+        }
+      },
+      "containment": "pass"
+    },
+    {
+      "viewport": 1440,
+      "theme": "dark",
+      "contrast": {
+        "limits": {
+          "ratio": null,
+          "fg": "rgb(229, 182, 125)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "evidence": {
+          "ratio": null,
+          "fg": "rgb(242, 178, 108)",
+          "bg": "rgb(11, 38, 57)"
+        },
+        "status": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "count": {
+          "ratio": null,
+          "fg": "rgb(246, 248, 251)",
+          "bg": "color(srgb 0.921569 0.517647 0.0156863 / 0.09)"
+        },
+        "journey": {
+          "ratio": null,
+          "fg": "rgb(235, 132, 4)",
+          "bg": "rgb(10, 35, 52)"
+        }
+      },
+      "containment": "pass"
+    }
+  ],
+  "passed": 6,
+  "failed": 0
+}

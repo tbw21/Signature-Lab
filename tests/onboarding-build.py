@@ -28,10 +28,21 @@ class Menu(HTMLParser):
 menu=build.help_contents(source)
 def identity():
  a=Menu();a.feed(menu)
- items=re.findall(r'<details class="details" id="([^"]+)" data-help-group="[^"]+"><summary>(.*?)</summary>',source,re.S)
- check(len(items)==22);check(set(h for h,t in a.links)=={'#'+i for i,t in items});check(len(a.links)==len(items))
+ # Attribute order is not a product contract. Preserve the exact 22 FAQ IDs,
+ # labels, and one-to-one generated contents links via structural parsing.
+ from bs4 import BeautifulSoup
+ doc=BeautifulSoup(source,'html.parser')
+ items=[]
+ for node in doc.select('#help > details.details'):
+  title=node.find('summary',recursive=False)
+  check(title is not None,'Missing direct FAQ title')
+  items.append((node.get('id'),title.get_text(' ',strip=True)))
+ check(len(items)==23);check(set(h for h,t in a.links)=={'#'+i for i,t in items});check(len(a.links)==len(items))
  from html import unescape
  check(dict(a.links)=={'#'+i:unescape(t) for i,t in items})
+ # Frozen RC27 baseline pins the full FAQ inventory; no removed/renamed topics.
+ current=sorted((e.get('id'),e.get('data-help-group'),e.find('summary',recursive=False).get_text(' ',strip=True)) for e in doc.select('#help > details.details'))
+ check(hashlib.sha256(json.dumps(current,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()=='77112aedc0519a7b8ae9300182cb98ba2cec379e7e8ae6d3699a52e05ea52a29','FAQ inventory deviates from frozen RC27')
 test('O-B01 every canonical FAQ has exactly one same-title contents link',identity)
 test('O-B02 contents output is deterministic and embedded once',lambda:(check(menu==build.help_contents(source)),check(html.count(menu)==1)))
 test('O-B03 missing FAQ id is a terminal build error',lambda:rejects(source.replace('id="known-example"','',1)))

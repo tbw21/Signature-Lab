@@ -1,0 +1,470 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "pass": true,
+    "advanced": {
+      "rows": [
+        {
+          "id": "guided-setup",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        },
+        {
+          "id": "transaction-editor",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        },
+        {
+          "id": "device-notes",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        }
+      ],
+      "bodyX": [
+        52,
+        52
+      ],
+      "documentScroll": 375,
+      "windowWidth": 390
+    },
+    "review": {
+      "rows": [
+        {
+          "id": "output-review",
+          "x": 58,
+          "w": 259,
+          "sw": 257,
+          "cw": 257,
+          "summaryX": 59,
+          "summaryW": 257
+        },
+        {
+          "id": "transaction-details",
+          "x": 58,
+          "w": 259,
+          "sw": 257,
+          "cw": 257,
+          "summaryX": 59,
+          "summaryW": 257
+        }
+      ],
+      "children": [
+        {
+          "sel": "#output-review>p",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Compare every destination"
+        },
+        {
+          "sel": "#output-review .review-outputs",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Output 1Recipient0.000050"
+        },
+        {
+          "sel": "#output-review .output-address",
+          "x": 88,
+          "right": 287,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 199,
+          "cw": 199,
+          "text": "bc1qlkxn772jen0nejcc5ede2"
+        },
+        {
+          "sel": "#transaction-details>dl",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Wallet balance change Rec"
+        },
+        {
+          "sel": "#transaction-details .transaction-id code",
+          "x": 75,
+          "right": 300,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 225,
+          "cw": 225,
+          "text": "1bc76ba91a65a0508e9def383"
+        }
+      ],
+      "documentScroll": 375,
+      "windowWidth": 390
+    },
+    "errors": [],
+    "network": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "pass": true,
+    "advanced": {
+      "rows": [
+        {
+          "id": "guided-setup",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        },
+        {
+          "id": "transaction-editor",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        },
+        {
+          "id": "device-notes",
+          "x": 37,
+          "w": 301,
+          "titleX": 52,
+          "sw": 299,
+          "cw": 299
+        }
+      ],
+      "bodyX": [
+        52,
+        52
+      ],
+      "documentScroll": 375,
+      "windowWidth": 390
+    },
+    "review": {
+      "rows": [
+        {
+          "id": "output-review",
+          "x": 58,
+          "w": 259,
+          "sw": 257,
+          "cw": 257,
+          "summaryX": 59,
+          "summaryW": 257
+        },
+        {
+          "id": "transaction-details",
+          "x": 58,
+          "w": 259,
+          "sw": 257,
+          "cw": 257,
+          "summaryX": 59,
+          "summaryW": 257
+        }
+      ],
+      "children": [
+        {
+          "sel": "#output-review>p",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Compare every destination"
+        },
+        {
+          "sel": "#output-review .review-outputs",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Output 1Change0.00100854 "
+        },
+        {
+          "sel": "#output-review .output-address",
+          "x": 88,
+          "right": 287,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 199,
+          "cw": 199,
+          "text": "bc1qsavtuarvhjetqv5dcfgy7"
+        },
+        {
+          "sel": "#transaction-details>dl",
+          "x": 59,
+          "right": 316,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 257,
+          "cw": 257,
+          "text": "Wallet balance change Rec"
+        },
+        {
+          "sel": "#transaction-details .transaction-id code",
+          "x": 75,
+          "right": 300,
+          "parentX": 58,
+          "parentRight": 317,
+          "sw": 225,
+          "cw": 225,
+          "text": "c63557e79f3a12afd5fafaa06"
+        }
+      ],
+      "documentScroll": 375,
+      "windowWidth": 390
+    },
+    "errors": [],
+    "network": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "pass": true,
+    "advanced": {
+      "rows": [
+        {
+          "id": "guided-setup",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        },
+        {
+          "id": "transaction-editor",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        },
+        {
+          "id": "device-notes",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        }
+      ],
+      "bodyX": [
+        98.625,
+        98.625
+      ],
+      "documentScroll": 1425,
+      "windowWidth": 1440
+    },
+    "review": {
+      "rows": [
+        {
+          "id": "output-review",
+          "x": 95.625,
+          "w": 745.34375,
+          "sw": 743,
+          "cw": 743,
+          "summaryX": 96.625,
+          "summaryW": 743.34375
+        },
+        {
+          "id": "transaction-details",
+          "x": 95.625,
+          "w": 745.34375,
+          "sw": 743,
+          "cw": 743,
+          "summaryX": 96.625,
+          "summaryW": 743.34375
+        }
+      ],
+      "children": [
+        {
+          "sel": "#output-review>p",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Compare every destination"
+        },
+        {
+          "sel": "#output-review .review-outputs",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Output 1Recipient0.000265"
+        },
+        {
+          "sel": "#output-review .output-address",
+          "x": 125.625,
+          "right": 810.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 685,
+          "cw": 685,
+          "text": "bc1qh20xdktpgswx9wx3dvv26"
+        },
+        {
+          "sel": "#transaction-details>dl",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Wallet balance change Rec"
+        },
+        {
+          "sel": "#transaction-details .transaction-id code",
+          "x": 112.625,
+          "right": 823.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 711,
+          "cw": 711,
+          "text": "83a1c3a73d0dfa2665c06385a"
+        }
+      ],
+      "documentScroll": 1425,
+      "windowWidth": 1440
+    },
+    "errors": [],
+    "network": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "pass": true,
+    "advanced": {
+      "rows": [
+        {
+          "id": "guided-setup",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        },
+        {
+          "id": "transaction-editor",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        },
+        {
+          "id": "device-notes",
+          "x": 79.625,
+          "w": 1265.75,
+          "titleX": 98.625,
+          "sw": 1264,
+          "cw": 1264
+        }
+      ],
+      "bodyX": [
+        98.625,
+        98.625
+      ],
+      "documentScroll": 1425,
+      "windowWidth": 1440
+    },
+    "review": {
+      "rows": [
+        {
+          "id": "output-review",
+          "x": 95.625,
+          "w": 745.34375,
+          "sw": 743,
+          "cw": 743,
+          "summaryX": 96.625,
+          "summaryW": 743.34375
+        },
+        {
+          "id": "transaction-details",
+          "x": 95.625,
+          "w": 745.34375,
+          "sw": 743,
+          "cw": 743,
+          "summaryX": 96.625,
+          "summaryW": 743.34375
+        }
+      ],
+      "children": [
+        {
+          "sel": "#output-review>p",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Compare every destination"
+        },
+        {
+          "sel": "#output-review .review-outputs",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Output 1Recipient0.000570"
+        },
+        {
+          "sel": "#output-review .output-address",
+          "x": 125.625,
+          "right": 810.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 685,
+          "cw": 685,
+          "text": "bc1q3wx89j4zv0vpng7p8lt4g"
+        },
+        {
+          "sel": "#transaction-details>dl",
+          "x": 96.625,
+          "right": 839.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 743,
+          "cw": 743,
+          "text": "Wallet balance change Rec"
+        },
+        {
+          "sel": "#transaction-details .transaction-id code",
+          "x": 112.625,
+          "right": 823.96875,
+          "parentX": 95.625,
+          "parentRight": 840.96875,
+          "sw": 711,
+          "cw": 711,
+          "text": "211b5745774a73ed877a6b6ae"
+        }
+      ],
+      "documentScroll": 1425,
+      "windowWidth": 1440
+    },
+    "errors": [],
+    "network": []
+  }
+]

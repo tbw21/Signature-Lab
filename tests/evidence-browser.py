@@ -23,7 +23,7 @@ with sync_playwright() as pw:
    h=Harness(browser,width=width,height=900);assert not h.page.locator('#session-evidence-tools').is_visible();before=unchanged(h);tools(h)
    assert not h.page.locator('#retain-evidence').is_checked();assert unchanged(h)==before;fits(h)
    if width in [390,1440]:h.page.screenshot(path=str(SHOTS/f'evidence-session-{width}.png'),full_page=True)
-   h.workspace('test');assert not h.page.locator('#session-evidence-tools').is_visible();assert unchanged(h)==before;close(h)
+   h.workspace('test');h.page.locator('#session-evidence-tools').wait_for(state='hidden');assert unchanged(h)==before;close(h)
   test(f'EB01 optional Session-only controls preserve calm default at {width}px',layout)
  def download():
   h=Harness(browser);h.config();enable(h);h.workspace('test');finish(h);original=h.call('return a.exportEvidence()');h.call("a.randomizeTransaction('small')");finish(h);tools(h)

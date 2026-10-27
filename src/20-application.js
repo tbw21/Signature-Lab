@@ -82,6 +82,11 @@ retired: false,
 get referenceSelfCheck() { return tbwReferenceSelfTest.status(); },
 githubUrl: `https://github.com/oren-z0/exfil-tester`,
 step: 1,
+landingDismissed: false,
+themePreference: (() => { try { const p=localStorage.getItem('tbw-signature-lab-theme'); return p==='light'||p==='dark'?p:'system'; } catch { return 'system'; } })(),
+themeMode: (() => { try { const saved=localStorage.getItem('tbw-signature-lab-theme'); if (saved==='light'||saved==='dark') return saved; } catch {} return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; })(),
+setThemePreference(preference) { if (!['light','dark','system'].includes(preference)) return; this.themePreference=preference; this.themeMode=preference==='system'?(window.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light'):preference; document.documentElement.dataset.theme=this.themeMode; try { if(preference==='system') localStorage.removeItem('tbw-signature-lab-theme'); else localStorage.setItem('tbw-signature-lab-theme',preference); } catch {} },
+toggleTheme() { this.setThemePreference(this.themeMode==='dark'?'light':'dark'); },
 acknowledged: !1,
 device: ``,
 firmware: ``,
@@ -264,6 +269,8 @@ get parseProblem() { this.resultRevision; return result?.error ?? null; },
 dragOver: !1,
 scan: {diagnostics:null, active:false, phase:'stopped', code:null, progress:0, format:null, error:null, supported:typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia},
 init() {
+    document.documentElement.dataset.theme = this.themeMode;
+    try { const m=window.matchMedia?.('(prefers-color-scheme: dark)'); m?.addEventListener?.('change', e=>{ if (this.themePreference==='system') { this.themeMode=e.matches?'dark':'light'; document.documentElement.dataset.theme=this.themeMode; } }); } catch {}
     this.$watch('stateSignature', () => this.scheduleRecompute());
     this.$watch('artifactText', () => {
         if (result && (this.artifactText !== result.artifactText || this.stateSignature !== result.stateKey) && !this.isTestComplete)
@@ -535,18 +542,18 @@ acceptArtifact(text, details = {}) {
 },
 failImport(message) {
     if (this.isTestComplete || !this.canReceiveResponse()) return;
-    this.artifactText = ''; intake = null; commit(this, null, message);
+    this.artifactText = ''; intake = null; this.step = 3; commit(this, null, message);
     this.intakeOpen = false; this.focusSection('resultTitle');
 },
 pasteArtifact(e) { if (this.isTestComplete)
             return; let t = e.clipboardData?.getData(`text/plain`); t && this.acceptArtifact(t); },
 async scanSignedTransaction() { await this.startScan(); },
-async openPaste() { this.isTestComplete || (this.step = 3, this.intakeOpen = !0, this.pasteOpen = !0, await this.focusSection(`artifactInput`)); },
+async openPaste() { this.isTestComplete || (this.step = 2, this.intakeOpen = !0, this.pasteOpen = !0, await this.focusSection(`artifactInput`)); },
 async handleFileInput(e) { let t = e.target, n = t.files?.[0]; n && await this.loadFile(n), t.value = ``; },
 async handleDrop(e) { this.dragOver = !1; let t = e.dataTransfer?.files?.[0]; t && await this.loadFile(t); },
 async loadFile(file) {
     if (this.isTestComplete || !this.canReceiveResponse()) return;
-    this.editArtifact(); this.step = 3; this.intakeOpen = true; this.focusSection('intakeSection');
+    this.editArtifact(); this.step = 2; this.intakeOpen = true; this.focusSection('intakeSection');
     const epoch = this.epoch, state = this.stateSignature, request = ++this.fileRequest;
     if (file.size > TBW_LIMITS.bytes) { this.failImport('This file exceeds the 512 KiB limit.'); return; }
     try {
@@ -563,7 +570,7 @@ async startScan() {
     if (this.isTestComplete || this.scan.active || !this.acknowledged || !this.canReceiveResponse()) return;
     this.recompute();
     if (this.buildProblem) { this.notice = this.buildProblem; return; }
-    this.editArtifact(); this.policyLocked = true; this.step = 3; this.intakeOpen = true;
+    this.editArtifact(); this.policyLocked = true; this.step = 2; this.intakeOpen = true;
     this.scan.progress = 0; this.scan.format = null; this.scan.diagnostics = null;
     const epoch = this.epoch, state = this.stateSignature;
     s = new E_({source:'camera'});
@@ -974,7 +981,7 @@ endGuidedSession() {
     this.pause();this.epoch++;journal.rollback(this.sessionEndReason.trim() || 'Ended by the operator.');this.sessionRevision++;
     this.notice = 'Session ended. Its record is in Session. Your current result is unchanged.';
     // Focus a stable visible control when the ended banner leaves the active workspace.
-    this.$refs?.sessionNav?.focus?.({preventScroll:true});
+    document.querySelector('#tbw-settings > summary')?.focus?.({preventScroll:true});
 },
 exportSessionReport() { this.sessionRevision; return journal.report(); },
 downloadSessionReport() {

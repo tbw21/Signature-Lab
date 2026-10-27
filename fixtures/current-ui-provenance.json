@@ -1,0 +1,19 @@
+{
+  "schema": "tbw-current-ui-provenance-v1",
+  "origin": "Unmodified frozen RC26 preflight source SHA-256 d5f64f048e46be3819466f7e742efa2308f49a12dc250d1687ced174dc224c26",
+  "limits": "Exact-byte baseline continuity only; does not prove independent publisher authentication, CSS semantic equivalence, or device correctness.",
+  "files": {
+    "src/20-application.js": {
+      "rc26Sha256": "4ded7810831f8f841fdde9c9c3f3e94c808eb25605de995c53297c6ab8fcb26d",
+      "archivedPriorSha256": "edca1d64494eb91bce1a28c6a50111996fe78d5b3d420bd4291cb1faf36d40fa"
+    },
+    "src/page.html": {
+      "rc26Sha256": "5fb24284faa8822dfc53f40dd49107ce503698f4ceb5fbdb885afe8f2e5ef24b",
+      "archivedPriorSha256": "7eec5a17303a7dfd7557aa54fd182ba2d04c86dce7039f177f162ae7fe4d6fc6"
+    },
+    "src/style.css": {
+      "rc26Sha256": "221e33ad63e0f214c53b44d831d6bec490273bac4fe88e2b89ed5f6492206ce3",
+      "archivedPriorSha256": "a37fc17e3a3a5a23937ca241b598ce796f8850f5cb5937b0c36f4fec7208bc5d"
+    }
+  }
+}

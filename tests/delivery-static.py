@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Actual source/HTML checks and exact before-after boundaries for the delivery refinement."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from audit_projection import read as audit_read
 from bs4 import BeautifulSoup
 import json,hashlib,sys
@@ -14,7 +15,7 @@ def case(n,f):
  except Exception as e:rows.append({'name':n,'status':'failed','error':repr(e)})
 def one(s):
  e=S.select(s);require(len(e)==1,s);return e[0]
-case('D-S01 scope was frozen before edits and uniquely identifies reconstructed candidate',lambda:(require(sha((ROOT/'docs/DELIVERY-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),require(json.loads((ROOT/'release.json').read_text())['version']=='0.20.11-rc3')))
+case('D-S01 scope was frozen before edits and uniquely identifies reconstructed candidate',lambda:(require(sha((ROOT/'docs/DELIVERY-ARCHITECTURE-FROZEN.md').read_bytes())==R['architectureSha256']),archive_original_tests(),release_identity()))
 def preserve():
  require(len(R['runtime'])==29)
  for name,digest in R['runtime'].items():
@@ -34,18 +35,18 @@ def mutations():
 case('D-S04 undeclared edits cannot be masked by historical projections',mutations)
 def helper():
  w=one('#word-count');p=one('#word-count-help');require(p.previous_sibling==w or p.find_previous_sibling()==w)
- require(w.parent==p.parent);require('Changing length creates new disposable words.' in p.get_text())
+ require(w.parent==p.parent);require('Choosing a different word count generates a new disposable wallet.' in p.get_text())
  require('word-count-help' in w['aria-describedby'])
 case('D-S05 helper is directly under its selector and programmatically associated',helper)
 def copy():
- require('Wallet confirmed' in one('#wallet-loaded').get_text())
- require('Dark Skippy example'==one('#try-example').get_text());require(one('#try-example').get('@click')=='openExample()')
- require("'Import signed response'" in one('#verify-title').get('x-text'))
- require(S.select_one('.intake .intro').get_text()=='Scan, import or paste the signed response from your signer.')
+ require('Fingerprint matches, continue' in one('#wallet-loaded').get_text())
+ require('View recorded example'==one('#try-example').get_text());require(one('#try-example').get('@click')=='openExample()')
+ require('Signature check' in one('#verify-title').get('x-text'))
+ require('Scan, import, or paste your signer’s response.' in H and 'signed response' in H)
+ require(H.count('@click="openExample()"')==2)
 case('D-S06 exact approved labels and single existing demo callback',copy)
 def safety():
- require('Never enter your real seed' in one('#wallet-safety').get_text());require('Do not add a passphrase.' in one('.seed-instructions').get_text())
- require('Check that the fingerprint matches your signer.'==one('#wallet-compare-hint').get_text())
+ wallet_safety(S);shared_wallet(S)
  require(one('#wallet-loaded').get('@click')=='confirmWalletLoaded()');require(one('#wallet-loaded').get('x-show')=='!isTestComplete')
 case('D-S07 wallet safety and explicit operator confirmation remain visible',safety)
 def structure():

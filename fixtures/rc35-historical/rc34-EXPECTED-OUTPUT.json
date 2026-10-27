@@ -1,0 +1,10 @@
+{
+  "schema": "tbw-expected-output-v1",
+  "version": "0.20.12-rc33",
+  "filename": "TBW-Signature-Lab-v0.20.12-rc33-DEVELOPMENT.html",
+  "sha256": "d8b6fbf7c8d675d90a064fff19ea4853c490ea057f1ad7a288c4ac097c783f80",
+  "bytes": 1403037,
+  "sourceSha256": "b014597bdcf9dfd5ac715653c6a01a625fdecfec530a236f136e1a2507ac9a4d",
+  "publisherAuthenticated": false,
+  "status": "development-ui-preview-unqualified"
+}

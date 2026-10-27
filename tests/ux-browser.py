@@ -33,6 +33,17 @@ def layout(h):
     assert not r['clipped'],r
     return r
 
+def present_result(h):
+    """Navigate to the visible result after direct synthetic evidence injection.
+
+    Unlike pressing Verify signatures, the isolated a.acceptArtifact fixture
+    does not operate the user-facing stepper. Retain the visible-state check.
+    """
+    assert h.call('return a.resultState') in ('match', 'mismatch', 'incomplete')
+    h.workspace('test')
+    h.page.locator('.stepper button').nth(2).click()
+    h.page.locator('.result').wait_for(state='visible')
+
 def snapshot(h):
     return h.call('return JSON.stringify([a.stateSignature,a.psbtBase64,a.variants,a.walletSession,a.walletFingerprint,a.preparedRevision,a.sessionChecks,a.guidedStatus,a.resultState,a.completedAt,a.scan.phase])')
 
@@ -57,17 +68,23 @@ with sync_playwright() as pw:
     browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
     environment={'browser':browser.version,'origin':'about:blank/document.setContent; exact candidate','network':'offline','camera':'synthetic only','enlargement':'computed font doubling or CSS zoom, not native browser zoom; no WCAG certification'}
     def initial():
-        h=Harness(browser,width=360);assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open')
+        h=Harness(browser,width=360);h.workspace('test');assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open')
         for selector in ['#session-count','#signing-policy','#device','#locktime']:
             assert not h.page.locator(selector).is_visible(),selector
-        assert h.page.locator('#workspace-advanced').is_visible()
+        assert h.page.locator('#tbw-settings > summary').is_visible()
         assert not h.page.locator('.session-tracker').is_visible()
         assert h.page.locator('#wallet-loaded').is_visible()
-        warning=h.page.locator('#wallet-safety').inner_text().lower();assert all(term in warning for term in ['never enter','real seed','overwrite','send bitcoin to this wallet']),warning
-        assert 'hardware acceptance pending' in h.page.locator('.release-status a').get_attribute('aria-label');layout(h);close(h)
+        warning=h.page.locator('#wallet-safety').inner_text().lower();assert all(term in warning for term in ['disposable wallet','never overwrite','send real bitcoin']),warning
+        help_warning=h.page.locator('#disposable-wallet').inner_text().lower()
+        assert 'never enter a recovery phrase from an existing wallet' in help_warning,help_warning
+        assert h.page.get_by_role('link',name='Help',exact=True).is_visible()
+        h.page.get_by_role('link',name='Help',exact=True).click()
+        help_status=h.page.locator('#release-status-help');help_status.locator(':scope > summary').click()
+        assert 'Physical signing-device and optical-scanning acceptance remain pending' in help_status.inner_text()
+        assert 'Publisher authentication' in help_status.inner_text();layout(h);close(h)
     test('UX default: optional tools closed and essential warning/action/discovery visible',initial)
     def normal():
-        h=Harness(browser,width=360);h.page.locator('#wallet-loaded').click()
+        h=Harness(browser,width=360);h.workspace('test');h.page.locator('#wallet-loaded').click()
         assert h.call('return a.step')==2
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open')
         h.page.locator('#qr-format').wait_for(state='visible')
@@ -100,7 +117,7 @@ with sync_playwright() as pw:
         assert snapshot(h)==before;close(h)
     test('UX opening/closing all configuration changes no authoritative test/result state',unchanged)
     def custom():
-        h=Harness(browser);h.page.locator('#wallet-loaded').click();h.open_settings()
+        h=Harness(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();h.open_settings()
         h.page.locator('#signing-policy').select_option('plain');h.page.locator('#psbt-version').select_option('2')
         h.page.wait_for_function('('+APP+').transactionReady');h.page.locator('#advanced-tools>summary').click()
         assert h.page.locator('.active-settings').is_visible()
@@ -110,18 +127,18 @@ with sync_playwright() as pw:
         assert snapshot(h)==before;close(h)
     test('UX nondefault policy/PSBT stays visible after collapse; review reveals without changing it',custom)
     def edited():
-        h=Harness(browser);h.page.locator('#wallet-loaded').click();h.open_settings();h.page.locator('#locktime').fill('1234')
+        h=Harness(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();h.open_settings();h.page.locator('#locktime').fill('1234')
         h.page.wait_for_function('('+APP+').transactionReady');h.page.locator('#advanced-tools>summary').click()
         assert 'Edited transaction' in h.page.locator('.active-settings').inner_text();close(h)
     test('UX edited transaction cannot silently disappear behind collapsed settings',edited)
     def locked():
-        h=planned(browser);h.page.locator('#wallet-loaded').click();before=snapshot(h)
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();before=snapshot(h)
         h.open_settings();assert h.page.locator('#locktime').is_disabled();assert h.page.locator('#signing-policy').is_disabled()
         h.page.locator('#advanced-tools>summary').click();assert snapshot(h)==before;h.workspace('test')
         assert h.page.locator('.guided-status').is_visible();close(h)
     test('UX guided transaction/policy lock survives disclosures and controls are disabled',locked)
     def invalid():
-        h=Harness(browser);h.config();h.accept('unusable response')
+        h=Harness(browser);h.config();h.accept('unusable response');present_result(h)
         assert h.call('return a.resultState')=='incomplete';assert h.page.locator('.result').is_visible()
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open');assert 'Could not complete' in h.page.locator('.result-message').inner_text();close(h)
     test('UX malformed import displays incomplete result with advanced tools closed',invalid)
@@ -131,30 +148,30 @@ with sync_playwright() as pw:
         tx=(Path(__file__).parents[1]/'fixtures/crypto-vectors.json')
         # Obtain known-attack hex from the pinned legacy bundled fixture, not a hidden runtime signer.
         m=re.search(r'var Vp\s*=\s*[`\"]([0-9a-f]+)[`\"]',BASE)
-        assert m;h.accept(m[1]);assert h.call('return a.resultState')=='mismatch'
+        assert m;h.accept(m[1]);present_result(h);assert h.call('return a.resultState')=='mismatch'
         assert h.page.locator('.result-message').is_visible();assert 'Signatures differ' in h.page.locator('.result-message').inner_text()
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open');close(h)
     test('UX published valid-but-different signatures remain visible without advanced access',differ)
     def metadata():
-        h=Harness(browser,width=360);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex())
+        h=Harness(browser,width=360);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());present_result(h)
         assert h.call('return a.resultState')=='match';assert h.call('return a.metadataSummary.status')=='unexpected'
         assert h.page.locator('.file-review-action').is_visible();assert not h.page.locator('#result-tools').evaluate('(e)=>e.open')
         assert not h.page.locator('#advanced-tools').evaluate('(e)=>e.open');layout(h);close(h)
     test('UX matching signatures never conceal unexpected metadata in the default view',metadata)
     def report():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);before=h.call('return a.report()');h.open_evidence()
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);before=h.call('return a.report()');h.open_evidence()
         assert h.page.get_by_role('button',name='Save evidence',exact=True).is_visible()
         h.page.locator('#result-tools>summary').click();assert h.call('return a.report()')==before
         assert h.page.get_by_role('button',name='Save result',exact=True).is_visible();close(h)
     test('UX evidence disclosure preserves the immutable result and ordinary report action',report)
     def evidence_download():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);expected=h.call('return a.exportEvidence()');h.open_evidence()
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);expected=h.call('return a.exportEvidence()');h.open_evidence()
         with h.page.expect_download() as event:h.page.get_by_role('button',name='Save evidence',exact=True).click()
         got=json.loads(Path(event.value.path()).read_text());assert got==expected
         assert d['seed'] not in json.dumps(got);close(h)
     test('UX explicit advanced evidence export equals current snapshot and excludes local seed',evidence_download)
     def terminal():
-        h=planned(browser);h.page.locator('#wallet-loaded').click();h.accept('bad data')
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept('bad data')
         assert h.call('return a.guidedStatus.phase')=='halted'
         assert not h.page.locator('#advanced-tools').is_visible()
         assert h.page.locator('.guided-status').is_visible();assert h.page.locator('.guided-stop-reason').is_visible()
@@ -162,7 +179,7 @@ with sync_playwright() as pw:
         h.page.locator('#end-guided-session').click();assert h.call('return a.guidedStatus.phase')=='ended';close(h)
     test('UX halted state and explicit End are reachable outside collapsed advanced tools',terminal)
     def complete():
-        h=planned(browser);h.page.locator('#wallet-loaded').click();seed=h.call('return a.seed.value')
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();seed=h.call('return a.seed.value')
         for i in range(2):
             h.accept(h.call('return a.variants[0].txHex'))
             if not i:h.page.locator('#next-transaction').click()
@@ -170,29 +187,29 @@ with sync_playwright() as pw:
         assert h.call('return a.seed.value')==seed;assert h.page.locator('.guided-status').is_visible();close(h)
     test('UX guided two-case session completes with advanced panel closed (synthetic signatures)',complete)
     def interruption():
-        h=planned(browser);h.page.locator('#wallet-loaded').click();before=h.call('return a.guidedStatus')
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();before=h.call('return a.guidedStatus')
         h.call('a.pause()');h.page.evaluate('window.dispatchEvent(new PageTransitionEvent("pageshow",{persisted:true}))')
         assert not h.call('return a.scan.active');assert h.call('return a.guidedStatus')==before;close(h)
     test('UX page restoration cannot auto-advance or reacquire capture',interruption)
     def capture():
-        h=Harness(browser,media=True);h.page.locator('#wallet-loaded').click();h.call('a.startScan()')
+        h=Harness(browser,media=True);h.workspace('test');h.page.locator('#wallet-loaded').click();h.call('a.startScan()')
         h.page.wait_for_function('('+APP+').scan.phase==="scanning"');before=h.page.evaluate('mediaCalls')
         for _ in range(3):
-            assert h.page.locator('#workspace-advanced').is_disabled();h.page.locator('#workspace-advanced').evaluate('(e)=>e.click()')
+            assert h.page.locator('#tbw-settings > summary').is_visible();assert h.page.locator('#workspace-advanced').count()==0
             h.call('a.openWorkspace("advanced")');assert h.call('return a.workspaceView')=='test'
         assert h.page.evaluate('mediaCalls')==before
         assert h.page.get_by_role('button',name='Stop camera',exact=True).is_visible()
         h.page.get_by_role('button',name='Stop camera',exact=True).click();assert not h.call('return a.scan.active');close(h)
     test('UX disclosures neither restart camera nor hide Stop while scanning',capture)
     def denied():
-        h=planned(browser);h.page.locator('#wallet-loaded').click()
+        h=planned(browser);h.workspace('test');h.page.locator('#wallet-loaded').click()
         h.page.evaluate('Object.defineProperty(navigator,"mediaDevices",{configurable:true,value:{getUserMedia:()=>Promise.reject(new DOMException("denied","NotAllowedError"))}})')
         h.call('a.scan.supported=true; a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="failed"')
         h.page.locator('[x-text="scan.error"]').wait_for(state="visible");assert h.page.locator('[x-text="scan.error"]').is_visible();assert h.page.locator('.guided-status').is_visible();close(h)
     test('UX denied camera remains an explicit terminal session finding in beginner view',denied)
     def help_identity():
-        h=Harness(browser);h.page.locator('.release-status a').click();box=h.page.locator('#release-status-help')
-        assert box.evaluate('(e)=>e.open');t=box.inner_text();assert 'unsigned' in t and 'not the SHA-256 of the final HTML' in t
+        h=Harness(browser);h.page.get_by_role('link',name='Help',exact=True).click();box=h.page.locator('#release-status-help');box.locator(':scope > summary').click()
+        assert box.evaluate('(e)=>e.open');t=box.inner_text();assert 'Publisher authentication and independent security review are not complete' in t and 'not the SHA-256 of the final HTML' in t
         assert h.call('return a.releaseVersion') in t
         assert len(h.page.locator('.source-identity').inner_text())==64;close(h)
     test('UX release status links to exact version and correctly limited source identity',help_identity)
@@ -204,7 +221,7 @@ with sync_playwright() as pw:
     def notes():
         h=Harness(browser);h.open_tools();h.page.locator('#device-notes>summary').click()
         payload='<img src=x onerror="window.injected=true">';h.page.locator('#firmware').fill(payload)
-        h.page.locator('#advanced-tools>summary').click();h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
+        h.page.locator('#advanced-tools>summary').click();h.workspace('test');h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
         assert h.call('return a.report().firmware')==payload;assert not h.page.evaluate('window.injected===true');close(h)
     test('UX operator notes remain inert text, not markup or a certified device identity',notes)
     def limits():
@@ -222,12 +239,12 @@ with sync_playwright() as pw:
         widths=h.page.locator('#guided-setup .guided-plan-controls').evaluate('(e)=>[e.clientWidth,e.scrollWidth]');assert widths[1]<=widths[0]+2,widths;close(h)
     test('UX planner respects its container width as well as viewport media breakpoints',narrow_container)
     def stale():
-        h=Harness(browser);h.page.locator('#wallet-loaded').click();h.open_settings();h.page.locator('#locktime').fill('not-valid')
+        h=Harness(browser);h.workspace('test');h.page.locator('#wallet-loaded').click();h.open_settings();h.page.locator('#locktime').fill('not-valid')
         h.page.locator('#advanced-tools>summary').click();h.workspace('test');h.page.wait_for_function('!!('+APP+').buildProblem')
         assert not h.page.locator('.sign-layout').is_visible();assert h.page.locator('[x-text="buildProblem"]:visible').count()>0;close(h)
     test('UX invalid hidden settings never expose stale signing QR or hide the build failure',stale)
     def returned_result():
-        h=Harness(browser);d=h.config();h.accept(d['tx']);before=h.call('return JSON.stringify(a.report())')
+        h=Harness(browser);d=h.config();h.accept(d['tx']);present_result(h);before=h.call('return JSON.stringify(a.report())')
         h.page.get_by_role('button',name='Review settings',exact=True).click()
         assert h.page.locator('#locktime').is_disabled();h.page.locator('#advanced-tools>summary').click()
         assert h.call('return JSON.stringify(a.report())')==before;close(h)
@@ -239,7 +256,7 @@ with sync_playwright() as pw:
             h=Harness(browser,width=w,height=1000);layout(h);h.open_settings();h.page.locator('#guided-setup>summary').click();h.page.locator('#device-notes>summary').click();layout(h)
             h.page.locator('#session-count').fill('20');assert h.page.locator('#start-guided-session').is_enabled()
             if w in [360,1440]:h.page.locator('#advanced-tools').screenshot(path=str(SHOTS/f'advanced-{w}.png'))
-            h.page.locator('#advanced-tools>summary').click();h.workspace('test');h.page.locator('#wallet-loaded').click();layout(h)
+            h.page.locator('#advanced-tools>summary').click();h.workspace('test');h.workspace('test');h.page.locator('#wallet-loaded').click();layout(h)
             h.accept(h.call('return a.variants[0].txHex'));layout(h);h.open_evidence();layout(h)
             if w in [360,1440]:h.page.screenshot(path=str(SHOTS/f'result-{w}.png'),full_page=True)
             close(h)
@@ -258,7 +275,7 @@ with sync_playwright() as pw:
         test(f'UX increased line/letter/word/paragraph spacing reflows at {width}px',spacing)
     for width in [320,360,768,1440]:
         def halted(w=width):
-            h=planned(browser,width=w);h.page.locator('#wallet-loaded').click();h.accept('wrong incomplete response')
+            h=planned(browser,width=w);h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept('wrong incomplete response')
             h.page.locator('.guided-end>summary').click();h.page.locator('#session-end-reason').fill('Device refused this request; preserve the evidence before retrying.')
             layout(h);assert h.page.locator('#end-guided-session').is_visible()
             if w==360:h.page.screenshot(path=str(SHOTS/'halted-360.png'),full_page=True)
@@ -266,19 +283,31 @@ with sync_playwright() as pw:
         test(f'UX halted guided session and End action remain readable at {width}px',halted)
     def forced_colors():
         h=Harness(browser,width=360);h.page.emulate_media(forced_colors='active');h.open_tools()
-        h.page.keyboard.press('Tab');h.page.locator('#advanced-tools>summary').focus();assert h.page.locator('#advanced-tools>summary').evaluate('(e)=>getComputedStyle(e).outlineStyle')!='none'
+        summary=h.page.locator('#advanced-tools>summary')
+        summary.wait_for(state='visible')
+        assert h.page.evaluate("matchMedia('(forced-colors: active)').matches")
+        h.page.keyboard.press('Tab');summary.focus()
+        # Wait for the real keyboard focus/style instead of racing first paint.
+        h.page.wait_for_function("""() => {
+          const e=document.querySelector('#advanced-tools > summary');
+          if (!e || document.activeElement!==e || !e.matches(':focus-visible')) return false;
+          const s=getComputedStyle(e);
+          return s.outlineStyle!=='none' && Number.parseFloat(s.outlineWidth)>0;
+        }""",timeout=4000)
+        assert summary.evaluate("""e => e===document.activeElement && e.matches(':focus-visible') &&
+          getComputedStyle(e).outlineStyle!=='none' && parseFloat(getComputedStyle(e).outlineWidth)>0""")
         layout(h);close(h)
     test('UX forced-color mode retains visible disclosure focus and border cues',forced_colors)
     def zoom():
         h=Harness(browser,width=1280,height=1000);h.page.evaluate('document.body.style.zoom="2"');h.open_settings();h.page.locator('#guided-setup>summary').click();layout(h);close(h)
     test('UX CSS 200-percent page-zoom simulation reflows planner without cropping (not native zoom)',zoom)
     def seed24():
-        h=Harness(browser,width=320);h.page.get_by_role('button',name='24 words',exact=True).click();h.page.wait_for_function('('+APP+').seedQrVisible');layout(h)
+        h=Harness(browser,width=320);h.workspace('test');h.page.get_by_role('button',name='24 words',exact=True).click();h.page.wait_for_function('('+APP+').seedQrVisible');layout(h)
         qr=h.page.locator('#seed-qr-display').bounding_box();fp=h.page.locator('.wallet-fingerprint').bounding_box();assert fp['y']>=qr['y']+qr['height'];close(h)
     test('UX 24-word wallet and matching fingerprint remain outside the QR quiet zone at 320px',seed24)
     for width in [320,1440]:
         def focused_result(w=width):
-            h=Harness(browser,width=w,height=900);h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
+            h=Harness(browser,width=w,height=900);h.workspace('test');h.page.locator('#wallet-loaded').click();h.accept(h.call('return a.variants[0].txHex'))
             h.page.wait_for_timeout(180)
             h.call('a.focusCurrentSection()');h.page.wait_for_timeout(100)
             title=h.page.locator('[x-ref="resultTitle"]').bounding_box();tracker=h.page.locator('.session-tracker').bounding_box()

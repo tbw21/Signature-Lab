@@ -1,0 +1,103 @@
+{
+  "sign TXID": [
+    {
+      "text": "Transaction ID (TXID)",
+      "ratio": 16.66,
+      "min": 4.5,
+      "font": 14,
+      "weight": 400,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(247,247,245)",
+      "selector": "span.",
+      "fail": false
+    }
+  ],
+  "sign bc1": [
+    {
+      "text": "bc1q30l7yew02zcgd64nhzwvvejmwn4dy9ghqencp9",
+      "ratio": 17.87,
+      "min": 4.5,
+      "font": 16,
+      "weight": 400,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(255,255,255)",
+      "selector": "code.output-address",
+      "fail": false
+    }
+  ],
+  "sign Output": [
+    {
+      "text": "Output",
+      "ratio": 17.87,
+      "min": 4.5,
+      "font": 14,
+      "weight": 400,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(255,255,255)",
+      "selector": "span.",
+      "fail": false
+    },
+    {
+      "text": "Review output",
+      "ratio": 16.66,
+      "min": 4.5,
+      "font": 16,
+      "weight": 500,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(247,247,245)",
+      "selector": "span.",
+      "fail": false
+    },
+    {
+      "text": "Output 1",
+      "ratio": 17.87,
+      "min": 4.5,
+      "font": 14,
+      "weight": 600,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(255,255,255)",
+      "selector": "strong.",
+      "fail": false
+    }
+  ],
+  "sign Fee rate": [
+    {
+      "text": "Estimated fee rate",
+      "ratio": 16.66,
+      "min": 4.5,
+      "font": 14,
+      "weight": 400,
+      "color": "rgb(17, 24, 32)",
+      "bg": "rgb(247,247,245)",
+      "selector": "dt.",
+      "fail": false
+    },
+    {
+      "text": "Fee rate uses an expected signed size. The actual size can vary slightly with the ",
+      "ratio": 5.62,
+      "min": 4.5,
+      "font": 14,
+      "weight": 400,
+      "color": "rgb(88, 100, 114)",
+      "bg": "rgb(247,247,245)",
+      "selector": "p.muted.compact",
+      "fail": false
+    }
+  ],
+  "help Back to contents": [],
+  "help SIGNATURE LAB GUIDE": [
+    {
+      "text": "SIGNATURE LAB GUIDE",
+      "ratio": 7.43,
+      "min": 4.5,
+      "font": 12.16,
+      "weight": 750,
+      "color": "rgb(130, 70, 0)",
+      "bg": "rgb(255,255,255)",
+      "selector": "p.help-eyebrow",
+      "fail": false
+    }
+  ],
+  "help Read the authors": [],
+  "help Scenario": []
+}

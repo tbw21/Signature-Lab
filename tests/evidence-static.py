@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from bs4 import BeautifulSoup
 import sys,json,hashlib,ast,re
 from evidence_projection import RECORD,project
@@ -27,7 +28,7 @@ def protected():
  for n in order:
   if n not in ('src/20-application.js','src/session-journal.js'):require(sha((ROOT/n).read_bytes())==RECORD['baselineHashes'][n],n)
 test('ES03 27 runtime modules including signing math, metadata, QR, camera and startup remain unchanged',protected)
-test('ES04 architecture freeze identity and unique candidate remain exact',lambda:(require(sha((ROOT/'docs/EVIDENCE-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(src('release.json'))['version']=='0.20.11-rc3')))
+test('ES04 architecture freeze identity and unique candidate remain exact',lambda:(require(sha((ROOT/'docs/EVIDENCE-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),archive_original_tests(),release_identity()))
 def optional():
  c=S.select_one('#session-evidence-tools');require(c.find_parent(id='session-view') is not None)
  require(S.select_one('#retention-warning').find_parent('noscript') is None)
@@ -70,7 +71,7 @@ test('ES14 deliberate defects are isolated and distinguish detected escaped and 
 test('ES15 no new font, external resource or framework/CSP change is smuggled into the candidate',lambda:(require(S.select_one('meta[http-equiv="Content-Security-Policy"]')['content']==BeautifulSoup(RECORD['edits']['src/page.html']['before'],'html.parser').select_one('meta[http-equiv="Content-Security-Policy"]')['content']),require(not S.select('script[src],link[rel="stylesheet"]'))))
 test('ES16 optional checkboxes have consistent native controls and label-sized activation targets',lambda:(require('min-height:44px' in src('src/style.css')),require('flex:0 0 20px' in src('src/style.css')),require(S.select_one('#retain-evidence').parent.get('class')==['evidence-opt-in'])))
 def documentation():
- t=src('docs/BASELINE-README-v0.20.3-rc1.md');require(t.startswith('# Signature Lab v0.20.3-rc1'));require('v0.20.11-rc3' in src('README.md'))
+ t=src('docs/BASELINE-README-v0.20.3-rc1.md');require(t.startswith('# Signature Lab v0.20.3-rc1'));require(src('README.md').startswith('# Signature Lab v'+json.loads(src('release.json'))['version']+' — DEVELOPMENT / NO-GO'))
  require('fully rerun metadata policy' not in t)
  require('**psbt-envelope-v3**' in t and 'Unknown policy versions' in t)
  require('No storage permission' in t and 'not a total' in t)

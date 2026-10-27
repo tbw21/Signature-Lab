@@ -1,5 +1,6 @@
 {
-  "version": "0.20.11-rc3",
-  "baseline": "v0.20.11-rc2 rejected due historical JavaScript projection missing exact release copy allowance",
-  "status": "release-candidate-device-testing-only"
+  "version": "0.20.12-rc36",
+  "baseline": "RC35 audit-remediated runtime unchanged; RC36 approved CSS consolidation and release identity",
+  "status": "development-ui-preview-unqualified",
+  "publisherAuthenticated": false
 }

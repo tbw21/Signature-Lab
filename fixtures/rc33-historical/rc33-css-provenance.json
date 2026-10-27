@@ -1,0 +1,13 @@
+{
+  "schema": "rc33-reviewed-delta-v1",
+  "baselineZipSha256": "123137d4f937b3f54cfc015d68664a801a2456ab9649b1595e07b1cf14087568",
+  "baselineHtmlSha256": "ea48885c4ea383b4a830cd0e8c4dac0b0dea704fd898a27e4355444b6e0430c6",
+  "approvedDevelopmentHtmlSha256": "d8b6fbf7c8d675d90a064fff19ea4853c490ea057f1ad7a288c4ac097c783f80",
+  "cssBaselineSha256": "442b6837a3ea39d467b804f801bfc8b23bdde5a6fc6758950a63159a16793f04",
+  "cssCurrentSha256": "ef4ef4ed54cc0352da1b771e9a143ede22e11fea7b68b18927da65130d520d4c",
+  "cssSafetyRule": "#test-view .sign-layout[style*=\"display: none\"]{display:none!important}",
+  "uiSecurityPurpose": "A transaction build failure must not leave a signing QR or transaction summary visible.",
+  "trustedModuleChanges": 0,
+  "currentRelease": "0.20.12-rc33",
+  "acceptance": false
+}

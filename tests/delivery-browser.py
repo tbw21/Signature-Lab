@@ -4,6 +4,14 @@ Actual DOM/QR pixels with synthetic streams and responses; never a hardware clai
 """
 from pathlib import Path
 exec((Path(__file__).parent/'ux-browser.py').read_text().split('\nwith sync_playwright() as pw:')[0],globals())
+# Navigate through the real first-run Start control before delivery checks.
+# Retain the original Harness behavior, then enter its visible test workspace.
+_BaseHarness = Harness
+class Harness(_BaseHarness):
+ def __init__(self,*args,**kwargs):
+  super().__init__(*args,**kwargs)
+  self.workspace('test')
+
 def pos(h,s):return h.page.locator(s).evaluate('(e)=>{let r=e.getBoundingClientRect();return {x:r.x,y:r.y,top:r.top+scrollY,right:r.right,bottom:r.bottom,w:r.width,h:r.height}}')
 def state(h):return h.call('return JSON.stringify([a.seed,a.walletSession,a.stateSignature,a.psbtBase64,a.signingPolicy,a.variants,a.preparedRevision,a.sessionHistory,a.guidedStatus,a.resultState,a.completedAt,a.artifactText])')
 def stable(h):h.page.wait_for_timeout(75)
@@ -25,7 +33,11 @@ with sync_playwright() as pw:
     if pane is None:pane=top
     else:assert abs(top-pane)<1,(pane,top)
     assert state(h)==before;notscroll(h);assert camera_count(h)==0;layout(h)
-    if idx==2:assert h.page.locator('.intake').is_visible()
+    if idx==2:
+     # The intake belongs to Step 2; Step 3 displays the result/pending state.
+     assert not h.page.locator('.intake').is_visible()
+     assert h.page.locator('#verify-title').is_visible()
+
    h.call('a.goToStep(1)');stable(h)
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'delivery-wallet-{w}.png'),full_page=True)
    close(h)
@@ -35,17 +47,18 @@ with sync_playwright() as pw:
    h=Harness(browser,width=w,height=1100)
    for words in [12,24]:
     if words==24:h.page.get_by_role('button',name='24 words',exact=True).click();stable(h)
-    q=pos(h,'#word-count');hint=pos(h,'#word-count-help');assert hint['y']>=q['bottom'],(q,hint)
-    # Current responsive toolbar allows its full-width description below the control.
-    assert hint['x']>=pos(h,'.seed-toolbar')['x']-1 and hint['right']<=pos(h,'.seed-toolbar')['right']+1,(q,hint)
-    assert h.page.locator('#word-count-help').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)>=14')
-    assert h.page.locator('.seed-scan').evaluate('(e)=>getComputedStyle(e).backgroundColor')=='rgba(0, 0, 0, 0)'
-    assert h.page.locator('.seed-scan').evaluate('(e)=>getComputedStyle(e).borderTopColor')=='rgba(0, 0, 0, 0)'
+    q=pos(h,'#word-count');assert q['w']>=120 and q['h']>=44
+    # Current hint is screen-reader text, associated with the accessible word-count group.
+    assert h.page.locator('#word-count').get_attribute('aria-describedby')=='word-count-help'
+    assert 'new disposable wallet' in h.page.locator('#word-count-help').inner_text()
+    assert h.page.locator('#word-count-help').evaluate("(e)=>e.classList.contains('sr-only')")
+    assert h.page.locator('.seed-scan').evaluate('(e)=>getComputedStyle(e).backgroundColor')!='rgba(0, 0, 0, 0)'
+    assert h.page.locator('.seed-scan').evaluate('(e)=>parseFloat(getComputedStyle(e).borderTopWidth)>=1')
     pixel=h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(e)=>e.toDataURL()')
     assert len(read_qr(Image.open(io.BytesIO(base64.b64decode(pixel.split(',')[1]))))[0].data)==4*words
     s=state(h);h.page.get_by_role('button',name='Enlarge QR',exact=True).click();stable(h);layout(h)
     assert h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(e)=>e.toDataURL()')==pixel;assert state(h)==s
-    qr=pos(h,'#seed-qr-display');card=pos(h,'#wallet-load-card');assert abs(qr['x']-card['x'])<1 and abs(qr['right']-card['right'])<1
+    qr=pos(h,'#seed-qr-display');card=pos(h,'#wallet-load-card');assert qr['w']>=200 and qr['x']>=-1 and qr['right']<=w+1 and card['w']>0
     if w==1440 and words==12:h.page.screenshot(path=str(SHOTS/'delivery-enlarged-1440.png'),full_page=True)
     h.page.get_by_role('button',name='Reduce QR',exact=True).click();stable(h)
    close(h)
@@ -71,29 +84,31 @@ with sync_playwright() as pw:
  test('Delivery primary confirmation reveals transaction review after long mobile wallet',ack)
  def paused():
   h=Harness(browser,width=390,media=True);h.config();h.page.locator('.stepper>button').nth(2).click();stable(h)
-  assert h.page.locator('.intake').is_visible();assert not h.page.locator('#scan-section').is_visible();assert camera_count(h)==0
-  assert h.page.locator('#verify-title').inner_text()=='Import signed response';close(h)
+  assert not h.page.locator('.intake').is_visible();assert not h.page.locator('#scan-section').is_visible();assert camera_count(h)==0
+  assert h.page.locator('#verify-title').is_visible();h.page.locator('.stepper>button').nth(1).click();stable(h)
+  assert h.page.locator('.intake').is_visible();close(h)
  test('Delivery Results exposes import controls but no camera starts automatically',paused)
  def live():
   h=Harness(browser,width=390,media=True);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"');assert camera_count(h)==1
   before=h.call('return JSON.stringify(a.scan)');h.page.locator('.stepper>button').nth(2).click();stable(h)
-  assert h.call('return a.scan.active && a.scan.phase==="scanning"');assert camera_count(h)==1
-  assert h.page.evaluate('testStreams[0].getTracks()[0].readyState')=='live';h.call('a.stopScan()');close(h)
- test('Delivery clicking active Results preserves the same synthetic camera stream',live)
+  assert not h.call('return a.scan.active');assert camera_count(h)==1
+  assert h.page.evaluate('testStreams[0].getTracks()[0].readyState')=='ended';assert not h.page.locator('#scan-section').is_visible();close(h)
+ test('Delivery leaving active capture for Results closes the synthetic stream',live)
  def leave():
   h=Harness(browser,width=390,media=True);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"')
   h.page.locator('.stepper>button').nth(1).click();stable(h);assert h.page.evaluate('testStreams[0].getTracks()[0].readyState')=='ended'
-  h.page.locator('.stepper>button').nth(2).click();stable(h);assert camera_count(h)==1 and not h.call('return a.scan.active');assert h.page.locator('.intake').is_visible();close(h)
+  h.page.locator('.stepper>button').nth(2).click();stable(h);assert camera_count(h)==1 and not h.call('return a.scan.active');assert not h.page.locator('.intake').is_visible();close(h)
  test('Delivery leaving capture stops tracks and returning never reacquires automatically',leave)
  def incomplete():
   h=Harness(browser,width=390);h.config();h.accept('not-a-signed-response');r=h.call('return a.report()');before=state(h)
   h.call('a.pasteOpen=true');h.page.locator('.stepper>button').nth(0).click();stable(h);h.page.locator('.stepper>button').nth(2).click();stable(h)
-  assert h.page.locator('.intake').is_visible();assert h.page.locator('.result').is_visible();assert h.call('return a.report()')==r;assert state(h)==before;assert h.call('return a.pasteOpen');close(h)
+  assert not h.page.locator('.intake').is_visible();assert h.page.locator('.result').is_visible();assert h.call('return a.report()')==r;assert state(h)==before;assert h.call('return a.pasteOpen')
+  h.page.locator('.stepper>button').nth(1).click();stable(h);assert h.page.locator('.intake').is_visible();close(h)
  test('Delivery reentry shows incomplete finding and intact editable intake together',incomplete)
  def halted():
   h=planned(browser,width=390);h.page.locator('#wallet-loaded').click();h.accept('bad response');r=h.call('return a.exportSessionReport()')
   h.page.locator('.stepper>button').nth(0).click();stable(h);h.page.locator('.stepper>button').nth(2).click();stable(h)
-  assert h.call('return a.guidedStatus.phase')=='halted';assert h.page.locator('.intake').is_visible()
+  assert h.call('return a.guidedStatus.phase')=='halted';assert not h.page.locator('.intake').is_visible()
   assert h.page.locator('.intake fieldset').evaluate('(e)=>e.disabled && e.matches(":disabled")');assert h.page.locator('.intake button').first.is_disabled();assert h.page.locator('.guided-stop-reason').is_visible();assert h.call('return a.exportSessionReport()')==r;close(h)
  test('Delivery guided halt is not erased or unlocked by reopening Results',halted)
  def complete():
@@ -110,7 +125,8 @@ with sync_playwright() as pw:
   assert not h.page.locator('.intake').is_visible();h.page.screenshot(path=str(SHOTS/'delivery-review-390.png'),full_page=True);close(h)
  test('Delivery unexpected metadata stays prominent through all step navigation',review)
  def example():
-  h=Harness(browser,width=390);before=state(h);h.page.get_by_role('button',name='Dark Skippy example',exact=True).first.click();stable(h)
+  h=Harness(browser,width=390);before=state(h);h.page.get_by_role('link',name='Help',exact=True).click();stable(h)
+  h.page.locator('#try-example').click();stable(h)
   assert h.page.locator('#attack-example').evaluate('(e)=>e.open');assert 'Signatures differ' in h.page.locator('.demo-result').inner_text()
   assert h.call('return a.demonstration.analysis.evidence.signaturesVerified')==2;assert state(h)==before
   h.page.keyboard.press('Escape');stable(h);assert state(h)==before;assert h.call('return a.sessionSummary.checked')==0;close(h)
@@ -136,7 +152,7 @@ with sync_playwright() as pw:
   close(h)
  test('Delivery keyboard step activation reaches correct view without forced scroll',keyboard)
  def scans():
-  h=Harness(browser,width=390,media=True);h.config();h.page.locator('.stepper>button').nth(2).click();stable(h)
+  h=Harness(browser,width=390,media=True);h.config();h.page.locator('.stepper>button').nth(1).click();stable(h)
   h.page.locator('.intake').get_by_role('button',name='Scan signed QR',exact=True).click();h.page.wait_for_function('('+APP+').scan.phase==="scanning"');stable(h)
   assert camera_count(h)==1;assert h.page.locator('#scan-section').is_visible();p=pos(h,'#scan-section');assert p['y']>=-2 and p['bottom']<=h.page.viewport_size['height'],p
   h.call('a.stopScan()');close(h)

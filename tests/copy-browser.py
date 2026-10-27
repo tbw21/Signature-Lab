@@ -10,7 +10,9 @@ def help_topic(h,id):
  if not parent.evaluate('(e)=>e.open'):parent.locator(':scope > summary').click()
  link.click();h.page.wait_for_timeout(40)
 def metrics(h):
- return h.page.locator('#test-purpose').evaluate('''e=>{const c=getComputedStyle(e),r=document.createRange();r.selectNodeContents(e);const ctx=document.createElement("canvas").getContext("2d");ctx.font=c.fontStyle+" "+c.fontWeight+" "+c.fontSize+" "+c.fontFamily;return {naturalWidth:ctx.measureText(e.textContent).width,text:e.textContent,font:parseFloat(c.fontSize),color:c.color,background:getComputedStyle(document.documentElement).backgroundColor,lines:new Set([...r.getClientRects()].map(r=>r.y)).size,width:e.clientWidth,scroll:e.scrollWidth,whiteSpace:c.whiteSpace,overflow:c.overflowX};}''')
+ # The current visible landing introduction replaces the retired hidden #test-purpose.
+ return h.page.locator('.tbw-landing-lede').evaluate('''e=>{const c=getComputedStyle(e),r=document.createRange();r.selectNodeContents(e);let p=e;let bg;while(p){const x=getComputedStyle(p).backgroundColor;if(x!=="rgba(0, 0, 0, 0)"&&x!=="transparent"){bg=x;break}p=p.parentElement}const ctx=document.createElement("canvas").getContext("2d");ctx.font=c.fontStyle+" "+c.fontWeight+" "+c.fontSize+" "+c.fontFamily;return {visible:e.checkVisibility({checkVisibilityCSS:true}),naturalWidth:ctx.measureText(e.textContent).width,text:e.textContent,font:parseFloat(c.fontSize),color:c.color,background:bg,lines:new Set([...r.getClientRects()].map(r=>r.y)).size,width:e.clientWidth,scroll:e.scrollWidth,whiteSpace:c.whiteSpace}}''')
+
 def luminance(s):
  c=[int(n)/255 for n in re.findall(r'\d+',s)[:3]];c=[n/12.92 if n<=.04045 else ((n+.055)/1.055)**2.4 for n in c]
  return sum(a*b for a,b in zip(c,[.2126,.7152,.0722]))
@@ -20,28 +22,33 @@ with sync_playwright() as pw:
  for width in [320,360,390,438,768,1024,1440]:
   def responsive(w=width):
    h=Harness(browser,width=w,height=1050);m=metrics(h)
-   assert m['text']==INTRO and m['color']=='rgb(201, 214, 223)';assert m['whiteSpace']=='normal'
-   assert m['scroll']<=m['width']+1 and m['font']>=13
+   assert m['visible'] and 'disposable Bitcoin test wallet' in m['text'] and 'returned signatures' in m['text'],m
+   assert m['whiteSpace']=='normal' and m['scroll']<=m['width']+1 and m['font']>=13,m
+   assert m['background'],m
    contrast=(max(luminance(m['color']),luminance(m['background']))+.05)/(min(luminance(m['color']),luminance(m['background']))+.05)
    assert contrast>=4.5,contrast
-   # Native system fonts differ in glyph widths. Preserve natural wrapping, not a fixed line count.
    if m['naturalWidth']<=m['width']:assert m['lines']==1,m
    else:assert m['lines']>1,m
-   if w>=1024:assert m['font']==16,m  # Approved readability requirement; no forced one-line text.
    if w<=438:assert m['lines']>1,m
+   assert h.page.locator('.premium-landing-safety').is_visible()
+   assert 'not proof that firmware is safe' in h.page.locator('.premium-landing-safety').inner_text()
+   h.workspace('test')
    assert h.page.locator('.seed-scan .wallet-fingerprint-help').count()==0
    assert h.page.locator('#wallet-fingerprint-value').is_visible()
    assert not h.page.locator('#wallet-technical-note').is_visible()
+   assert h.page.locator('#wallet-safety').is_visible()
    before=identity(h)
    for view in ['advanced','session','test']:
-    h.workspace(view);assert metrics(h)['text']==INTRO;assert identity(h)==before;layout(h)
+    h.workspace(view);assert identity(h)==before;layout(h)
+   h.page.locator('#wallet-safety').wait_for(state='visible')
+   assert h.page.locator('#wallet-safety').is_visible()
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'copy-wallet-{w}.png'),full_page=True)
    close(h)
   test(f'Copy layout: restrained readable contrast and natural reflow at {width}px',responsive)
  for width in [390,1440]:
   for words in [12,24]:
    def wallet(w=width,n=words):
-    h=Harness(browser,width=w,height=1100);h.call('a.selectSeedLength(arg)',n)
+    h=Harness(browser,width=w,height=1100);h.workspace('test');h.call('a.selectSeedLength(arg)',n)
     h.page.wait_for_function(f'document.querySelectorAll(".seed-grid li").length==={n}')
     h.page.wait_for_function('('+APP+').seedQrVisible && ('+APP+').walletFingerprint')
     before=identity(h);uri=h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(e)=>e.toDataURL()')
@@ -56,7 +63,8 @@ with sync_playwright() as pw:
  for width in [320,1440]:
   def large(w=width):
    h=Harness(browser,width=w,height=1100);h.page.evaluate(ENLARGE);layout(h)
-   assert metrics(h)['lines']>1
+   assert metrics(h)['visible'] and metrics(h)['lines']>1
+   h.workspace('test');layout(h)
    help_topic(h,'technical-help');assert h.page.locator('#wallet-technical-note').is_visible();layout(h);close(h)
   test(f'Copy and relocated technical note reflow with doubled text at {width}px',large)
  def spacing():
@@ -72,7 +80,7 @@ with sync_playwright() as pw:
   h.page.get_by_role('link',name='Back to test',exact=True).click();assert identity(h)==before;close(h)
  test('Moved wallet details and attack scope are keyboard-reachable without changing the active test',details)
  def result():
-  h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);before=identity(h);report=h.call('return a.report()')
+  h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);present_result(h);before=identity(h);report=h.call('return a.report()')
   limit=h.page.locator('.result-limit:visible');assert limit.count()==1
   assert 'this transaction only' in limit.inner_text() and 'does not rule out seed leakage' in limit.inner_text()
   h.page.screenshot(path=str(SHOTS/'copy-result-390.png'),full_page=True)
@@ -80,7 +88,7 @@ with sync_playwright() as pw:
   assert identity(h)==before and h.call('return a.report()')==report;close(h)
  test('Matching result keeps one precise scope limitation and unchanged immutable evidence',result)
  def example():
-  h=Harness(browser);before=identity(h);h.page.locator('#try-example').click()
+  h=Harness(browser);before=identity(h);help_topic(h,'known-example');h.page.locator('#try-example').click()
   assert h.page.locator('#attack-example').is_visible()
   assert h.call('return a.demonstration.analysis.evidence.signaturesVerified')==2
   assert not h.call('return !!a.demonstration.analysis.matched')

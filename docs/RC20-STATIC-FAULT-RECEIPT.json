@@ -1,0 +1,26 @@
+{
+  "trusted_js_byte_identity": {
+    "passed": 29,
+    "failed": 0
+  },
+  "javascript_syntax": {
+    "passed": 29,
+    "failed": 0
+  },
+  "css_top_level_syntax": {
+    "passed": 1,
+    "failed": 0
+  },
+  "clean_source_html_rebuild": {
+    "passed": 1,
+    "failed": 0
+  },
+  "overwrite_refusal": {
+    "passed": 1,
+    "failed": 0
+  },
+  "source_tamper_refusal": {
+    "passed": 1,
+    "failed": 0
+  }
+}

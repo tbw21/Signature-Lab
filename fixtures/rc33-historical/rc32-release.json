@@ -1,0 +1,6 @@
+{
+  "version": "0.20.12-rc32",
+  "baseline": "immutable RC30 plus RC31 test migration; 44px mobile control fixes and historical browser-contract migration; development only",
+  "status": "development-ui-preview-unqualified",
+  "publisherAuthenticated": false
+}

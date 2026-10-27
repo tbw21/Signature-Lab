@@ -1,0 +1,16 @@
+{
+  "rc30Sha256": "cbcf6fef2e10877c16d3e7929d0e5ee95079083a4b5b7d9dec4f76923a2e3bfb",
+  "rc32Sha256": "442b6837a3ea39d467b804f801bfc8b23bdde5a6fc6758950a63159a16793f04",
+  "replacements": [
+    {
+      "after": ".aux-heading.aux-hero>.button{align-self:flex-end;margin:0;min-height:44px}",
+      "before": ".aux-heading.aux-hero>.button{align-self:flex-end;margin:0;min-height:42px}"
+    },
+    {
+      "after": ".premium-reset-row #new-test-wallet{margin:0!important;background:var(--premium-surface)!important;min-height:44px!important;",
+      "before": ".premium-reset-row #new-test-wallet{margin:0!important;background:var(--premium-surface)!important;min-height:38px!important;"
+    }
+  ],
+  "schema": "tbw-reviewed-rc32-css-delta-v1",
+  "scope": "Two 44px mobile controls; no signing/Bitcoin/QR/runtime logic changes"
+}

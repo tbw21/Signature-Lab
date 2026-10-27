@@ -1,0 +1,48 @@
+{
+  "version": "0.20.12-rc24",
+  "scope": "Scoped responsive layout, expanded disclosure and editor contrast validation (NOT public release qualification)",
+  "css_parsing": "PASS",
+  "source_lock_tamper_rejection": "PASS",
+  "existing_output_refusal": "PASS",
+  "js_files_byte_identical_to_rc23": 30,
+  "js_syntax": "30 passed / 0 failed",
+  "responsive_disclosure_contract": {
+    "cases": 8,
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "passed": 8,
+    "failed": 0
+  },
+  "expanded_editor_containment": {
+    "cases": 3,
+    "passed": 3
+  },
+  "editor_row_contrast": {
+    "cases": 4,
+    "light_text_contrast_ratio": 15.38,
+    "passed": 4
+  },
+  "core_bbqr_subset": {
+    "passed": 5,
+    "failed": 0
+  },
+  "sessions_subset": {
+    "passed": 10,
+    "failed": 0
+  },
+  "known_limitations": [
+    "No native file-origin test",
+    "No physical signer/camera acceptance",
+    "No signed-result acceptance",
+    "Full historical campaign unported/not run",
+    "No 320px screenshot/manual assistive technology audit"
+  ]
+}

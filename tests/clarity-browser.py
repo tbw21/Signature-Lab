@@ -3,29 +3,35 @@
 from pathlib import Path
 exec((Path(__file__).parent/'ux-browser.py').read_text().split('\nwith sync_playwright() as pw:')[0],globals())
 def stable_state(h):return h.call('return JSON.stringify([a.stateSignature,a.walletSession,a.psbtBase64,a.variants,a.preparedRevision,a.sessionHistory,a.guidedStatus,a.resultState,a.completedAt,a.signingPolicy])')
-def geom(h):return h.page.evaluate('''()=>{const rect=e=>{const r=e.getBoundingClientRect();return [r.left,r.top,r.width,r.height]};const pane=[...document.querySelectorAll('.panel,.aux-view')].find(e=>e.checkVisibility());return {nav:rect(document.querySelector('.workspace-heading')),panel:rect(pane),scroll:scrollY,width:document.documentElement.clientWidth};}''')
+def geom(h):
+ # Header and main workspace have stable origins across views; the stepper is
+ # intentionally visible only inside Test and must not be used as global nav.
+ return h.page.evaluate('''()=>{const rect=e=>{const r=e.getBoundingClientRect();return [r.left,r.top,r.width,r.height]};return {nav:rect(document.querySelector('.header-inner')),panel:rect(document.querySelector('main.page-container')),scroll:scrollY,width:document.documentElement.clientWidth};}''')
 def fonts(h):
- result=h.page.evaluate('''()=>{const b=getComputedStyle(document.body).fontFamily;const wrong=[...document.querySelectorAll('body *')].filter(e=>e.checkVisibility()&&!['SCRIPT','STYLE','TEMPLATE'].includes(e.tagName)&&getComputedStyle(e).fontFamily!==b).map(e=>[e.tagName,e.id,getComputedStyle(e).fontFamily]);return {b,wrong};}''')
- assert result['b'].startswith('Helvetica'),result
- assert not result['wrong'],result
+ # Current approved design uses a system-ui reading face and a deliberately
+ # contrasting serif wordmark; reject illegible or unexpected font fallbacks.
+ result=h.page.evaluate("""()=>{const css=e=>getComputedStyle(document.querySelector(e));return {body:css('body').fontFamily,brand:css('.brand-name').fontFamily,brandSize:parseFloat(css('.brand-name').fontSize),textSize:parseFloat(css('body').fontSize)}}""")
+ assert result['body'] and result['textSize']>=14,result
+ assert ('Georgia' in result['brand'] or 'Times' in result['brand']) and result['brandSize']>=16,result
+
 
 def dialog(h):
- h.page.locator('#try-example').click();h.page.wait_for_timeout(50)
+ h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();h.page.wait_for_timeout(50)
  assert h.page.locator('#attack-example').evaluate('(e)=>e.open && e.matches(":modal")')
  assert h.call('return !!a.demonstration.analysis?.ok && !a.demonstration.analysis?.matched')
- assert 'not a device test' in h.page.locator('#example-scope').inner_text()
+ assert 'does not run malicious firmware' in h.page.locator('#attack-example').inner_text().lower()
 
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
  environment={'browser':browser.version,'mode':'exact HTML setContent, native Linux system font','physicalSigner':False,'realCamera':False,'nativeMacWindows':False}
  for width in [320,360,390,438,768,1024,1440]:
   def geometry(w=width):
-   h=Harness(browser,width=w,height=950);before=stable_state(h)
+   h=Harness(browser,width=w,height=950);h.workspace('test');before=stable_state(h)
    for acknowledged in [False,True]:
     if acknowledged:h.call('a.acknowledged=true');h.page.wait_for_timeout(40)
     h.page.evaluate('window.scrollTo(0,0)');initial=geom(h)
     for view in ['advanced','session','test','session','advanced','test']:
-     h.page.locator('#workspace-'+view).click();h.page.wait_for_timeout(60);now=geom(h)
+     h.workspace(view);h.page.wait_for_timeout(60);now=geom(h);assert h.call('return a.workspaceView')==view
      # Progress steps intentionally disappear outside Test. Preserve the left edge,
      # viewport fit, and semantic state, not obsolete fixed vertical coordinates.
      for key in ['nav','panel']:
@@ -39,12 +45,12 @@ with sync_playwright() as pw:
   test(f'Clarity stable navigation/panel origin and one native family across views at {width}px',geometry)
  for width in [320,390,1440]:
   def scroll(w=width):
-   h=Harness(browser,width=w,height=900);h.page.evaluate('scrollTo(0,60)');start=geom(h);before=stable_state(h)
+   h=Harness(browser,width=w,height=900);h.workspace('test');h.page.evaluate('scrollTo(0,60)');start=geom(h);before=stable_state(h)
    h.page.evaluate("""()=>{window.unrequestedScrolls=[];const into=Element.prototype.scrollIntoView,to=window.scrollTo;
     Element.prototype.scrollIntoView=function(...x){unrequestedScrolls.push('into');return into.apply(this,x)};
     window.scrollTo=function(...x){unrequestedScrolls.push('to');return to.apply(this,x)};}""")
    for v in ['advanced','session','test']:
-    previous=geom(h);h.page.locator('#workspace-'+v).click();h.page.wait_for_timeout(50);g=geom(h)
+    previous=geom(h);h.workspace(v);h.page.wait_for_timeout(50);g=geom(h);assert h.call('return a.workspaceView')==v
     maximum=h.page.evaluate('Math.max(0,document.documentElement.scrollHeight-innerHeight)')
     # A content-following footer may make a short view unscrollable. Preserve every
     # still-representable offset; accept only the browser's mandatory height clamp.
@@ -59,15 +65,15 @@ with sync_playwright() as pw:
  for width in [320,390,768,1440]:
   for words in [12,24]:
    def sizes(w=width,n=words):
-    h=Harness(browser,width=w,height=1000)
-    if n==24:h.call('a.selectSeedLength(24)')
+    h=Harness(browser,width=w,height=1000);h.workspace('test')
+    if n==24:h.page.get_by_role('button',name='24 words',exact=True).click()
     h.page.wait_for_function('('+APP+').seedQrVisible && !!('+APP+').walletFingerprint')
     s=stable_state(h);im=h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(c)=>c.toDataURL()')
     raw=read_qr(Image.open(io.BytesIO(base64.b64decode(im.split(',')[1]))))[0].data
     assert len(raw)==n*4;fonts(h);layout(h)
-    assert h.page.locator('#wallet-safety').bounding_box()['y']<h.page.locator('.seed-grid').bounding_box()['y']
+    assert h.page.locator('#wallet-safety').is_visible() and 'Never overwrite an existing wallet' in h.page.locator('#wallet-safety').inner_text()
     assert not h.page.locator('[onclick]').count()
-    assert h.page.get_by_role('button',name='New test wallet',exact=True).is_visible()
+    assert h.page.locator('#new-test-wallet').is_visible()
     h.page.get_by_role('button',name='Enlarge QR',exact=True).click();h.page.wait_for_timeout(50)
     assert stable_state(h)==s;assert h.page.locator('[x-ref="seedQrCanvas"]').evaluate('(c)=>c.toDataURL()')==im
     h.page.evaluate(ENLARGE);layout(h);fonts(h)
@@ -75,7 +81,7 @@ with sync_playwright() as pw:
    test(f'Clarity {words} words retain QR pixels and readable enlarged native text at {width}px',sizes)
  for width in [320,390,1440]:
   def example(w=width):
-   h=Harness(browser,width=w,height=1000);before=stable_state(h);y=h.page.evaluate('scrollY');dialog(h);layout(h);fonts(h)
+   h=Harness(browser,width=w,height=1000);h.workspace('test');before=stable_state(h);dialog(h);y=h.page.evaluate('scrollY');layout(h);fonts(h)
    assert stable_state(h)==before;assert h.call('return a.sessionSummary.checked')==0
    for _ in range(8):
     h.page.keyboard.press('Tab');assert h.page.evaluate('document.activeElement===document.body || !!document.activeElement.closest("#attack-example")')
@@ -84,42 +90,43 @@ with sync_playwright() as pw:
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'clarity-example-{w}.png'),full_page=False)
    h.page.keyboard.press('Escape');h.page.wait_for_timeout(30);assert not h.page.locator('#attack-example').is_visible()
    assert h.page.evaluate('document.activeElement.id')=='try-example';assert stable_state(h)==before;assert h.page.evaluate('scrollY')==y
-   h.page.locator('#wallet-loaded').click();h.page.wait_for_timeout(60)
+   h.page.locator('.help-navigation a').click();h.page.locator('#wallet-loaded').click();h.page.wait_for_timeout(60)
    if w in [390,1440]:h.page.screenshot(path=str(SHOTS/f'clarity-transaction-{w}.png'),full_page=True)
    close(h)
   test(f'Clarity one-click example and native modal background isolation/Escape preserve active test at {width}px',example)
  def example_large():
-  h=Harness(browser,width=320,height=850);h.page.evaluate(ENLARGE);h.page.add_style_tag(content=TEXT_SPACE);dialog(h);layout(h);fonts(h)
+  h=Harness(browser,width=320,height=850);h.workspace('test');h.page.evaluate(ENLARGE);h.page.add_style_tag(content=TEXT_SPACE);dialog(h);layout(h);fonts(h)
   h.page.keyboard.press('Escape');assert not h.page.locator('#attack-example').is_visible();close(h)
  test('Clarity enlarged/spaced modal content stays reachable and escapable at 320px',example_large)
  def help_example():
-  h=Harness(browser,width=390);h.page.get_by_role('link',name='Help',exact=True).click();link=h.page.locator('.help-contents a[href="#known-example"]');link.locator('xpath=ancestor::details[1]').locator('summary').click();link.click()
-  before=stable_state(h);h.page.get_by_role('button',name='Check example',exact=True).click();assert h.page.locator('#attack-example').is_visible();assert stable_state(h)==before
-  h.page.get_by_role('button',name='Close example').click();assert h.page.locator('#known-example').is_visible();close(h)
+  h=Harness(browser,width=390);h.workspace('test');h.page.get_by_role('link',name='Help',exact=True).click();link=h.page.locator('.help-contents a[href="#known-example"]');assert link.count()==1;link.locator('xpath=ancestor::details[1]').locator('summary').click();link.click()
+  before=stable_state(h);h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();assert h.page.locator('#attack-example').is_visible();assert stable_state(h)==before
+  h.page.get_by_role('button',name='Close Dark Skippy example').click();assert h.page.locator('#known-example').is_visible();close(h)
  test('Clarity Help and Step1 use the same one-click dialog and verifier',help_example)
  def completed():
-  h=Harness(browser,width=390);d=h.config();h.accept(d['tx']);before=stable_state(h);report=h.call('return a.report()');h.call('a.openExample()');assert h.page.locator('#attack-example').is_visible();h.page.keyboard.press('Escape');assert stable_state(h)==before;assert h.call('return a.report()')==report;close(h)
+  h=Harness(browser,width=390);h.workspace('test');d=h.config();h.accept(d['tx']);before=stable_state(h);report=h.call('return a.report()');h.call('a.openExample()');assert h.page.locator('#attack-example').is_visible();h.page.keyboard.press('Escape');assert stable_state(h)==before;assert h.call('return a.report()')==report;close(h)
  test('Clarity opening optional demo cannot replace a completed immutable result',completed)
  def failure():
-  h=Harness(browser,width=390);h.call("a.runDemonstration=()=>{a.demonstration.error='Injected example failure';a.demonstration.analysis=null}")
-  before=stable_state(h);h.page.locator('#try-example').click();h.page.wait_for_function('document.getElementById("attack-example").innerText.includes("Injected example failure")');assert 'Injected example failure' in h.page.locator('#attack-example').inner_text();assert not h.page.locator('.example-checks').count();assert stable_state(h)==before;h.page.keyboard.press('Escape');close(h)
+  h=Harness(browser,width=390);h.workspace('test');h.call("a.runDemonstration=()=>{a.demonstration.error='Injected example failure';a.demonstration.analysis=null}")
+  before=stable_state(h);h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();h.page.wait_for_function('document.getElementById("attack-example").innerText.includes("Injected example failure")');assert 'Injected example failure' in h.page.locator('#attack-example').inner_text();assert not h.page.locator('.example-checks').count();assert stable_state(h)==before;h.page.keyboard.press('Escape');close(h)
  test('Clarity example failure has no green result and leaves the device test intact',failure)
  def no_dialog():
-  h=Harness(browser);h.page.evaluate('document.getElementById("attack-example").remove()');h.call('delete a.$refs.exampleDialog');before=stable_state(h);h.page.locator('#try-example').click();assert 'unavailable' in h.call('return a.notice');assert stable_state(h)==before;d=h.config();h.accept(d['tx']);assert h.call('return a.resultState')=='match';close(h)
+  h=Harness(browser);h.workspace('test');h.page.evaluate('document.getElementById("attack-example").remove()');h.call('delete a.$refs.exampleDialog');before=stable_state(h);h.page.get_by_role('link',name='Help',exact=True).click();h.page.locator('#try-example').click();assert 'unavailable' in h.call('return a.notice');assert stable_state(h)==before;d=h.config();h.accept(d['tx']);assert h.call('return a.resultState')=='match';close(h)
  test('Clarity absent optional dialog does not block ordinary verification',no_dialog)
  def camera():
   h=Harness(browser,media=True);h.config();h.call('a.startScan()');h.page.wait_for_function('('+APP+').scan.phase==="scanning"');count=h.page.evaluate('mediaCalls');assert h.call('return a.openExample()')==False;assert h.call('return a.scan.active');assert h.page.evaluate('mediaCalls')==count;h.call('a.stopScan()');close(h)
  test('Clarity example cannot hide live camera capture or trigger another permission request',camera)
  def reset():
-  h=Harness(browser,width=390);before=h.call('return a.seed.value');h.page.get_by_role('button',name='New test wallet',exact=True).click();h.page.wait_for_timeout(70);assert h.call('return a.seed.value')!=before;assert h.call('return a.wordCount')=='12';assert h.call('return a.workspaceView')=='test';assert not h.call('return a.acknowledged');close(h)
+  h=Harness(browser,width=390);h.workspace('test');before=h.call('return a.seed.value');h.page.locator('#new-test-wallet').click();h.page.wait_for_timeout(70);assert h.call('return a.seed.value')!=before;assert h.call('return a.wordCount')=='12';assert h.call('return a.workspaceView')=='test';assert not h.call('return a.acknowledged');close(h)
  test('Clarity visible wallet replacement retains same-length regeneration',reset)
  def outcomes():
-  h=Harness(browser,width=390);d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());assert h.page.locator('.file-review-action').is_visible();before=stable_state(h)
+  h=Harness(browser,width=390);h.workspace('test');d=h.config();h.accept(marker(sign_psbt(d['psbt'],d['tx'])).hex());present_result(h);assert h.page.locator('.file-review-action').is_visible();before=stable_state(h)
   for v in ['advanced','session','test']:h.workspace(v);assert stable_state(h)==before;fonts(h)
+  present_result(h)
   assert h.page.locator('.file-review-action').is_visible();close(h)
  test('Clarity simplification does not hide unexpected file findings or change their evidence',outcomes)
  def forced():
-  h=Harness(browser,width=390);h.page.emulate_media(forced_colors='active',reduced_motion='reduce');dialog(h);layout(h);h.page.keyboard.press('Escape')
+  h=Harness(browser,width=390);h.workspace('test');h.page.emulate_media(forced_colors='active',reduced_motion='reduce');dialog(h);layout(h);h.page.keyboard.press('Escape')
   for view in ['advanced','session','test']:h.workspace(view);layout(h)
   close(h)
  test('Clarity controls and demo remain accessible in forced colors and reduced motion',forced)

@@ -1,0 +1,27 @@
+{
+  "schema": "tbw-retirement-analysis-v1",
+  "grade": "development-not-qualified",
+  "activeSourceModules": 29,
+  "runtimeUnitsChanged": [
+    "src/20-application.js"
+  ],
+  "retainedByteIdenticalRuntimeUnits": 28,
+  "oldNavigationSelectorsInPage": 0,
+  "oldNavigationCssReferences": 0,
+  "testScriptsWithHistoricSelectorDependencies": [
+    "tests/current-assurance.py",
+    "tests/current-accessibility.py",
+    "tests/origins.py",
+    "tests/polish-browser.py",
+    "tests/rc30-retired-nav-smoke.py",
+    "tests/calm-browser.py",
+    "tests/static.cjs",
+    "tests/alignment-browser.py",
+    "tests/polish-static.py",
+    "tests/ux-browser.py",
+    "tests/feedback-browser.py",
+    "tests/feedback-static.py"
+  ],
+  "historicalDuplicateTree": "source/ (not part of runtime; preserved for provenance)",
+  "securityScope": "no signing or verification algorithm changes"
+}

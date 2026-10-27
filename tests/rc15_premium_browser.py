@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Scoped UI qualification. This supplements, never replaces, the historical campaign."""
+import sys,json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+HTML=Path(sys.argv[1]).read_text()
+results=[]
+def check(v,msg):
+ if not v: raise AssertionError(msg)
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+ for width in (390,768,1440):
+  for theme in ('dark','light'):
+   page=b.new_page(viewport={'width':width,'height':920},color_scheme=theme,accept_downloads=True)
+   errors=[];external=[]
+   page.on('pageerror',lambda e:errors.append(str(e)))
+   page.on('request',lambda r:external.append(r.url) if r.url.startswith(('https://','http://')) else None)
+   page.set_content(HTML,wait_until='domcontentloaded')
+   page.wait_for_selector('html[data-app-ready="true"]',timeout=25000)
+   page.evaluate('(t)=>document.querySelector(".shell")._x_dataStack[0].setThemePreference(t)',theme)
+   check(page.locator('#tbw-landing').is_visible(),'landing absent')
+   check(page.locator('.premium-journey-step').count()==3,'steps absent')
+   check(page.locator('.premium-journey-step img').count()==0,'landing has product image')
+   check('supported expected results' in page.locator('.tbw-landing-lede').inner_text(),'project scope unclear')
+   check(page.locator('.premium-landing-safety').is_visible(),'disposable warning absent')
+   check(not page.locator('.scenario-note').is_visible(),'unexpected boundary alert')
+   check(page.evaluate('document.body.scrollWidth<=innerWidth+1'),'landing overflow')
+   page.locator('#start-safe-test').click()
+   check(page.locator('#prepare-title').is_visible(),'step1 absent')
+   check(page.locator('.premium-step-number').first.inner_text()=='1','missing Step 1')
+   check(page.locator('.premium-words-list li').count()==12,'wrong default word count')
+   check(len(page.locator('#wallet-fingerprint-value').inner_text())==8,'fingerprint missing')
+   check(page.locator('#seed-qr-display canvas').count()==1,'original SeedQR canvas removed')
+   check(page.locator('#new-test-wallet').count()==1,'wallet reset missing')
+   rect=page.evaluate('''()=>{let a=document.querySelector('#seed-qr-display').getBoundingClientRect(),b=document.querySelector('.premium-test-step .seed-qr-actions button').getBoundingClientRect();return [a.width,b.width]}''')
+   check(abs(rect[0]-rect[1])<1.1,f'QR/button width mismatch: {rect}')
+   check(page.evaluate('document.body.scrollWidth<=innerWidth+1'),'step1 overflow')
+   # Ensure the 24-word generator and reset retain authoritative behavior.
+   page.locator('#word-count button').nth(1).click()
+   check(page.locator('.premium-words-list li').count()==24,'24-word switching failed')
+   page.locator('#word-count button').nth(0).click()
+   check(page.locator('.premium-words-list li').count()==12,'12-word switching failed')
+   check(page.locator('#wallet-loaded').is_visible(),'fingerprint confirmation absent')
+   page.wait_for_function('document.querySelector(".shell")._x_dataStack[0].transactionReady',timeout=10000)
+   page.locator('#wallet-loaded').click()
+   page.wait_for_timeout(300)
+   check(page.locator('#sign-title').is_visible(),'step2 absent')
+   check(page.locator('.transaction-summary').is_visible(),'transaction review removed')
+   check(page.locator('#qr-format').is_visible(),'QR format controls absent')
+   check(page.locator('[data-qr-mode="ur"]').count()==1,'BC-UR missing')
+   check(page.locator('[data-qr-mode="bbqr"]').count()==1,'BBQr missing')
+   page.locator('[data-qr-mode="bbqr"]').click()
+   check(page.locator('[data-qr-mode="bbqr"]').get_attribute('aria-pressed')=='true','BBQr mode fails')
+   check(page.locator('.psbt-actions').is_visible(),'save-copy row absent')
+   check(page.locator('.psbt-actions button').count()>=2,'PSBT save/copy missing')
+   check(page.locator('.import-actions').is_visible(),'response import options absent')
+   check(page.locator('.import-actions button').count()>=2,'response scan/paste missing')
+   check(page.evaluate('document.body.scrollWidth<=innerWidth+1'),'step2 overflow')
+   page.locator('.topbar .help-control').click()
+   check(page.locator('#help').is_visible(),'Help inaccessible')
+   page.locator('#help .help-navigation a').click()
+   # Advanced and history remain available in Settings; no duplicate state.
+   page.locator('.tbw-settings>summary').click()
+   check('Advanced testing' in page.locator('.tbw-drawer-workspace').inner_text(),'advanced inaccessible')
+   check('Session history' in page.locator('.tbw-drawer-workspace').inner_text(),'session history inaccessible')
+   page.locator('.tbw-close-settings').click()
+   check(not errors,f'JS errors: {errors}')
+   check(not external,f'network requests: {external}')
+   results.append({'theme':theme,'width':width,'status':'passed','qr':rect,'javascriptErrors':0,'networkRequests':0})
+   page.close()
+ b.close()
+print(json.dumps({'status':'passed','totalCases':len(results),'results':results},indent=2))

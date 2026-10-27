@@ -1,0 +1,11 @@
+--- src/20-application.js@RC28
++++ src/20-application.js@RC30
+@@ -981,7 +981,7 @@
+     this.pause();this.epoch++;journal.rollback(this.sessionEndReason.trim() || 'Ended by the operator.');this.sessionRevision++;
+     this.notice = 'Session ended. Its record is in Session. Your current result is unchanged.';
+     // Focus a stable visible control when the ended banner leaves the active workspace.
+-    this.$refs?.sessionNav?.focus?.({preventScroll:true});
++    document.querySelector('#tbw-settings > summary')?.focus?.({preventScroll:true});
+ },
+ exportSessionReport() { this.sessionRevision; return journal.report(); },
+ downloadSessionReport() {

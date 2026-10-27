@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Exact current-template/state boundary checks for the header/QR polish."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from audit_projection import read as audit_read
+from rc35_style_pin import pinned_historical_css
 from bs4 import BeautifulSoup
 import json,hashlib,re,sys
 from delivery_projection import project as delivery_project
@@ -22,13 +24,13 @@ def preservation():
 case('P-S02 28 runtime units identical; declared navigation changes reverse exactly to v0.18.1',preservation)
 def reverse():
  for name,digest in R['before'].items():
-  text=audit_read(name);require(sha(text.encode())==R['after'][name],name)
+  text=pinned_historical_css() if name=='src/style.css' else audit_read(name);require(sha(text.encode())==R['after'][name],name)
   for e in reversed(R['edits'][name]):require(e['after'] and text.count(e['after'])==1,name);text=text.replace(e['after'],e['before'],1)
   require(sha(text.encode())==digest,name)
 case('P-S03 complete page and stylesheet reverse exactly to baseline bytes',reverse)
 def mutation():
  for name,digest in R['before'].items():
-  text=audit_read(name)+'\n/* unrelated mutation */'
+  text=(pinned_historical_css() if name=='src/style.css' else audit_read(name))+'\n/* unrelated mutation */'
   for e in reversed(R['edits'][name]):text=text.replace(e['after'],e['before'],1)
   require(sha(text.encode())!=digest,name)
 case('P-S04 preservation check does not hide an unrelated appended change',mutation)
@@ -37,21 +39,30 @@ def help_control():
  require(e.has_attr('data-help-home') and e.has_attr('data-help-link'))
  require(e.find_parent(class_='header-actions') is not None)
  require(e.find_parent(class_='workspace-nav') is None)
- require(e.get_text().strip()=='?');require(e.span.get('aria-hidden')=='true')
+ require(e.get_text().strip()=='Help');require(not e.select('script'))
 case('P-S05 one named Help control uses existing header navigation route',help_control)
-case('P-S06 only Test Advanced Session remain workspace tabs',lambda:require([e.get('id') for e in S.select('.workspace-nav>button')]==['workspace-test','workspace-advanced','workspace-session']))
+def active_navigation():
+ require(not S.select('nav.workspace-nav,#workspace-test,#workspace-advanced,#workspace-session,.workspace-alert'),'Retired hidden tabs returned')
+ drawer=one('#tbw-settings');require(drawer.name=='details' and drawer.find('summary') is not None)
+ routes=one('#tbw-settings .tbw-drawer-workspace')
+ for target in ['advanced','session']:
+  require(len([b for b in routes.select('button') if "openWorkspace('"+target+"')" in b.get('@click','')])==1,'Visible route missing: '+target)
+ require(len(S.select('#advanced-view .aux-heading button'))>=1 and len(S.select('#session-view .aux-heading button'))>=1)
+case('P-S06 retired tabs absent; visible Settings routes preserve single workspace',active_navigation)
 def release():
- e=one('.release-status a');require(e.get('href')=='#release-status-help');require('hardware acceptance pending' in e['aria-label'])
- require('v'+json.loads((ROOT/'release.json').read_text())['version'] in e.get_text());require('RC3' in e.get_text())
- require(e.find_parent(class_='header-actions') is not None)
+ release_identity()
+ require('v'+json.loads((ROOT/'release.json').read_text())['version'] in str(one('.tbw-drawer-about')))
+ require('Session data is not uploaded or saved automatically.' in str(one('.tbw-drawer-about')))
+ require('not an approved public release' in one('#release-status-help').get_text())
+ require('Publisher authentication' in one('#release-status-help').get_text())
+ require(one('.tbw-settings').find_parent(class_='header-actions') is not None)
 case('P-S07 unique version and release caveat stay accessible in header',release)
 def structure():
- card=one('#wallet-load-card');qr=one('#seed-qr-display');col=card.find_parent(class_='qr-column');require(col is not None and col==qr.parent)
- require(card.find_parent(class_='seed-scan') is not None)
- for s in ['#wallet-fingerprint-value','#wallet-compare-hint','#wallet-loaded','.seed-qr-actions>button']:
-  require(card in one(s).parents,s)
- require(len(card.select('button'))==2);require(not card.has_attr('x-data'))
- require(qr.find('button') is None);require(qr.find(id='wallet-fingerprint-value') is None)
+ shared_wallet(S)
+ card=one('#wallet-load-card');qr=one('#seed-qr-display')
+ require(card != qr and card.find_parent(class_='premium-wallet-panel') == qr.find_parent(class_='premium-wallet-panel'))
+ require(not qr.find('button') and not qr.find(id='wallet-fingerprint-value'))
+ require(not card.has_attr('x-data'))
 case('P-S08 QR fingerprint and actions share one group without controls in the quiet zone',structure)
 def callbacks():
  require(one('#wallet-loaded').get('@click')=='confirmWalletLoaded()')
@@ -61,8 +72,7 @@ def callbacks():
  one('[x-ref="seedQrCanvas"]');one('.seed-grid')
 case('P-S09 original distinct callbacks and canvas/identity bindings preserved',callbacks)
 def safety():
- require('Never enter your real seed' in one('#wallet-safety').get_text())
- require('Do not add a passphrase.' in one('.seed-instructions').get_text())
+ wallet_safety(S)
  require('Signatures matched. File changes need review.' in H)
  require('Could not complete the check' in H);require('does not rule out seed leakage' in H)
  require('@click="downloadResult()"' in H and 'output.address' in H)

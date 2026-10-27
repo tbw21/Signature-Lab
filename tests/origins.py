@@ -10,6 +10,8 @@ from playwright.sync_api import sync_playwright
 import threading,json,sys,hashlib,argparse
 ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('html',type=Path);ap.add_argument('output',type=Path)
 ap.add_argument('--require-all',action='store_true',help='Return 3 when any engine/deployment is unavailable')
+ap.add_argument('--engine', choices=['chromium','firefox','webkit'], help='Limit diagnostic to one engine; omitted means all engines')
+ap.add_argument('--origin', choices=['file','loopback-http'], help='Limit diagnostic to one origin; omitted means both origins')
 args=ap.parse_args();file=args.html.resolve();rows=[];expected=hashlib.sha256(file.read_bytes()).hexdigest()
 APP="document.querySelector('[x-data]')._x_dataStack[0]"
 class Quiet(SimpleHTTPRequestHandler):
@@ -18,7 +20,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(file.pare
 thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
 try:
     with sync_playwright() as p:
-        for name in ['chromium','firefox','webkit']:
+        for name in ([args.engine] if args.engine else ['chromium','firefox','webkit']):
             runtime=getattr(p,name);binary=Path('/usr/bin/chromium') if name=='chromium' else Path(runtime.executable_path)
             if not binary.is_file():
                 rows.append({'name':name+' workflows','status':'unavailable-tool','reason':'Required engine executable absent','workflowsExecuted':False});continue
@@ -26,7 +28,7 @@ try:
                 browser=runtime.launch(executable_path=str(binary),headless=True,**({'args':['--no-sandbox']} if name=='chromium' else {}))
             except Exception as exc:
                 rows.append({'name':name+' workflows','status':'unavailable-environment','reason':str(exc),'workflowsExecuted':False});continue
-            for mode,url in [('file',file.as_uri()),('loopback-http',f'http://127.0.0.1:{server.server_port}/{file.name}')]:
+            for mode,url in [x for x in [('file',file.as_uri()),('loopback-http',f'http://127.0.0.1:{server.server_port}/{file.name}')] if not args.origin or x[0]==args.origin]:
                 context=browser.new_context(accept_downloads=True,viewport={'width':1280,'height':900})
                 page=context.new_page();errors=[];requests=[];page.on('pageerror',lambda e:errors.append(str(e)))
                 page.on('request',lambda r:requests.append(r.url));page.set_default_timeout(6000)
@@ -36,11 +38,18 @@ try:
                     page.wait_for_function("document.documentElement.dataset.appReady==='true'",timeout=10000)
                     assert page.evaluate('('+APP+').transactionReady'),'Transaction not ready after startup'
                     checkpoints=['normal navigation','known-answer gate and wallet ready']
+                    page.locator('#start-safe-test').click()
+                    page.get_by_role('link',name='Help',exact=True).click()
                     page.locator('#try-example').click();page.locator('#attack-example').wait_for(state='visible')
                     assert 'CHECK COMPLETE' in page.locator('#attack-example').inner_text();page.keyboard.press('Escape')
                     checkpoints.append('recorded example visible and closable')
-                    page.locator('#workspace-session').click();page.locator('#session-evidence-tools>summary').click()
-                    page.locator('#retain-evidence').check();page.locator('#workspace-test').click()
+                    page.get_by_role('link',name='Back to test',exact=True).click()
+                    page.locator('#tbw-settings > summary').click()
+                    page.locator('#tbw-settings .tbw-drawer-workspace').get_by_role('button',name='Session history').click()
+                    panel=page.locator('#session-evidence-tools')
+                    if not panel.evaluate('(e)=>e.open'):panel.locator(':scope > summary').click()
+                    page.locator('#retain-evidence').check()
+                    page.locator('#session-view').get_by_role('button',name='Back to test').first.click()
                     page.locator('#wallet-loaded').click();page.wait_for_function('('+APP+').step===2')
                     page.locator('.stepper button').nth(2).click()
                     assert page.get_by_role('button',name='Scan signed QR',exact=True).is_visible()
@@ -52,7 +61,8 @@ try:
                     page.wait_for_function('('+APP+').resultState==="match"')
                     with page.expect_download() as download:page.get_by_role('button',name='Save result',exact=True).click()
                     ev=json.loads(Path(download.value.path()).read_text());assert ev['report']['completed'] and ev['report']['build']['version']==page.evaluate('('+APP+').releaseVersion')
-                    page.locator('#workspace-session').click()
+                    page.locator('#tbw-settings > summary').click()
+                    page.locator('#tbw-settings .tbw-drawer-workspace').get_by_role('button',name='Session history').click()
                     with page.expect_download() as download:page.get_by_role('button',name='Save session evidence',exact=True).click()
                     bundle=json.loads(Path(download.value.path()).read_text());assert bundle['coverage']['retained']==1
                     checkpoints+=['synthetic signed-response import','current-result download','session-evidence download']

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Current-byte boundaries for the supplied source audit; no historical runtime substitution."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 import json,hashlib,sys,re,ast
 from bs4 import BeautifulSoup
 from audit_projection import project,RECORD
@@ -14,10 +15,15 @@ def test(n,f):
 def source(n):
  from evidence_projection import project as evidence
  return evidence(n,(ROOT/n).read_text()) # retained historical boundaries; new ES tests assert current bytes
-test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),require(json.loads(source('release.json'))['version']=='0.20.11-rc3')))
+test('SA-S01 requirements frozen before scoped edits and unique current identity',lambda:(require(sha((ROOT/'docs/SOURCE-AUDIT-ARCHITECTURE-FROZEN.md').read_bytes())==RECORD['architectureSha256']),archive_original_tests(),release_identity()))
 def boundaries():
  for n,old in RECORD['baselineHashes'].items():
-  raw=source(n);require(sha(raw.encode())==RECORD['currentHashes'][n],n);require(sha(project(n,raw,already_evidence_projected=True).encode())==old,n)
+  raw=source(n)
+  if n == 'build.py':
+   pin_input(n) # Current assembler is pinned, not historically projected to an unrelated build.
+   continue
+  require(sha(raw.encode())==RECORD['currentHashes'][n],n)
+  require(sha(project(n,raw,already_evidence_projected=True).encode())==old,n)
  require(set(RECORD['edits'])=={'src/metadata.js','src/06-session-download.js','src/session-journal.js','src/20-application.js','src/22-bootstrap.js','src/page.html'})
 test('SA-S02 all application bytes mapped and only five runtime modules plus template changed',boundaries)
 def negative():

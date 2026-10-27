@@ -1,0 +1,10 @@
+{
+  "schema": "tbw-reviewed-rc34-segmented-controls-v1",
+  "baselineSha256": "ef4ef4ed54cc0352da1b771e9a143ede22e11fea7b68b18927da65130d520d4c",
+  "currentSha256": "9c4ef0365efdcce75c0411f3aacaba410a882b62f921ad4082b5c6a10fcd2218",
+  "approvedHtmlSha256": "e77a04c6998ba5b19c86623ff1dd81aa712308e3e553ff894b3893409395bc23",
+  "exactAppend": "\n/* RC34: common accessible metrics for wallet-word and QR-format segmented controls. */\n#test-view .premium-words-card #word-count button,\n#test-view #qr-format button {font-size:.94rem!important;padding:8px 4px!important;min-height:44px!important;}\n",
+  "appendSha256": "a55be35408afccb856b1c3e86c16b87a43d66474860eab5af605607c9da1d782",
+  "scope": "Equivalent accessible 44px word-count and QR-format segmented control metrics; no runtime module edits",
+  "releaseGrade": "DEVELOPMENT-NO-GO"
+}

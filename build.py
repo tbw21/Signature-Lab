@@ -84,9 +84,11 @@ def help_contents(template):
 
 def assemble():
     hashes=locked();identity=sha(json.dumps(hashes,sort_keys=True,separators=(',',':')).encode())
-    version=json.loads((ROOT/'release.json').read_text())['version']
+    release=json.loads((ROOT/'release.json').read_text());version=release['version'];status=release['status']
+    if not isinstance(status,str) or status not in {'development-ui-preview-unqualified','release-candidate-unqualified','signed-release'}:raise ValueError('Invalid release status')
+    if status=='signed-release' and not release.get('publisherAuthenticated',False):raise ValueError('Signed release needs explicit authentication evidence')
     if not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc\d+))?',version): raise ValueError('Invalid release version')
-    chunks=['const TBW_BUILD = Object.freeze('+json.dumps({'version':version,'sourceSha256':identity,'publisherAuthenticated':False},separators=(',',':'))+');\n']
+    chunks=['const TBW_BUILD = Object.freeze('+json.dumps({'version':version,'sourceSha256':identity,'publisherAuthenticated':bool(release.get('publisherAuthenticated',False)),'status':status},separators=(',',':'))+');\n']
     for name in inputs()[1]:
         text=(ROOT/name).read_text()
         if name=='src/11-bbqr.js':chunks.append('/* TBW_BBQR_CODEC_BEGIN */\n')
@@ -102,7 +104,9 @@ def assemble():
     for marker in ['@@SCRIPT@@','@@STYLE@@','@@HELP_CONTENTS@@']:
         if html.count(marker)!=1: raise ValueError('Template marker count')
     html=html.replace('@@HELP_CONTENTS@@',help_contents(html))
-    html=html.replace('@@SCRIPT@@',script).replace('@@STYLE@@',(ROOT/'src/style.css').read_text()).replace('@@VERSION@@',version)
+    if html.count('@@RELEASE_NOTICE@@')!=1: raise ValueError('Release notice marker count')
+    notice=('Development UI preview. Publisher authentication has not been verified.' if status=='development-ui-preview-unqualified' else 'Release candidate undergoing qualification. Publisher authentication not verified.' if status=='release-candidate-unqualified' else 'Publisher authentication recorded for this build. Verify the published signature and hash.')
+    html=html.replace('@@SCRIPT@@',script).replace('@@STYLE@@',(ROOT/'src/style.css').read_text()).replace('@@VERSION@@',version).replace('@@RELEASE_NOTICE@@',escape(notice))
     if '@@' in html and re.search(r'@@[A-Z_]+@@',html):raise ValueError('Unresolved template marker')
     return html.encode(),identity
 

@@ -107,9 +107,27 @@ class Harness:
         self.page.wait_for_function("document.documentElement.dataset.appReady==='true'",timeout=10000)
         self.page.wait_for_timeout(30)
     def workspace(self,view):
-        control=self.page.locator('#workspace-'+view)
-        if control.count() and self.call('return a.workspaceView')!=view:
-            control.click();self.page.wait_for_timeout(40)
+        """Use only currently visible navigation. No direct hidden-tab clicks.
+
+        Test/Advanced/Session remain the same underlying application state.
+        """
+        current=self.call('return a.workspaceView')
+        if current==view:
+            if view=='test' and self.page.locator('#start-safe-test').is_visible():
+                self.page.locator('#start-safe-test').click()
+            return
+        if view=='test':
+            dest='#advanced-view' if current=='advanced' else '#session-view'
+            self.page.locator(dest).get_by_role('button',name='Back to test').first.click()
+        else:
+            details=self.page.locator('#tbw-settings')
+            if not details.evaluate('(e)=>e.open'):
+                details.locator(':scope > summary').click()
+            label='Advanced testing' if view=='advanced' else 'Session history'
+            self.page.locator('#tbw-settings .tbw-drawer-workspace').get_by_role('button',name=label).click()
+        self.page.wait_for_function('(view)=>('+APP+').workspaceView===view',arg=view)
+        if view=='test' and self.page.locator('#start-safe-test').is_visible():
+            self.page.locator('#start-safe-test').click()
     def open_tools(self):
         self.workspace('advanced')
         panel=self.page.locator('#advanced-tools')
@@ -139,6 +157,8 @@ class Harness:
     def call(self,expr,arg=None):
         return self.page.evaluate('(arg)=>{const a='+APP+';'+expr+'}',arg)
     def config(self):
+        # Enter the visible wallet flow before injecting synthetic test inputs.
+        self.workspace('test')
         data=self.page.evaluate(CONFIG);assert data['ready'];self.page.wait_for_timeout(30);return data
     def accept(self,text):
         self.call('a.acceptArtifact(arg)',text);self.page.wait_for_timeout(25)
@@ -394,9 +414,14 @@ with sync_playwright() as pw:
           return {seed:style(seed,keys),qr:style(qr,keys),seedActive:style(seed.querySelector('[aria-pressed=true]'),bkeys),
             qrActive:style(qr.querySelector('[aria-pressed=true]'),bkeys),seedOther:style(seed.querySelector('[aria-pressed=false]'),bkeys),qrOther:style(qr.querySelector('[aria-pressed=false]'),bkeys)};
         }""")
-        assert styles['seed']==styles['qr'],styles
-        assert styles['seedActive']==styles['qrActive'],styles
-        assert styles['seedOther']==styles['qrOther'],styles
+        # The approved wallet and transport groups have deliberately different
+        # surface/active colors. Assert the shared accessible control geometry,
+        # not obsolete visual identity of their parent containers.
+        geometry=('paddingTop','paddingRight','minHeight','fontSize')
+        for left,right in (('seedActive','qrActive'),('seedOther','qrOther')):
+            assert all(styles[left][k]==styles[right][k] for k in geometry),styles
+            assert float(styles[left]['minHeight'].removesuffix('px'))>=44,styles
+        assert styles['qr']['borderWidth']!='0px',styles
         h.page.screenshot(path=str(SHOTS/'segmented-desktop.png'),full_page=True)
         h.page.locator('.qr-format-control').screenshot(path=str(SHOTS/'selector-bc-ur.png'))
         h.page.locator('[data-qr-mode="bbqr"]').click()

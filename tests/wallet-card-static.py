@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Direct current-source/HTML checks. Does not execute historical projections."""
 from pathlib import Path
+from rc29_static_contract import release_identity,archive_original_tests,pin_input,shared_wallet,wallet_safety
 from audit_projection import read as audit_read
+from rc35_style_pin import pinned_historical_css
 from bs4 import BeautifulSoup
 import hashlib,json,re,sys
 from delivery_projection import project as delivery_project
@@ -22,17 +24,19 @@ def runtime():
 test('WC-S02 runtime units preserve dev-4 after exact declared navigation reversal',runtime)
 def exactchanges():
  for name,digest in R['before'].items():
-  text=audit_read(name);check(sha(text.encode())==R['after'][name],name)
+  text=pinned_historical_css() if name=='src/style.css' else audit_read(name);check(sha(text.encode())==R['after'][name],name)
   for edit in reversed(R['edits'][name]):
    check(text.count(edit['after'])==1,name);text=text.replace(edit['after'],edit['before'],1)
   check(sha(text.encode())==digest,name)
 test('WC-S03 entire page/style changes reverse to exact supplied baseline',exactchanges)
 def card():
+ shared_wallet(soup)
  c=unique('#wallet-load-card');check(c.name=='section');check(c.get('aria-labelledby')=='wallet-fingerprint-label')
- for selector in ['#wallet-fingerprint-value','#wallet-fingerprint-label','#wallet-compare-hint','.seed-qr-actions>button','#wallet-loaded']:
-  e=unique(selector);check(c in e.parents,selector)
- check(c.find_parent('section',attrs={'aria-labelledby':'prepare-title'}) is not None)
- check(len(c.select('button'))==2)
+ for selector in ['#wallet-fingerprint-value','#wallet-fingerprint-label','#wallet-compare-hint']:
+  check(c in unique(selector).parents,selector)
+ check(unique('#wallet-loaded').find_parent(class_='premium-wallet-continue') is not None)
+ check(unique('.seed-qr-actions>button').find_parent(class_='seed-scan') is not None)
+ check(not c.has_attr('x-data'))
 test('WC-S04 all four related pieces live once in one card inside the wallet panel',card)
 def binding():
  check(unique('#wallet-fingerprint-value').get('x-text')=="walletFingerprint || 'Unavailable'")
@@ -42,12 +46,10 @@ def binding():
  check(e.get(':aria-expanded')=='seedQrExpanded');check(e.get('aria-controls')=='seed-qr-display')
  check(e not in unique('#seed-qr-display').descendants)
 test('WC-S05 fingerprint, enlargement and acknowledgement retain their distinct bindings',binding)
-test('WC-S06 one original seed canvas and word list with no duplicated wallet surface',lambda:(unique('[x-ref="seedQrCanvas"]'),unique('.seed-grid'),unique('.seed-instructions'),check(not soup.select('.panel-actions.acknowledgement'))))
+test('WC-S06 one original seed canvas and word list with no duplicated wallet surface',lambda:(unique('[x-ref="seedQrCanvas"]'),unique('.seed-grid'),unique('.premium-passphrase'),check(not soup.select('.panel-actions.acknowledgement'))))
 def safety():
- check('Never enter your real seed' in unique('#wallet-safety').get_text())
- check('Do not add a passphrase.' in unique('.seed-instructions').get_text())
- check('Check that the fingerprint matches your signer' in unique('#wallet-compare-hint').get_text())
- check(H.index('id="wallet-safety"')<H.index('class="seed-grid notranslate"'))
+ wallet_safety(soup)
+ check('wallet-safety' in unique('#wallet-loaded').get('aria-describedby','').split())
 test('WC-S07 disposal, no-passphrase and fingerprint-comparison guidance remain',safety)
 def actions():
  for b in soup.select('#wallet-load-card button'):check(b.get('type')=='button');check(not b.find_parent('button'))

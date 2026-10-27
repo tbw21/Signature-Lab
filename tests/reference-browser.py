@@ -63,7 +63,7 @@ with sync_playwright() as pw:
  for kind in ['answer','signer','missing']:
   test('R-B startup '+kind+' fault hides wallet/import controls before random key generation',lambda k=kind:fail_page(k))
  def no_optional():
-  h=Harness(browser);h.page.evaluate('document.querySelector("#help").remove();document.querySelector("#try-example").remove();document.querySelector("#attack-example").remove()')
+  h=Harness(browser);h.page.evaluate('document.querySelectorAll("#help, #try-example, #attack-example").forEach(el => el.remove())')
   data=h.config();h.accept(data['tx']);assert h.call('return a.resultState')=='match';assert h.call('return a.referenceSelfCheck.phase')=='passed';close(h)
  test('R-B13 Help/demo absence neither blocks nor substitutes for mandatory startup self-check',no_optional)
  def contrast_keyboard():
